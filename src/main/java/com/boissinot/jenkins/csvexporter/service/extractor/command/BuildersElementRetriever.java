@@ -30,7 +30,7 @@ public class BuildersElementRetriever {
             }
         }
 
-        builder.delete(0,1);
+        builder.delete(0, 1);
         return builder.toString();
     }
 }

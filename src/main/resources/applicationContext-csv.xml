@@ -33,11 +33,17 @@
     </batch:job>
 
     <bean id="exportBatchListener" class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"/>
-    <bean id="reader" class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"/>
+    <bean id="reader"
+          class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
+          scope="step">
+        <property name="onFolder" value="#{jobParameters['on.folder']}"/>
+        <property name="jenkinsURL" value="#{jobParameters['jenkins.url']}"/>
+        <property name="folderPath" value="#{jobParameters['folder.path']}"/>
+    </bean>
 
     <bean id="writer"
-          class="org.springframework.batch.item.file.FlatFileItemWriter">
-        <property name="resource" value="file:export.csv"/>
+          class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+        <property name="resource" value="file:#{jobParameters['exportcsv.filepath']}"/>
         <property name="shouldDeleteIfExists" value="true"/>
         <property name="headerCallback">
             <bean class="com.boissinot.jenkins.csvexporter.batch.FlatFileItemWriterHeaderCallback">

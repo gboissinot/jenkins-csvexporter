@@ -1,18 +1,18 @@
 package com.boissinot.jenkins.csvexporter.batch;
 
+import com.boissinot.jenkins.csvexporter.batch.delegator.JobItemReaderDelegator;
+import com.boissinot.jenkins.csvexporter.batch.delegator.JobItemReaderFolderDelegator;
+import com.boissinot.jenkins.csvexporter.batch.delegator.JobItemReaderRemoteInstanceDelegator;
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
+import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import com.boissinot.jenkins.csvexporter.service.FunctionalJobTypeRetriever;
-import org.apache.commons.io.IOUtils;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +22,39 @@ import java.util.List;
 public class JobItemReader implements ItemReader<InputSBJobObj> {
 
 
+    /* Computed */
     private List<String> urls = new ArrayList<String>();
+    private JobItemReaderDelegator delegator;
+
+    /* Managed */
+    private boolean onFolder;
+    private String folderPath;
+    private String jenkinsURL;
+
+    public void setOnFolder(String onFolder) {
+        if (onFolder == null) {
+            this.onFolder = false;
+        }
+        this.onFolder = Boolean.valueOf(onFolder);
+    }
+
+    public void setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
+    }
+
+    public void setJenkinsURL(String jenkinsURL) {
+        this.jenkinsURL = jenkinsURL;
+    }
 
     @BeforeStep
-    private void beforeStepLocal() {
-        File configDir = new File("/Users/gregory/Dev/configs/");
-        File[] files = configDir.listFiles();
-        for (File file : files) {
-            urls.add(file.getAbsolutePath());
+    private void beforeAnyRead() {
+        if (onFolder) {
+            delegator = new JobItemReaderFolderDelegator(folderPath);
+        } else {
+            delegator = new JobItemReaderRemoteInstanceDelegator(jenkinsURL);
         }
+
+        urls = delegator.buildURLs();
     }
 
     public InputSBJobObj read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
@@ -40,21 +64,17 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
                 return null;
             }
             String url = urls.remove(0);
-            //System.out.println("Read " + url);
+            System.out.println("Read Job" + url);
             return readJob(url);
-        } catch (Exception e) {
-            //TODO
-            e.printStackTrace();
-        }
 
-        return null;
+        } catch (Exception e) {
+            throw new ExportException(e);
+        }
     }
 
-    private InputSBJobObj readJob(String url) throws IOException {
+    private InputSBJobObj readJob(String jobURL) throws IOException {
 
-        File configFile = new File(url);
-        String jobName = configFile.getName().substring(configFile.getName().indexOf("config-") + 7);
-
+        String jobName = delegator.getJobName(jobURL);
         FunctionalJobTypeRetriever jobTypeRetriever = new FunctionalJobTypeRetriever();
         FunctionalJobTypeRetriever.JOB_TYPE jobType = jobTypeRetriever.getJobType(jobName);
 
@@ -63,13 +83,9 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
                         jobName,
                         jobType.getType(),
                         jobType.getLanguage(),
-                        testGetConfigXMLContent(jobName, url));
+                        delegator.getConfigXML(jobURL));
 
         return inputSBJobObj;
-    }
-
-    private String testGetConfigXMLContent(String jobName, String jobURL) throws IOException {
-        return IOUtils.toString(new InputStreamReader(new FileInputStream(jobURL)));
     }
 
 }
