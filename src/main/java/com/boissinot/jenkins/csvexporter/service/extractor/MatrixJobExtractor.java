@@ -20,6 +20,8 @@ public class MatrixJobExtractor extends JobExtractorSupport {
         //Get Maven Commands
         Node buildersNode = template.evaluateAsNode("//builders", configXMLSource);
 
+        buildSCMSection(builder, configXML);
+
         builder.buildSteps(buildCommandSection(buildersNode));
 
         builder.buildSteps("\""
