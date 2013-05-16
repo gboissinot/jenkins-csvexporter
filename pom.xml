@@ -51,7 +51,7 @@
             <dependency>
                 <groupId>com.boissinot.jenkins</groupId>
                 <artifactId>csvexporter-apt-lib</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
