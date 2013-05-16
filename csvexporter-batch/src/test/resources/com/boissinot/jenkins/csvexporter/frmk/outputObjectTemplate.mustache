@@ -1,0 +1,21 @@
+package com.boissinot.jenkins.csvexporter.domain.generated;
+
+
+/**
+ * @author Gregory Boissinot
+ * @javax.annotation.Generated("{{OriginClassName}}")
+ */
+public class {{Class}} extends com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj {
+
+    public String[] getNames() {
+        return new String[]{"name", "desc", "disabled", "jenkinsType", "functionalJobLanguage",
+                "functionalJobType", "cvsRoot", "cvsModule", "svnURL", "gitURL",
+                "trigger", "buildSteps"};
+    }
+
+    public String getNameLabels() {
+        return "NAME;DESCRIPTION;DISABLED;JENKINS TYPE;LANGUAGE;FUNCTIONAL TYPE;CVS ROOT;CVS MODULE;SVN URL;GIT URL;TRIGGER;COMMANDS";
+    }
+
+}
+

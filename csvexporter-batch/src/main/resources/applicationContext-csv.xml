@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/batch
+    http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <import resource="classpath:batch-infra.xml"/>
+    <import resource="classpath:extract-spi.xml"/>
+
+    <context:component-scan base-package="com.boissinot.jenkins.csvexporter.domain.generated"/>
+
+    <batch:job id="extract-jenkins-job">
+        <batch:step id="extract">
+            <batch:tasklet>
+                <batch:chunk reader="reader"
+                             processor="processor"
+                             writer="writer"
+                             commit-interval="10"
+                             skip-limit="200">
+                    <batch:skippable-exception-classes>
+                        <batch:include class="java.lang.Throwable"/>
+                    </batch:skippable-exception-classes>
+                </batch:chunk>
+            </batch:tasklet>
+            <batch:listeners>
+                <batch:listener ref="exportBatchListener">
+                </batch:listener>
+            </batch:listeners>
+        </batch:step>
+    </batch:job>
+
+    <bean id="exportBatchListener" class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"/>
+    <bean id="reader"
+          class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
+          scope="step">
+        <property name="onFolder" value="#{jobParameters['on.folder']}"/>
+        <property name="jenkinsURL" value="#{jobParameters['jenkins.url']}"/>
+        <property name="folderPath" value="#{jobParameters['folder.path']}"/>
+    </bean>
+
+    <bean id="writer"
+          class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+        <property name="resource" value="file:#{jobParameters['exportcsv.filepath']}"/>
+        <property name="shouldDeleteIfExists" value="true"/>
+        <property name="headerCallback">
+            <bean class="com.boissinot.jenkins.csvexporter.batch.FlatFileItemWriterHeaderCallback">
+                <property name="labels"
+                          value="#{outputObj.getNameLabels()}"/>
+            </bean>
+        </property>
+        <property name="lineAggregator">
+            <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+                <property name="delimiter" value=";"/>
+                <property name="fieldExtractor">
+                    <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                        <property name="names"
+                                  value="#{outputObj.getNames()}"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

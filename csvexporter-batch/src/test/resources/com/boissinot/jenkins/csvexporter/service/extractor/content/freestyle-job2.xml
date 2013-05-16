@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+    <actions/>
+    <description>Dead Can Dance search and analyze dead code in larger projects</description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <hudson.plugins.descriptionsetter.JobByDescription/>
+        <hudson.plugins.disk__usage.DiskUsageProperty/>
+        <hudson.plugins.mantis.MantisProjectProperty>
+            <siteName>http://controle.synchrotron-soleil.fr/mantis/</siteName>
+            <regexpPattern>
+                <pattern>(?&lt;=issue #?)(\d+)(?=)</pattern>
+                <flags>0</flags>
+            </regexpPattern>
+            <linkEnabled>false</linkEnabled>
+        </hudson.plugins.mantis.MantisProjectProperty>
+    </properties>
+    <scm class="hudson.scm.NullSCM"/>
+    <assignedNode>java&amp;&amp;(!fowler)</assignedNode>
+    <canRoam>false</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers class="vector"/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Shell>
+            <command># Checkout Project cvs -Q -z3 -d :pserver:anonymous:@ganymede.synchrotron-soleil.fr:/usr/local/CVS
+                co -P System/scripts/deployment/DeadCanDance SoleilBean SoleilLibrary GUI/GlobalScreen/PasserelleLibrary
+                LibrairieMachine BeamLineLibrary AilesSupervision AntaresSupervision AppliAlarmes AppliAlignementAnneau
+                AppliAlimAnneau AppliDiagAnneau AppliFBT AppliFcAnneau AppliGeneraleBooster AppliGeneraleLT1
+                AppliGeneraleLT2 AppliInsertion AppliInterlock AppliRFAnneau AppliTDL AppliVideAnneau Booster_RF
+                CassiopeeSupervision CristalSupervision DeimosSupervision DesirsSupervision DiffabsSupervision
+                DiscoSupervision GalaxiesSupervision HermesSupervision LuciaSupervision MarsSupervision
+                MetrologieSupervision OdeSupervision PleiadesSupervision Proxima1Supervision Proxima2aSupervision
+                PsicheSupervision PssApplication SambaSupervision SextantsSupervision SiriusSupervision SixsSupervision
+                SmisSupervision SwingSupervision TempoSupervision VideBooster System/GLOBAL_ROOT/lib/PasserelleLibrary#
+                Compile SoleilBeanmvn -f SoleilBean/pom.xml clean package -Dmaven.test.skip=true# Compile
+                PasserelleLibrarymvn -f GUI/GlobalScreen/PasserelleLibrary/pom.xml clean package# Compile DCD and
+                execute itmvn -f System/scripts/deployment/DeadCanDance/pom.xml clean package exec:exec -Dargs=&quot;$WORKSPACE/SoleilBean:MavenProject,
+                $WORKSPACE/GUI/GlobalScreen/PasserelleLibrary:MavenProject &gt; $WORKSPACE/SoleilLibrary:GbsLibrary,
+                $WORKSPACE/System/GLOBAL_ROOT/lib/PasserelleLibrary:GbsLibrary &gt;
+                $WORKSPACE/LibrairieMachine:GbsLibrary &gt;$WORKSPACE/BeamLineLibrary:GbsLibrary &gt;$WORKSPACE/AilesSupervision:GbsLibrary,$WORKSPACE/AntaresSupervision:GbsLibrary,$WORKSPACE/AppliAlarmes:GbsLibrary,$WORKSPACE/AppliAlignementAnneau:GbsLibrary,$WORKSPACE/AppliAlimAnneau:GbsLibrary,$WORKSPACE/AppliDiagAnneau:GbsLibrary,$WORKSPACE/AppliFBT:GbsLibrary,$WORKSPACE/AppliFcAnneau:GbsLibrary,$WORKSPACE/AppliGeneraleBooster:GbsLibrary,$WORKSPACE/AppliGeneraleLT1:GbsLibrary,$WORKSPACE/AppliGeneraleLT2:GbsLibrary,$WORKSPACE/AppliInsertion:GbsLibrary,$WORKSPACE/AppliInterlock:GbsLibrary,$WORKSPACE/AppliRFAnneau:GbsLibrary,$WORKSPACE/AppliTDL:GbsLibrary,$WORKSPACE/AppliVideAnneau:GbsLibrary,$WORKSPACE/Booster_RF:GbsLibrary,$WORKSPACE/CassiopeeSupervision:GbsLibrary,$WORKSPACE/CristalSupervision:GbsLibrary,$WORKSPACE/DeimosSupervision:GbsLibrary,$WORKSPACE/DesirsSupervision:GbsLibrary,$WORKSPACE/DiffabsSupervision:GbsLibrary,$WORKSPACE/DiscoSupervision:GbsLibrary,$WORKSPACE/GalaxiesSupervision:GbsLibrary,$WORKSPACE/HermesSupervision:GbsLibrary,$WORKSPACE/LuciaSupervision:GbsLibrary,$WORKSPACE/MarsSupervision:GbsLibrary,$WORKSPACE/MetrologieSupervision:GbsLibrary,$WORKSPACE/OdeSupervision:GbsLibrary,$WORKSPACE/PleiadesSupervision:GbsLibrary,$WORKSPACE/Proxima1Supervision:GbsLibrary,$WORKSPACE/Proxima2aSupervision:GbsLibrary,$WORKSPACE/PsicheSupervision:GbsLibrary,$WORKSPACE/PssApplication:GbsLibrary,$WORKSPACE/SambaSupervision:GbsLibrary,$WORKSPACE/SextantsSupervision:GbsLibrary,$WORKSPACE/SiriusSupervision:GbsLibrary,$WORKSPACE/SixsSupervision:GbsLibrary,$WORKSPACE/SmisSupervision:GbsLibrary,$WORKSPACE/SwingSupervision:GbsLibrary,$WORKSPACE/TempoSupervision:GbsLibrary,$WORKSPACE/VideBooster:GbsLibrary
+                &gt;$WORKSPACE/AilesSupervision:GbsApplication,$WORKSPACE/AntaresSupervision:GbsApplication,$WORKSPACE/AppliAlarmes:GbsApplication,$WORKSPACE/AppliAlignementAnneau:GbsApplication,$WORKSPACE/AppliAlimAnneau:GbsApplication,$WORKSPACE/AppliDiagAnneau:GbsApplication,$WORKSPACE/AppliFBT:GbsApplication,$WORKSPACE/AppliFcAnneau:GbsApplication,$WORKSPACE/AppliGeneraleBooster:GbsApplication,$WORKSPACE/AppliGeneraleLT1:GbsApplication,$WORKSPACE/AppliGeneraleLT2:GbsApplication,$WORKSPACE/AppliInsertion:GbsApplication,$WORKSPACE/AppliInterlock:GbsApplication,$WORKSPACE/AppliRFAnneau:GbsApplication,$WORKSPACE/AppliTDL:GbsApplication,$WORKSPACE/AppliVideAnneau:GbsApplication,$WORKSPACE/Booster_RF:GbsApplication,$WORKSPACE/CassiopeeSupervision:GbsApplication,$WORKSPACE/CristalSupervision:GbsApplication,$WORKSPACE/DeimosSupervision:GbsApplication,$WORKSPACE/DesirsSupervision:GbsApplication,$WORKSPACE/DiffabsSupervision:GbsApplication,$WORKSPACE/DiscoSupervision:GbsApplication,$WORKSPACE/GalaxiesSupervision:GbsApplication,$WORKSPACE/HermesSupervision:GbsApplication,$WORKSPACE/LuciaSupervision:GbsApplication,$WORKSPACE/MarsSupervision:GbsApplication,$WORKSPACE/MetrologieSupervision:GbsApplication,$WORKSPACE/OdeSupervision:GbsApplication,$WORKSPACE/PleiadesSupervision:GbsApplication,$WORKSPACE/Proxima1Supervision:GbsApplication,$WORKSPACE/Proxima2aSupervision:GbsApplication,$WORKSPACE/PsicheSupervision:GbsApplication,$WORKSPACE/PssApplication:GbsApplication,$WORKSPACE/SambaSupervision:GbsApplication,$WORKSPACE/SextantsSupervision:GbsApplication,$WORKSPACE/SiriusSupervision:GbsApplication,$WORKSPACE/SixsSupervision:GbsApplication,$WORKSPACE/SmisSupervision:GbsApplication,$WORKSPACE/SwingSupervision:GbsApplication,$WORKSPACE/TempoSupervision:GbsApplication,$WORKSPACE/VideBooster:GbsApplication&quot;</command>
+        </hudson.tasks.Shell>
+    </builders>
+    <publishers>
+        <hudson.tasks.ArtifactArchiver>
+            <artifacts>**/DCD*.xml</artifacts>
+            <latestOnly>false</latestOnly>
+        </hudson.tasks.ArtifactArchiver>
+    </publishers>
+    <buildWrappers/>
+</project>
