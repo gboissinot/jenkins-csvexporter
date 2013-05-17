@@ -1,7 +1,7 @@
 package com.boissinot.jenkins.csvexporter.domain;
 
-import com.boissinot.jenkins.csvexporter.frmk.ExportElement;
-import com.boissinot.jenkins.csvexporter.frmk.ExportElementType;
+import com.boissinot.jenkins.csvexporter.apt.ExportElement;
+import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
 
 /**
  * @author Gregory Boissinot

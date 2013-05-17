@@ -1,5 +1,8 @@
-package com.boissinot.jenkins.csvexporter.frmk;
+package com.boissinot.jenkins.csvexporter.apt;
 
+import com.boissinot.jenkins.csvexporter.apt.batch.BeanFieldRetriever;
+import com.boissinot.jenkins.csvexporter.apt.batch.ExportBean;
+import com.boissinot.jenkins.csvexporter.apt.batch.HeaderLabelRetriever;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
@@ -16,6 +19,7 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -43,53 +47,6 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
         return supportedAnnotationTypes;
     }
 
-    private static class OrderLabelBean implements Comparable<OrderLabelBean> {
-
-        private int order;
-
-        private String name;
-
-        private String label;
-
-        public OrderLabelBean(int order, String name, String label) {
-            this.order = order;
-            this.name = name;
-            this.label = label;
-        }
-
-        public int compareTo(OrderLabelBean orderLabelBean) {
-            if (this.order < orderLabelBean.order) {
-                return -1;
-            } else if (this.order == orderLabelBean.order) {
-                return 0;
-            } else {
-                return 1;
-            }
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            OrderLabelBean that = (OrderLabelBean) o;
-
-            if (order != that.order) return false;
-            if (label != null ? !label.equals(that.label) : that.label != null) return false;
-            if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = order;
-            result = 31 * result + (name != null ? name.hashCode() : 0);
-            result = 31 * result + (label != null ? label.hashCode() : 0);
-            return result;
-        }
-    }
-
     @Override
     public boolean process(Set<? extends TypeElement> annotationsElement, RoundEnvironment roundEnv) {
 
@@ -114,10 +71,16 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
 
                     JavaFileObject fileObject = processingEnv.getFiler().createSourceFile("com.boissinot.jenkins.csvexporter.domain.generated.OutputCSVJobObj_", element);
 
-                    Set<OrderLabelBean> orderLabelBeans = getSortedOrderLabelBean(roundEnv.getElementsAnnotatedWith(ExportElement.class));
+                    SortedSet<ExportBean> beans = getSortedOrderLabelBean(roundEnv.getElementsAnnotatedWith(ExportElement.class));
 
                     Writer writer = fileObject.openWriter();
-                    mustache.execute(writer, new OutputCSVJobTemplateContent(className, className + "_", getNames(orderLabelBeans), getNameLabels(orderLabelBeans)));
+
+                    HeaderLabelRetriever headerLabelRetriever = new HeaderLabelRetriever();
+                    BeanFieldRetriever beanFieldRetriever = new BeanFieldRetriever();
+                    mustache.execute(writer,
+                            new OutputCSVJobTemplateContent(className, className + "_",
+                                    beanFieldRetriever.getNames(beans),
+                                    headerLabelRetriever.getNameLabels(beans)));
                     writer.flush();
                 }
             }
@@ -131,39 +94,16 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
         return true;
     }
 
-    private Set<OrderLabelBean> getSortedOrderLabelBean(final Set<? extends Element> elementsAnnotatedWithExportElement) {
-        Set<OrderLabelBean> sortedSet = new TreeSet<OrderLabelBean>();
+    private SortedSet<ExportBean> getSortedOrderLabelBean(final Set<? extends Element> elementsAnnotatedWithExportElement) {
+        SortedSet<ExportBean> sortedSet = new TreeSet<ExportBean>();
         for (Element element1 : elementsAnnotatedWithExportElement) {
             String label = element1.getAnnotation(ExportElement.class).label();
             int order = element1.getAnnotation(ExportElement.class).order();
-            sortedSet.add(new OrderLabelBean(order, element1.getSimpleName().toString(), label));
+            sortedSet.add(new ExportBean(order, element1.getSimpleName().toString(), label));
         }
         return sortedSet;
     }
 
-    private String getNames(Set<OrderLabelBean> sortedSet) {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (OrderLabelBean orderLabelBean : sortedSet) {
-            stringBuilder.append(",");
-            stringBuilder.append("\"");
-            stringBuilder.append(orderLabelBean.name);
-            stringBuilder.append("\"");
-        }
-        stringBuilder.delete(0, 1);
-        return stringBuilder.toString();
-    }
-
-    private String getNameLabels(Set<OrderLabelBean> sortedSet) {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (OrderLabelBean orderLabelBean : sortedSet) {
-            stringBuilder.append(";");
-            stringBuilder.append(orderLabelBean.label);
-        }
-        stringBuilder.delete(0, 1);
-        return stringBuilder.toString();
-    }
 
 }
 

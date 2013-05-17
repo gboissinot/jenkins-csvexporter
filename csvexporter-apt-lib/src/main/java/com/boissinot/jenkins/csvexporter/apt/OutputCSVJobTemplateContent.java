@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.frmk;
+package com.boissinot.jenkins.csvexporter.apt;
 
 /**
  * @author Gregory Boissinot

@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.frmk;
+package com.boissinot.jenkins.csvexporter.apt;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 

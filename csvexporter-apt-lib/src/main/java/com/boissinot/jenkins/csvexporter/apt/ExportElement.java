@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.frmk;
+package com.boissinot.jenkins.csvexporter.apt;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
