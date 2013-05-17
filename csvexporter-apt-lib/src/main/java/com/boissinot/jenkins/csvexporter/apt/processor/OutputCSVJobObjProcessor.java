@@ -1,7 +1,12 @@
-package com.boissinot.jenkins.csvexporter.apt;
+package com.boissinot.jenkins.csvexporter.apt.processor;
 
+import com.boissinot.jenkins.csvexporter.apt.ExportElement;
+import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
+import com.boissinot.jenkins.csvexporter.apt.mustache.JavaDefaultMustacheFactory;
+import com.boissinot.jenkins.csvexporter.apt.mustache.OutputCSVJobTemplateContent;
 import com.boissinot.jenkins.csvexporter.apt.batch.BeanFieldRetriever;
 import com.boissinot.jenkins.csvexporter.apt.batch.ExportBean;
+import com.boissinot.jenkins.csvexporter.apt.batch.ExportBeanListRetriever;
 import com.boissinot.jenkins.csvexporter.apt.batch.HeaderLabelRetriever;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -20,7 +25,6 @@ import java.io.Writer;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * @author Gregory Boissinot
@@ -58,7 +62,7 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
                     System.out.println("OutputCSVObj Processing ....");
 
                     String className = element.getAnnotation(ExportElementType.class).value();
-                    InputStream inputStream = this.getClass().getResourceAsStream("subClassTemplate.mustache");
+                    InputStream inputStream = this.getClass().getResourceAsStream("mustache/subClassTemplate.mustache");
                     StringBuffer sb = new StringBuffer();
                     int c;
                     while ((c = inputStream.read()) != -1) {
@@ -71,7 +75,8 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
 
                     JavaFileObject fileObject = processingEnv.getFiler().createSourceFile("com.boissinot.jenkins.csvexporter.domain.generated.OutputCSVJobObj_", element);
 
-                    SortedSet<ExportBean> beans = getSortedOrderLabelBean(roundEnv.getElementsAnnotatedWith(ExportElement.class));
+                    ExportBeanListRetriever exportBeanListRetriever = new ExportBeanListRetriever();
+                    SortedSet<ExportBean> beans = exportBeanListRetriever.buildExportBeanList(roundEnv.getElementsAnnotatedWith(ExportElement.class));
 
                     Writer writer = fileObject.openWriter();
 
@@ -93,17 +98,6 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
 
         return true;
     }
-
-    private SortedSet<ExportBean> getSortedOrderLabelBean(final Set<? extends Element> elementsAnnotatedWithExportElement) {
-        SortedSet<ExportBean> sortedSet = new TreeSet<ExportBean>();
-        for (Element element1 : elementsAnnotatedWithExportElement) {
-            String label = element1.getAnnotation(ExportElement.class).label();
-            int order = element1.getAnnotation(ExportElement.class).order();
-            sortedSet.add(new ExportBean(order, element1.getSimpleName().toString(), label));
-        }
-        return sortedSet;
-    }
-
 
 }
 

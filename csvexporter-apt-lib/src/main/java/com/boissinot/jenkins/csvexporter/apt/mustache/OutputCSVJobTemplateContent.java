@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.apt;
+package com.boissinot.jenkins.csvexporter.apt.mustache;
 
 /**
  * @author Gregory Boissinot
