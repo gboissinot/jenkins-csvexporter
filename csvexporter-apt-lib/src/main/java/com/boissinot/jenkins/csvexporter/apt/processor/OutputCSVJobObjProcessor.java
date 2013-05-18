@@ -2,12 +2,11 @@ package com.boissinot.jenkins.csvexporter.apt.processor;
 
 import com.boissinot.jenkins.csvexporter.apt.ExportElement;
 import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
-import com.boissinot.jenkins.csvexporter.apt.mustache.JavaDefaultMustacheFactory;
-import com.boissinot.jenkins.csvexporter.apt.mustache.OutputCSVJobTemplateContent;
 import com.boissinot.jenkins.csvexporter.apt.batch.BeanFieldRetriever;
 import com.boissinot.jenkins.csvexporter.apt.batch.ExportBean;
-import com.boissinot.jenkins.csvexporter.apt.batch.ExportBeanListRetriever;
 import com.boissinot.jenkins.csvexporter.apt.batch.HeaderLabelRetriever;
+import com.boissinot.jenkins.csvexporter.apt.mustache.JavaDefaultMustacheFactory;
+import com.boissinot.jenkins.csvexporter.apt.mustache.OutputCSVJobTemplateContent;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
