@@ -3,9 +3,9 @@ package com.boissinot.jenkins.csvexporter.apt.processor;
 import com.boissinot.jenkins.csvexporter.apt.ExportElement;
 import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
 import com.boissinot.jenkins.csvexporter.apt.batch.ExportBean;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import sun.jvm.hotspot.utilities.Assert;
 
 import javax.lang.model.element.*;
 import javax.lang.model.type.NoType;
@@ -208,7 +208,7 @@ public class ExportBeanListRetrieverTest {
         expectedExportBeans.add(exportBean3);
 
         for (ExportBean actualExportBean : actualExportBeans) {
-            Assert.that(expectedExportBeans.contains(actualExportBean), "");
+            Assert.assertTrue(expectedExportBeans.contains(actualExportBean));
         }
     }
 
