@@ -9,7 +9,7 @@ import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
 @ExportElementType("OutputCSVJobObj")
 public class OutputCSVJobObj {
 
-    @ExportElement(order = 1, label = "NAME")
+    @ExportElement(order = 1, label = "JOB_NAME")
     private String name;
 
     @ExportElement(order = 2, label = "DESCRIPTION")
@@ -44,7 +44,6 @@ public class OutputCSVJobObj {
 
     @ExportElement(order = 12, label = "COMMANDS")
     private String buildSteps;
-
 
     public OutputCSVJobObj() {
     }
@@ -196,7 +195,6 @@ public class OutputCSVJobObj {
     public String getBuildSteps() {
         return buildSteps;
     }
-
 
 
 }
