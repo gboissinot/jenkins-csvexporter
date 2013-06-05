@@ -12,7 +12,6 @@ public class BuildersElementRetriever {
 
         StringBuilder builder = new StringBuilder();
 
-
         NodeList childNodes = buildersNode.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             builder.append("\n");
