@@ -30,9 +30,17 @@ public class Main {
 
         final String onFolder = System.getProperty("onFolder");
         if (onFolder == null) {
-            parametersBuilder.addString("on.folder", "true");
+            parametersBuilder.addString("on.folder", "false");
         } else {
-            parametersBuilder.addString("on.folder", onFolder);
+            if (Boolean.valueOf(onFolder)) {
+                parametersBuilder.addString("on.folder", onFolder);
+                final String folderPath = System.getProperty("folderPath");
+                if (folderPath == null) {
+                    parametersBuilder.addString("folder.path", "/Users/gregory/Dev/_old/configs/");
+                } else {
+                    parametersBuilder.addString("folder.path", folderPath);
+                }
+            }
         }
 
         final String jenkinsURL = System.getProperty("jenkinsURL");
@@ -40,13 +48,6 @@ public class Main {
             parametersBuilder.addString("jenkins.url", "http://calypso/jenkins/");
         } else {
             parametersBuilder.addString("jenkins.url", jenkinsURL);
-        }
-
-        final String folderPath = System.getProperty("folderPath");
-        if (folderPath == null) {
-            parametersBuilder.addString("folder.path", "/Users/gregory/Dev/configs/");
-        } else {
-            parametersBuilder.addString("folder.path", folderPath);
         }
 
         final String exportJobsPath = System.getProperty("exportJobsPath");
