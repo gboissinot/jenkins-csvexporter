@@ -57,6 +57,7 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
         urls = delegator.buildURLs();
     }
 
+    @Override
     public InputSBJobObj read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
         try {
