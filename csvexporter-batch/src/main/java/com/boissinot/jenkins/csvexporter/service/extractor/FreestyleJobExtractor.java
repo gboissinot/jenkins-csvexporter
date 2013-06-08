@@ -22,9 +22,7 @@ public class FreestyleJobExtractor extends JobExtractorSupport {
 
         buildSCMSection(builder, configXML);
 
-        builder.buildSteps("\""
-                + buildCommandSection(buildersNode)
-                + "\"");
+        builder.buildSteps(buildCommandSection(buildersNode));
     }
 
     private String buildCommandSection(Node buildersNode) {

@@ -50,10 +50,10 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         String spec = template.evaluateAsString("//spec", configXMLSource);
 
         Node disabledNode = template.evaluateAsNode("//disabled", configXMLSource);
-        boolean disabled = Boolean.valueOf(getContent(disabledNode)).booleanValue();
+        boolean disabled = Boolean.valueOf(getContent(disabledNode));
 
         builder.disabled(disabled)
-                .desc("\"" + description + "\"")
+                .desc(description)
                 .trigger(spec);
 
         buildCVSObj(builder, configXML);

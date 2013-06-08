@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.launch;
+package com.boissinot.jenkins.csvexporter.launcher;
 
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -31,23 +31,18 @@ public class Main {
         final String onFolder = System.getProperty("onFolder");
         if (onFolder == null) {
             parametersBuilder.addString("on.folder", "false");
+            final String jenkinsURL = System.getProperty("jenkinsURL");
+            if (jenkinsURL == null) {
+                parametersBuilder.addString("jenkins.url", "http://calypso/jenkins/");
+            } else {
+                parametersBuilder.addString("jenkins.url", jenkinsURL);
+            }
         } else {
             if (Boolean.valueOf(onFolder)) {
                 parametersBuilder.addString("on.folder", onFolder);
                 final String folderPath = System.getProperty("folderPath");
-                if (folderPath == null) {
-                    parametersBuilder.addString("folder.path", "/Users/gregory/Dev/_old/configs/");
-                } else {
-                    parametersBuilder.addString("folder.path", folderPath);
-                }
+                parametersBuilder.addString("folder.path", folderPath);
             }
-        }
-
-        final String jenkinsURL = System.getProperty("jenkinsURL");
-        if (jenkinsURL == null) {
-            parametersBuilder.addString("jenkins.url", "http://calypso/jenkins/");
-        } else {
-            parametersBuilder.addString("jenkins.url", jenkinsURL);
         }
 
         final String exportJobsPath = System.getProperty("exportJobsPath");

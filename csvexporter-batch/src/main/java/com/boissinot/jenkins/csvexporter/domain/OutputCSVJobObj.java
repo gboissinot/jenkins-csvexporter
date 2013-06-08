@@ -2,6 +2,7 @@ package com.boissinot.jenkins.csvexporter.domain;
 
 import com.boissinot.jenkins.csvexporter.apt.ExportElement;
 import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
+import com.boissinot.jenkins.csvexporter.service.CSVCellProcessor;
 
 /**
  * @author Gregory Boissinot
@@ -49,18 +50,19 @@ public class OutputCSVJobObj {
     }
 
     public OutputCSVJobObj(Builder builder) {
-        this.name = builder.name;
-        this.desc = builder.desc;
+        CSVCellProcessor cellProcessor = new CSVCellProcessor();
+        this.name = cellProcessor.getCSVAware(builder.name);
+        this.desc = cellProcessor.getCSVAware(builder.desc);
         this.disabled = builder.disabled;
-        this.jenkinsType = builder.jenkinsType;
-        this.functionalJobType = builder.functionalJobType;
-        this.functionalJobLanguage = builder.functionalJobLanguage;
-        this.cvsRoot = builder.cvsRoot;
-        this.cvsModule = builder.cvsModule;
-        this.svnURL = builder.svnURL;
-        this.gitURL = builder.gitURL;
-        this.trigger = builder.trigger;
-        this.buildSteps = builder.buildSteps;
+        this.jenkinsType = cellProcessor.getCSVAware(builder.jenkinsType);
+        this.functionalJobType = cellProcessor.getCSVAware(builder.functionalJobType);
+        this.functionalJobLanguage = cellProcessor.getCSVAware(builder.functionalJobLanguage);
+        this.cvsRoot = cellProcessor.getCSVAware(builder.cvsRoot);
+        this.cvsModule = cellProcessor.getCSVAware(builder.cvsModule);
+        this.svnURL = cellProcessor.getCSVAware(builder.svnURL);
+        this.gitURL = cellProcessor.getCSVAware(builder.gitURL);
+        this.trigger = cellProcessor.getCSVAware(builder.trigger);
+        this.buildSteps = cellProcessor.getCSVAware(builder.buildSteps);
     }
 
     public static class Builder {

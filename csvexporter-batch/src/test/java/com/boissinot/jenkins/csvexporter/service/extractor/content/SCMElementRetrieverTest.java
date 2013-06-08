@@ -1,8 +1,10 @@
 package com.boissinot.jenkins.csvexporter.service.extractor.content;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
+import com.boissinot.jenkins.csvexporter.service.CSVCellProcessor;
 import com.boissinot.jenkins.csvexporter.service.extractor.scm.SCMElementRetriever;
 import org.apache.commons.io.IOUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.xml.transform.StringSource;
 import org.springframework.xml.xpath.Jaxp13XPathTemplate;
@@ -15,13 +17,20 @@ import java.io.IOException;
  */
 public class SCMElementRetrieverTest {
 
+    private static CSVCellProcessor cellProcessor;
+
+    @BeforeClass
+    public static void init() {
+        cellProcessor = new CSVCellProcessor();
+    }
+
     @Test
     public void testCVS1() throws IOException {
         String jobName = "maven-job-1.xml";
         OutputCSVJobObj.Builder scmContentBuilder = getSCMContent(jobName);
         OutputCSVJobObj outputCSVJobObj = new OutputCSVJobObj(scmContentBuilder);
-        String expectedCVSRoot = ":ext:maven@ganymede.synchrotron-soleil.fr:/usr/local/CVS";
-        String expectedCVSModule = "ContinuousIntegration/maven/packaging/OmniRoot-WIN32";
+        String expectedCVSRoot = cellProcessor.getCSVAware(":ext:maven@ganymede.synchrotron-soleil.fr:/usr/local/CVS");
+        String expectedCVSModule = cellProcessor.getCSVAware("ContinuousIntegration/maven/packaging/OmniRoot-WIN32");
         org.junit.Assert.assertEquals(expectedCVSRoot, outputCSVJobObj.getCvsRoot());
         org.junit.Assert.assertEquals(expectedCVSModule, outputCSVJobObj.getCvsModule());
     }
@@ -31,7 +40,7 @@ public class SCMElementRetrieverTest {
         String jobName = "freestyle-job-1.xml";
         OutputCSVJobObj.Builder scmContentBuilder = getSCMContent(jobName);
         OutputCSVJobObj outputCSVJobObj = new OutputCSVJobObj(scmContentBuilder);
-        String expectedScmURL = "https://svn.code.sf.net/p/cometeapps/code/TangoBeans/AbstractTangoBean/tags/AbstractTangoBean-0.0.4";
+        String expectedScmURL = cellProcessor.getCSVAware("https://svn.code.sf.net/p/cometeapps/code/TangoBeans/AbstractTangoBean/tags/AbstractTangoBean-0.0.4");
         org.junit.Assert.assertEquals(expectedScmURL, outputCSVJobObj.getSvnURL());
     }
 

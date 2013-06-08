@@ -20,9 +20,7 @@ public class MatrixJobExtractor extends JobExtractorSupport {
         buildSCMSection(builder, configXML);
 
         Node buildersNode = template.evaluateAsNode("//builders", configXMLSource);
-        builder.buildSteps("\""
-                + buildCommandSection(buildersNode)
-                + "\"");
+        builder.buildSteps(buildCommandSection(buildersNode));
     }
 
     private String buildCommandSection(Node buildersNode) {

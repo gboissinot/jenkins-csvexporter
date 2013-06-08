@@ -125,7 +125,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.boissinot.jenkins.csvexporter.launch.Main</mainClass>
+                            <mainClass>com.boissinot.jenkins.csvexporter.launcher.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
