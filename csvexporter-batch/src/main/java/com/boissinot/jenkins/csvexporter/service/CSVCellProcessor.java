@@ -20,6 +20,7 @@ public class CSVCellProcessor {
         if (content.contains("\"")) {
             content = content.replaceAll("\"", "\"\"");
         }
+
         return "\"" + content + "\"";
     }
 }

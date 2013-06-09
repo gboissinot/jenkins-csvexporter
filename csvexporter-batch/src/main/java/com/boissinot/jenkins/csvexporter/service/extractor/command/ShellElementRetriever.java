@@ -11,7 +11,7 @@ public class ShellElementRetriever extends CommonElementRetriever {
 
     public String buildShellCommand(Node builderNode) {
 
-        Node commandNode = getLabelNode(builderNode, "command");
+        Node commandNode = getChildNodeWithLabel(builderNode, "command");
         if (commandNode == null) {
             throw new ExportException("A command section must be set.");
         }

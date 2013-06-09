@@ -21,8 +21,6 @@ public class MavenJobExtractor extends JobExtractorSupport {
 
         builder.buildSteps(goals);
 
-        buildSCMSection(builder, configXML);
-
     }
 
 

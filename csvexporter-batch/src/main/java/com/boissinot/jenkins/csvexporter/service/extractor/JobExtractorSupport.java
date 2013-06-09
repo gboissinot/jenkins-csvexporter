@@ -2,7 +2,6 @@ package com.boissinot.jenkins.csvexporter.service.extractor;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
-import com.boissinot.jenkins.csvexporter.service.extractor.scm.SCMElementRetriever;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageHeaders;
 import org.springframework.xml.transform.StringSource;
@@ -29,11 +28,6 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
 
         OutputCSVJobObj.Builder builder = new OutputCSVJobObj.Builder();
 
-        builder.name(jobName)
-                .jenkinsType(jenkinsJobType)
-                .functionalJobType(functionalJobType)
-                .functionalJobLanguage(functionalJobLanguage);
-
         String configXML = (String) jobMessage.getPayload();
         if (configXML == null) {
             throw new ExportException(String.format("'%s' job name must be set.", jobName));
@@ -41,7 +35,6 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         if (configXML.trim().length() == 0) {
             throw new ExportException(String.format("'%s' job name is empty.", jobName));
         }
-
 
         Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
         Source configXMLSource = new StringSource(configXML);
@@ -52,9 +45,17 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         Node disabledNode = template.evaluateAsNode("//disabled", configXMLSource);
         boolean disabled = Boolean.valueOf(getContent(disabledNode));
 
-        builder.disabled(disabled)
+        Node scmNode = template.evaluateAsNode("//scm ", configXMLSource);
+
+        builder.name(jobName)
+                .jenkinsType(jenkinsJobType)
+                .functionalJobType(functionalJobType)
+                .functionalJobLanguage(functionalJobLanguage)
+                .disabled(disabled)
                 .desc(description)
-                .trigger(spec);
+                .trigger(spec)
+                .scm(scmNode);
+
 
         buildCVSObj(builder, configXML);
 
@@ -63,15 +64,4 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
 
     protected abstract void buildCVSObj(OutputCSVJobObj.Builder builder, String configXML);
 
-
-    protected OutputCSVJobObj.Builder buildSCMSection(OutputCSVJobObj.Builder builder, String configXML) {
-        Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
-        Source configXMLSource = new StringSource(configXML);
-        Node scmNode = template.evaluateAsNode("//scm ", configXMLSource);
-
-        SCMElementRetriever scmElementRetriever = new SCMElementRetriever();
-        scmElementRetriever.setSCMSection(builder, scmNode);
-
-        return builder;
-    }
 }

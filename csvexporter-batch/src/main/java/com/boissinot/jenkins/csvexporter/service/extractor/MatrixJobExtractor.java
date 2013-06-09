@@ -17,8 +17,6 @@ public class MatrixJobExtractor extends JobExtractorSupport {
         Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
         Source configXMLSource = new StringSource(configXML);
 
-        buildSCMSection(builder, configXML);
-
         Node buildersNode = template.evaluateAsNode("//builders", configXMLSource);
         builder.buildSteps(buildCommandSection(buildersNode));
     }

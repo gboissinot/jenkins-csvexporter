@@ -3,6 +3,11 @@ package com.boissinot.jenkins.csvexporter.domain;
 import com.boissinot.jenkins.csvexporter.apt.ExportElement;
 import com.boissinot.jenkins.csvexporter.apt.ExportElementType;
 import com.boissinot.jenkins.csvexporter.service.CSVCellProcessor;
+import com.boissinot.jenkins.csvexporter.service.extractor.scm.CVSElementBuilder;
+import com.boissinot.jenkins.csvexporter.service.extractor.scm.GITElementBuilder;
+import com.boissinot.jenkins.csvexporter.service.extractor.scm.SVNElementBuilder;
+import com.sun.org.apache.xerces.internal.dom.DeferredElementNSImpl;
+import org.w3c.dom.Node;
 
 /**
  * @author Gregory Boissinot
@@ -113,25 +118,28 @@ public class OutputCSVJobObj {
             return this;
         }
 
-        public Builder cvsRoot(String cvsRoot) {
-            this.cvsRoot = cvsRoot;
+        public Builder scm(Node scmNode) {
+            String scmClassElement = ((DeferredElementNSImpl) scmNode).getAttribute("class");
+            if ("hudson.scm.CVSSCM".equals(scmClassElement)) {
+                CVSElementBuilder cvsElementBuilder = new CVSElementBuilder();
+                cvsElementBuilder.buildSCMElement(scmNode);
+                this.cvsRoot = cvsElementBuilder.getCvsRoot();
+                this.cvsModule = cvsElementBuilder.getCvsModule();
+            } else if ("hudson.scm.SubversionSCM".equals(scmClassElement)) {
+                SVNElementBuilder svnElementBuilder = new SVNElementBuilder();
+                svnElementBuilder.buildSCMElement(scmNode);
+                this.svnURL = svnElementBuilder.getSvnURL();
+            } else if ("hudson.plugins.git.GitSCM".equals(scmClassElement)) {
+                GITElementBuilder gitElementBuilder = new GITElementBuilder();
+                gitElementBuilder.buildSCMElement(scmNode);
+                this.gitURL = gitElementBuilder.getGitURL();
+            } else {
+                throw new IllegalArgumentException("Only CVS and SVN are supported as SCMs");
+            }
+
             return this;
         }
 
-        public Builder cvsModule(String cvsModule) {
-            this.cvsModule = cvsModule;
-            return this;
-        }
-
-        public Builder svnURL(String svnURL) {
-            this.svnURL = svnURL;
-            return this;
-        }
-
-        public Builder gitURL(String gitURL) {
-            this.gitURL = gitURL;
-            return this;
-        }
 
         public Builder trigger(String trigger) {
             this.trigger = trigger;

@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.service.extractor;
+package com.boissinot.jenkins.csvexporter.service.extractor.scm;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -6,7 +6,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Gregory Boissinot
  */
-public class CommonElementRetriever {
+public abstract class SCMBuilder {
 
     protected Node getChildNodeWithLabel(Node rootNode, String nodeLabel) {
         final NodeList childNodes = rootNode.getChildNodes();
@@ -24,4 +24,6 @@ public class CommonElementRetriever {
     protected String getContent(Node node) {
         return node.getTextContent().trim();
     }
+
+    public abstract void buildSCMElement(Node scmNode);
 }

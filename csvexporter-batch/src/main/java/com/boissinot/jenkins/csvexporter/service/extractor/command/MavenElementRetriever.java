@@ -11,7 +11,7 @@ public class MavenElementRetriever extends CommonElementRetriever {
 
     public String buildMavenCommand(Node builderNode) {
 
-        Node targetNode = getLabelNode(builderNode, "targets");
+        Node targetNode = getChildNodeWithLabel(builderNode, "targets");
         if (targetNode == null) {
             throw new ExportException("A Maven command must contain a targets section.");
         }

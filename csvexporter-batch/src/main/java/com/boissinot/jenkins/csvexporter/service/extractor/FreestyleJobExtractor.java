@@ -20,8 +20,6 @@ public class FreestyleJobExtractor extends JobExtractorSupport {
 
         Node buildersNode = template.evaluateAsNode("//builders", configXMLSource);
 
-        buildSCMSection(builder, configXML);
-
         builder.buildSteps(buildCommandSection(buildersNode));
     }
 
