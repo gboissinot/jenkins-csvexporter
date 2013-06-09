@@ -1,5 +1,7 @@
 package com.boissinot.jenkins.csvexporter.service;
 
+import com.boissinot.jenkins.csvexporter.exception.ExportException;
+
 /**
  * @author Gregory Boissinot
  */
@@ -12,9 +14,11 @@ public class FunctionalJobTypeRetriever {
         CPP_REPORT("CPP", "REPORT"),
         JAR("JAR", "BUILD"),
         JAR_RELEASE("JAR", "RELEASE"),
+        WAR("WAR", "BUILD"),
+        WAR_RELEASE("WAR", "RELEASE"),
         TEMPLATE("GENERIC", "TEMPLATE"),
         PKG("ANY", "PACKAGING"),
-        MAVEN_PLUGIN("JAVA", "PLUGIN"),
+        PLUGIN("JAVA", "PLUGIN"),
         OTHER("GENERIC", "NOT DETERMINED");
 
         private String language;
@@ -36,11 +40,16 @@ public class FunctionalJobTypeRetriever {
     }
 
     public JOB_TYPE getJobType(String jobName) {
+
         if (jobName == null) {
-            return null;
+            throw new ExportException("You must give a non empty job name.");
         }
 
-        if (jobName.contains("template")) {
+        if (jobName.isEmpty()) {
+            throw new ExportException("You must give a non empty job name.");
+        }
+
+        if (jobName.contains("template") || jobName.contains("TEMPLATE")) {
             return JOB_TYPE.TEMPLATE;
         }
 
@@ -48,8 +57,12 @@ public class FunctionalJobTypeRetriever {
             return JOB_TYPE.PKG;
         }
 
-        if (jobName.contains("plugin")) {
-            return JOB_TYPE.MAVEN_PLUGIN;
+        if (jobName.contains("plugin") || jobName.contains("PLUGIN")) {
+            return JOB_TYPE.PLUGIN;
+        }
+
+        if (jobName.contains("NAR_REPORT")) {
+            return JOB_TYPE.CPP_REPORT;
         }
 
         if (jobName.contains("NAR_RELEASE_REPORT")) {
@@ -70,6 +83,14 @@ public class FunctionalJobTypeRetriever {
 
         if (jobName.contains("JAR")) {
             return JOB_TYPE.JAR;
+        }
+
+        if (jobName.contains("WAR_RELEASE")) {
+            return JOB_TYPE.WAR_RELEASE;
+        }
+
+        if (jobName.contains("WAR")) {
+            return JOB_TYPE.WAR;
         }
 
         return JOB_TYPE.OTHER;
