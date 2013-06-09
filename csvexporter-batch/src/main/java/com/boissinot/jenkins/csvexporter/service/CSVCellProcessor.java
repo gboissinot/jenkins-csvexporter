@@ -1,12 +1,14 @@
 package com.boissinot.jenkins.csvexporter.service;
 
+import javax.annotation.Nullable;
+
 /**
  * @author Gregory Boissinot
  */
 public class CSVCellProcessor {
 
 
-    public String getCSVAware(String content) {
+    public String getCSVAware(@Nullable String content) {
         if (content == null) {
             return null;
         }
