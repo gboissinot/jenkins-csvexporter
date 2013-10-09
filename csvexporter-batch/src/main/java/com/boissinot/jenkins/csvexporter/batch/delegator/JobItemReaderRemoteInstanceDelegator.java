@@ -49,7 +49,6 @@ public class JobItemReaderRemoteInstanceDelegator implements JobItemReaderDelega
                 builder.append(line);
             }
             String str = builder.toString();
-            System.out.println(str);
 
             Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
             List<Node> nodes = template.evaluateAsNodeList("//job/url", new StringSource(str));
