@@ -1,5 +1,0 @@
-grep -l "<disabled>true</disabled>" *.xml | wc -l
-
-
-jenkins-csvexport-annotationprocessor
-jenkins-csvexport-core
