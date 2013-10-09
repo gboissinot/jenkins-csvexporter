@@ -69,13 +69,6 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
 
         Node scmNode = template.evaluateAsNode("//scm ", configXMLSource);
 
-
-        //---
-        // TEMP
-        //  Compute SCM NODE
-        //
-        //--
-
         String cvsRoot = null;
         String cvsModule = null;
         String cvsBranche = null;
@@ -121,19 +114,10 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         configJob.setCvsBranche(cvsBranche);
         configJob.setCvsModule(cvsModule);
         configJob.setGitURL(gitURL);
+        configJob.setSvnURL(svnURL);
         configJob.setJobName(jobName);
 
         POMRemoteObj pomObj = pomFileInfoExtractor.getPOMUrls(configJob);
-
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
-///        for (POMRemoteObj pomObj : listPOMUrls) {
-//            Future<PomFile> futureExecutionTask = executorService.submit(
-//                    new POMEmailExtractorTask(pomObj.getHttpURL(),
-//                            contentFetcher,
-//                            pomDeveloperSectionExtractor));
-//            futureExecutionTaskList.add(futureExecutionTask);
-//        }
-//        executorService.shutdown();
         PomFile pomFile = null;
         try {
             if (pomObj != null) {
@@ -147,29 +131,9 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
             throw new ExportException(e);
         }
 
-//        for (Future<PomFile> futureTask : futureExecutionTaskList) {
-//
-//            PomFile pomFile;
-//            try {
-//                pomFile = futureTask.get();
-//            } catch (InterruptedException ie) {
-//                throw new ExportException(ie);
-//            } catch (ExecutionException ee) {
-//                if (ee.getCause() != null && ee.getCause() instanceof ExportException) {
-//                    throw new ExportException(ee.getCause().getMessage());
-//                }
-//                throw new ExportException(ee);
-//            }
         if (pomFile != null) {
             builder.developers(pomFile.getEmailContent());
         }
-//        }
-
-//        try {
-//            executorService.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
-//        } catch (InterruptedException ie) {
-//            throw new ExportException(ie);
-//        }
 
         return new OutputCSVJobObj(builder);
     }
