@@ -27,32 +27,6 @@ public class ResourceContentFetcher {
 
     public String getContent(String httpURL) throws ExportException {
 
-        RestTemplate restTemplate = new RestTemplate();
-        //restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
-        CommonsClientHttpRequestFactory f = new CommonsClientHttpRequestFactory();
-        f.setReadTimeout(120 * 1000);
-        return restTemplate.getForObject(httpURL, String.class);
-
-//        try {
-//            return IOUtils.toString(new URL(httpURL));
-//        } catch (IOException e) {
-//            throw new ExportException(e);
-//        }
-    }
-
-    public String getContent0(String httpURL) throws ExportException {
-
-        try {
-            return IOUtils.toString(new URL(httpURL));
-        } catch (IOException e) {
-            throw new ExportException(e);
-        }
-    }
-
-    public String getContent1(String httpURL) throws ExportException {
-
-
         StringBuilder builder = new StringBuilder();
         HttpURLConnection conn = null;
         InputStream inputStream = null;
