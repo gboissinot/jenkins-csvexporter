@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>fr.soleil</groupId>
+        <artifactId>super-pom-SOLEIL</artifactId>
+        <version>2013.7.30</version>
+    </parent>
+
+    <groupId>fr.soleil.packaging</groupId>
+    <artifactId>LiveRoot</artifactId>
+    <version>13.4.2-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>Packaging :: LIVE_ROOT (Java binaries)</name>
+    <description>
+        Full process
+        - IC
+        - Analyse Qualité avec action
+        - Suivi de projet important
+    </description>
+
+    <scm>
+        <connection>scm:cvs:pserver:anonymous:@ganymede.synchrotron-soleil.fr:/usr/local/CVS:ContinuousIntegration/maven/packaging/LiveRoot</connection>
+        <developerConnection>scm:cvs:ext:maven@ganymede.synchrotron-soleil.fr:/usr/local/CVS:ContinuousIntegration/maven/packaging/LiveRoot</developerConnection>
+        <url>http://ganymede.synchrotron-soleil.fr/viewcvs/viewcvs.cgi/ContinuousIntegration/maven/packaging/LiveRoot</url>
+        <tag>LiveRoot-13_1_1</tag>
+    </scm>
+    <developers>
+        <developer>
+            <id>Ounsy</id>
+            <name>Majid Ounsy</name>
+            <email>majid.ounsy@synchrotron-soleil.fr</email>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>manager</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+        <developer>
+            <id>saintin</id>
+            <name>Katy Saintin</name>
+            <email>katy.saintin@synchrotron-soleil.fr</email>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+        <developer>
+            <id>viguier</id>
+            <name>Gregory Viguier</name>
+            <email>gregory.viguier@synchrotron-soleil.fr</email>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+        <developer>
+            <id>huriez</id>
+            <name>Yann Huriez</name>
+            <email>yann.huriez@synchrotron-soleil.fr</email>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+        <developer>
+            <id>mainguy</id>
+            <name>Sylvain Mainguy</name>
+            <email>sylvain.mainguy@avisto.com</email>
+            <organization>Avisto</organization>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- import BOM part -->
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>Java-3rdParties</artifactId>
+                <version>${Java-3rdParties.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>Java-Applications</artifactId>
+                <version>${Java-Applications.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>Java-Devices</artifactId>
+                <version>${Java-Devices.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>C-CPP-3rdParties</artifactId>
+                <version>${C-CPP-3rdParties.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>C-CPP-Libraries</artifactId>
+                <version>${C-CPP-Libraries.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>fr.soleil.bom</groupId>
+                <artifactId>C-CPP-Devices</artifactId>
+                <version>${C-CPP-Devices.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>fr.soleil.gui</groupId>
+            <artifactId>Zouk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.soleil.gui</groupId>
+            <artifactId>Tumba</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.soleil.gui.salsa</groupId>
+            <artifactId>SalsaClient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.soleil.gui</groupId>
+            <artifactId>charleston</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.cdma.gui</groupId>
+            <artifactId>DataBrowser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.soleil.comete.bean</groupId>
+            <artifactId>DataStorageApplication</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                    <arguments>-DenableCheckRelease=false -Drelease=true -Pstable</arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>fr.soleil.maven.plugins</groupId>
+                <artifactId>maven-distrib-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>zip</id>
+                        <goals>
+                            <goal>zip</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+                    <jarDirectory>share/java</jarDirectory>
+                    <scriptList combine.children="append">
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/zouk.vm</templatePath>
+                            <fileName>zouk</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>Zouk</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/tumba.vm</templatePath>
+                            <fileName>tumba</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>Tumba</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/salsaV3.vm</templatePath>
+                            <fileName>salsa</fileName>
+                            <groupId>fr.soleil.gui.salsa</groupId>
+                            <artifactId>SalsaClient</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/charleston.vm</templatePath>
+                            <fileName>charleston</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>charleston</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/databrowser.vm</templatePath>
+                            <fileName>databrowser</fileName>
+                            <groupId>org.cdma.gui</groupId>
+                            <artifactId>DataBrowser</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/linux/datastorage.vm</templatePath>
+                            <fileName>datastorage</fileName>
+                            <groupId>fr.soleil.comete.bean</groupId>
+                            <artifactId>DataStorageApplication</artifactId>
+                            <directory>bin/linux</directory>
+                        </distribComponent>
+
+                        <!-- Windows scripts -->
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/zouk.bat.vm</templatePath>
+                            <fileName>zouk.bat</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>Zouk</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/tumba.bat.vm</templatePath>
+                            <fileName>tumba.bat</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>Tumba</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/salsaV3.bat.vm</templatePath>
+                            <fileName>salsa.bat</fileName>
+                            <groupId>fr.soleil.gui.salsa</groupId>
+                            <artifactId>SalsaClient</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/charleston.bat.vm </templatePath>
+                            <fileName>charleston.bat</fileName>
+                            <groupId>fr.soleil.gui</groupId>
+                            <artifactId>charleston</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/databrowser.bat.vm </templatePath>
+                            <fileName>databrowser.bat</fileName>
+                            <groupId>org.cdma.gui</groupId>
+                            <artifactId>DataBrowser</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                        <distribComponent>
+                            <templatePath>src/main/template/windows/datastorage.bat.vm </templatePath>
+                            <fileName>datastorage.bat</fileName>
+                            <groupId>fr.soleil.comete.bean</groupId>
+                            <artifactId>DataStorageApplication</artifactId>
+                            <directory>bin/windows</directory>
+                        </distribComponent>
+
+                    </scriptList>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>stable</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>stable</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <stable>true</stable>
+
+                <Java-3rdParties.version>13.4.23</Java-3rdParties.version>
+                <Java-Applications.version>13.4.23</Java-Applications.version>
+                <Java-Devices.version>13.4.23</Java-Devices.version>
+                <C-CPP-3rdParties.version>13.4.23</C-CPP-3rdParties.version>
+                <C-CPP-Libraries.version>13.4.23</C-CPP-Libraries.version>
+                <C-CPP-Devices.version>13.4.23</C-CPP-Devices.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>unstable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!stable</name>
+                </property>
+            </activation>
+            <properties>
+                <stable>false</stable>
+
+                <Java-3rdParties.version>13.4.24-SNAPSHOT</Java-3rdParties.version>
+                <Java-Applications.version>13.4.24-SNAPSHOT</Java-Applications.version>
+                <Java-Devices.version>13.4.24-SNAPSHOT</Java-Devices.version>
+                <C-CPP-3rdParties.version>13.4.24-SNAPSHOT</C-CPP-3rdParties.version>
+                <C-CPP-Libraries.version>13.4.24-SNAPSHOT</C-CPP-Libraries.version>
+                <C-CPP-Devices.version>13.4.24-SNAPSHOT</C-CPP-Devices.version>
+            </properties>
+        </profile>
+    </profiles>
+</project>

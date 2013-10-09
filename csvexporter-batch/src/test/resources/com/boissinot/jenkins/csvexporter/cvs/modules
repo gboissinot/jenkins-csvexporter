@@ -1,0 +1,568 @@
+
+[cvs] / CVSROOT / modules 	Repository:
+ViewVC logotype
+View of /CVSROOT/modules
+
+Parent Directory Parent Directory | Revision Log Revision Log
+Revision 1.644 - (download) (annotate)
+Mon Sep 30 16:46:45 2013 UTC (42 hours, 54 minutes ago) by buteau
+Branch: MAIN
+CVS Tags: HEAD
+Changes since 1.643: +1 -1 lines
+
+no message
+
+# Three different line formats are valid:
+#	key	-a    aliases...
+#	key [options] directory
+#	key [options] directory files...
+#
+# Where "options" are composed of:
+#	-i prog 	Run "prog" on "cvs commit" from top-level of module.
+#	-o prog 	Run "prog" on "cvs checkout" of module.
+#	-e prog 	Run "prog" on "cvs export" of module.
+#	-t prog 	Run "prog" on "cvs rtag" of module.
+#	-u prog 	Run "prog" on "cvs update" of module.
+#	-d dir		Place module in directory "dir" instead of module name.
+#	-l		Top-level directory only -- do not recurse.
+#
+# NOTE:  If you change any of the "Run" options above, you'll have to
+# release and re-checkout any working directories of these modules.
+#
+# And "directory" is a path to a directory relative to $CVSROOT.
+#
+# The "-a" option specifies an alias.  An alias is interpreted as if
+# everything on the right of the "-a" had been typed on the command line.
+#
+# You can encode a module within a module by using the special '&'
+# character to interpose another module into the current module.  This
+# can be useful for creating a module that consists of many directories
+# spread out over the entire source repository.
+#
+# -------------------------------------------------------------------------
+#  chemin vers les Device Server GENERIC
+# -------------------------------------------------------------------------
+AdbArchivingServers				DeviceServer/Generic/AdbArchivingServers
+ImageGrabber                    DeviceServer/Generic/Acquisition/ImageGrabber
+Mar345							DeviceServer/Generic/Acquisition/Mar345
+MCADxpXmap						DeviceServer/Generic/Acquisition/MCADxpXmap
+MUX				                DeviceServer/Generic/Instrumentation/MUX
+Pico617-6485                    DeviceServer/Generic/Instrumentation/Pico617-6485
+Keithley2611                    DeviceServer/Generic/Instrumentation/Keithley2611
+TangoUnit						DeviceServer/Generic/Quality/TangoUnit
+ControlBoxV2			        DeviceServer/Generic/Motorisation/ControlBoxV2
+GalilBox			            DeviceServer/Generic/Motorisation/GalilBox
+GalilSlit			            DeviceServer/Generic/Motorisation/GalilSlit
+GalilPiezoAna                   DeviceServer/Generic/Motorisation/GalilPiezoAna
+MCAmultiport			        DeviceServer/Generic/Acquisition/MCA/MCAmultiport
+PLCDataViewer			        DeviceServer/Generic/Communication/PLCDataViewer
+PLCServer			            DeviceServer/Generic/Communication/PLCServer
+ProfibusMultiServer		        DeviceServer/Generic/Communication/ProfibusMultiServer
+GpibDeviceServer		        DeviceServer/Generic/Communication/GpibDeviceServer
+ClientSocketServer              DeviceServer/Generic/Communication/ClientSocketServer
+CMMparser		                DeviceServer/Generic/System/ChassisMonitoringModule/CMMparser
+CompactPCICrate 		        DeviceServer/Generic/System/CompactPCICrate
+ServiceLocker                   DeviceServer/Generic/System/ServiceLocker
+TimeManager                     DeviceServer/Generic/System/TimeManager
+ErrorGenerator					DeviceServer/Generic/Tests/ErrorGenerator
+TestGlobalScreenDevice			DeviceServer/Generic/Tests/TestGlobalScreenDevice
+TestPasserelleDevice			DeviceServer/Generic/Tests/TestPasserelleDevice
+DataMerger						DeviceServer/Generic/Recording/DataMerger
+
+# -------------------------------------------------------------------------
+#  chemin vers les Device Server SPECIFIC
+# -------------------------------------------------------------------------
+BeamLineEnergyAntares           DeviceServer/Specific/BeamLine/Antares/BeamLineEnergyAntares
+HeasonPositioner				DeviceServer/Specific/BeamLine/Antares/HeasonPositioner
+UHRAntares						DeviceServer/Specific/BeamLine/Antares/UHRAntares
+AcqAndor                        DeviceServer/Specific/BeamLine/Cristal/AcqAndor
+Droplet                         DeviceServer/Specific/BeamLine/Cristal/Droplet
+MonochromatorCristal            DeviceServer/Specific/BeamLine/Cristal/MonochromatorCristal
+BeamLineEnergyCristal           DeviceServer/Specific/BeamLine/Cristal/BeamLineEnergyCristal
+MostabRegulation                DeviceServer/Specific/BeamLine/Cristal/MostabRegulation
+Eurotherm_902					DeviceServer/Specific/BeamLine/Cristal/Eurotherm_902
+Eurotherm_2604					DeviceServer/Specific/BeamLine/Cristal/Eurotherm_2604
+MonochromatorSamba      	    DeviceServer/Specific/BeamLine/Samba/MonochromatorSamba
+NeoceraLTC11                    DeviceServer/Specific/BeamLine/Samba/NeoceraLTC11
+GirderManagerSamba              DeviceServer/Specific/BeamLine/Samba/GirderManagerSamba
+QuickExafs						DeviceServer/Specific/BeamLine/Samba/QuickExafs
+MonochromatorSwing              DeviceServer/Specific/BeamLine/Swing/MonochromatorSwing
+AcqPrincetonSwing               DeviceServer/Specific/BeamLine/Swing/AcqPrincetonSwing
+BeamLineEnergySwing             DeviceServer/Specific/BeamLine/Swing/BeamLineEnergySwing
+MonochromatorDesir       	    DeviceServer/Specific/BeamLine/Desir/MonochromatorDesir
+MonochromatorCassiopee          DeviceServer/Specific/BeamLine/Cassiopee/MonochromatorCassiopee
+BeamLineEnergyCassiopee			DeviceServer/Specific/BeamLine/Cassiopee/BeamLineEnergyCassiopee
+MonochromatorTempo              DeviceServer/Specific/BeamLine/Tempo/MonochromatorTempo
+BeamLineEnergyTempo1            DeviceServer/Specific/BeamLine/Tempo/BeamLineEnergyTempo1
+KepcoAnalogControl              DeviceServer/Specific/BeamLine/Tempo/KepcoAnalogControl
+Attenuator                      DeviceServer/Specific/BeamLine/Transverse/Attenuator
+MI_FEMTO                        DeviceServer/Specific/BeamLine/Transverse/BeamDiag/MI_FEMTO
+OnTrack                         DeviceServer/Specific/BeamLine/Transverse/BeamDiag/OnTrack
+MiChannel                       DeviceServer/Specific/BeamLine/Transverse/BeamDiag/MiChannel
+Diffractometer                  DeviceServer/Specific/BeamLine/Transverse/Diffractometer
+DiffractometerDevice            DeviceServer/Specific/BeamLine/Transverse/Diffractometer
+SpiControllerViewer				DeviceServer/Specific/BeamLine/Transverse/SpiControllerViewer
+FastAttenuationCalculator		DeviceServer/Specific/BeamLine/Transverse/FastAttenuationCalculator
+BeamEnergy			            DeviceServer/Specific/BeamLine/Lucia/BeamEnergy
+FileSnapShot			        DeviceServer/Specific/BeamLine/Lucia/Acquisition/FileSnapShot
+LuciaCounter			        DeviceServer/Specific/BeamLine/Lucia/Acquisition/LuciaCounter
+SlsUndulator			        DeviceServer/Specific/BeamLine/Lucia/SlsUndulator
+LuciaMono			            DeviceServer/Specific/BeamLine/Lucia/LuciaMono
+LuciaPiezoAIO			        DeviceServer/Specific/BeamLine/Lucia/LuciaPiezoAIO
+Ortec				            DeviceServer/Specific/BeamLine/LPS/Ortec
+OxfordITC503                    DeviceServer/Specific/BeamLine/LPS/OxfordITC503
+RIXS							DeviceServer/Specific/BeamLine/Galaxies/RIXS
+BeamLineEnergyMetrologie		DeviceServer/Specific/BeamLine/Metrologie/BeamLineEnergyMetrologie
+MonochromatorMetrologie			DeviceServer/Specific/BeamLine/Metrologie/MonochromatorMetrologie
+MonochromatorDCMMetrologie		DeviceServer/Specific/BeamLine/Metrologie/MonochromatorDCMMetrologie
+XUVOrderSorter					DeviceServer/Specific/BeamLine/Metrologie/XUVOrderSorter
+LIGAValidation					DeviceServer/Specific/BeamLine/Metrologie/LIGAValidation
+AcqPrinceton                    DeviceServer/Specific/BeamLine/ODE/AcqPrinceton
+MonochromatorOde                DeviceServer/Specific/BeamLine/ODE/MonochromatorOde
+BruckerBTPS                     DeviceServer/Specific/BeamLine/ODE/BruckerBTPS
+XMCD                            DeviceServer/Specific/BeamLine/ODE/XMCD
+XMCDQO							DeviceServer/Specific/BeamLine/ODE/XMCDQO
+HVSuppliesGammadata				DeviceServer/Specific/BeamLine/Pleiades/HVSuppliesGammadata
+BeamLineEnergyPleiades			DeviceServer/Specific/BeamLine/Pleiades/BeamLineEnergyPleiades
+MonochromatorDeimos             DeviceServer/Specific/BeamLine/Deimos/MonochromatorDeimos
+DeimosCryoSampleEnvironement    DeviceServer/Specific/BeamLine/Deimos/DeimosCryoSampleEnvironement
+AMI420PowerSupplyConf			DeviceServer/Specific/BeamLine/Deimos/AMI420PowerSupplyConf
+BeamLineEnergyDeimos			DeviceServer/Specific/BeamLine/Deimos/BeamLineEnergyDeimos
+AMICryoLevel					DeviceServer/Specific/BeamLine/Deimos/AMICryoLevel
+MonochromatorDiffabs            DeviceServer/Specific/BeamLine/Diffabs/MonochromatorDiffabs
+GirderManagerDiffabs            DeviceServer/Specific/BeamLine/Diffabs/GirderManagerDiffabs
+Laser                           DeviceServer/Specific/BeamLine/Diffabs/Laser
+Impac                           DeviceServer/Specific/BeamLine/Diffabs/Impac
+AutomaticFilterManager          DeviceServer/Specific/BeamLine/Diffabs/AutomaticFilterManager
+REP1806                         DeviceServer/Specific/BeamLine/Diffabs/REP1806
+MotorsKBDiffabs                 DeviceServer/Specific/BeamLine/Diffabs/MotorsKBDiffabs
+TractionMachine					DeviceServer/Specific/BeamLine/Diffabs/TractionMachine
+AOIPeltierController            DeviceServer/Specific/BeamLine/Disco/AOIPeltierController
+MonochromatorDisco				DeviceServer/Specific/BeamLine/Disco/MonochromatorDisco
+MonochromatorProxima            DeviceServer/Specific/BeamLine/Proxima/MonochromatorProxima
+AcqMar555                       DeviceServer/Specific/BeamLine/Proxima/AcqMar555
+BeamLineEnergyProxima1          DeviceServer/Specific/BeamLine/Proxima/BeamLineEnergyProxima1
+MSCServer                       DeviceServer/Specific/BeamLine/Proxima/MSCServer
+Cameraman                       DeviceServer/Specific/BeamLine/Proxima/Cameraman
+RobotActor                      DeviceServer/Specific/BeamLine/Proxima/RobotActor
+chooch                          DeviceServer/Specific/BeamLine/Proxima/chooch
+MonochromatorDCMPsiche			DeviceServer/Specific/BeamLine/Psiche/MonochromatorDCMPsiche
+Caesar							DeviceServer/Specific/BeamLine/Psiche/Caesar
+MonochromatorDCMSirius			DeviceServer/Specific/BeamLine/Sirius/MonochromatorDCMSirius
+BeamLineEnergyMars				DeviceServer/Specific/BeamLine/Mars/BeamLineEnergyMars
+MonochromatorMars               DeviceServer/Specific/BeamLine/Mars/MonochromatorMars
+MonochromatorMarsDCM            DeviceServer/Specific/BeamLine/Mars/MonochromatorMarsDCM
+MonochromatorMars1              DeviceServer/Specific/BeamLine/Mars/MonochromatorMars1
+MonochromatorMicroFocus         DeviceServer/Specific/BeamLine/MicroFocus/MonochromatorMicroFocus
+MonochromatorDCMSixs			DeviceServer/Specific/BeamLine/Sixs/MonochromatorDCMSixs
+MonochromatorDCMNanoscopium		DeviceServer/Specific/BeamLine/Nanoscopium/MonochromatorDCMNanoscopium
+MonochromatorHermes				DeviceServer/Specific/BeamLine/Hermes/MonochromatorHermes
+DualMotors						DeviceServer/Specific/BeamLine/Sextants/DualMotors
+AnalogGauge                     DeviceServer/Specific/BeamLine/Vide/AnalogGauge
+EdwardsPumpingGroup             DeviceServer/Specific/BeamLine/Vide/EdwardsPumpingGroup
+TurboPump                       DeviceServer/Specific/BeamLine/Vide/TurboPump
+TurboPumpPF                     DeviceServer/Specific/BeamLine/Vide/TurboPumpPF
+ActiveGauge                     DeviceServer/Specific/BeamLine/Vide/ActiveGauge
+TurboPumpED                     DeviceServer/Specific/BeamLine/Vide/TurboPumpED
+TurboPumpAL                     DeviceServer/Specific/BeamLine/Vide/TurboPumpAL
+TitaniumSublimation				DeviceServer/Specific/BeamLine/Vide/TitaniumSublimation
+XPSAxis                         DeviceServer/Specific/BeamLine/Motion/XPSAxis
+AbsorbingSystem                 DeviceServer/Specific/BeamLine/Motion/AbsorbingSystem
+BeamLineRegulationAlgorithm     DeviceServer/Specific/BeamLine/Transverse/BeamLineRegulationAlgorithm
+BeamLineEnergyGeneric			DeviceServer/Specific/BeamLine/Transverse/BeamLineEnergyGeneric
+DXASCalibration                 DeviceServer/Specific/BeamLine/Transverse/DXASCalibration
+FastAttenuation					DeviceServer/Specific/BeamLine/Transverse/FastAttenuation
+AuthServer                      DeviceServer/Specific/BeamLine/Transverse/Recording/AuthServer
+DataRecorder                    DeviceServer/Specific/BeamLine/Transverse/Recording/DataRecorder
+ExperimentalFrame               DeviceServer/Specific/BeamLine/Transverse/Recording/ExperimentalFrame
+NexusReader                     DeviceServer/Specific/BeamLine/Transverse/Recording/NexusReader
+SampleData                      DeviceServer/Specific/BeamLine/Transverse/Recording/SampleData
+TechnicalData                   DeviceServer/Specific/BeamLine/Transverse/Recording/TechnicalData
+ThermostatedBath				DeviceServer/Specific/BeamLine/Transverse/ThermostatedBath
+TimbelDevice					DeviceServer/Specific/BeamLine/Transverse/TimbelDevice
+TimbelDriver					DeviceServer/Specific/BeamLine/Transverse/TimbelDriver
+BeamlineStatus                  DeviceServer/Specific/BeamLine/BeamlineStatus
+Diaphragme                      DeviceServer/Specific/Machine/Vide/Diaphragme
+IonPump 			            DeviceServer/Specific/Machine/Vide/IonPump
+VacuumValve			            DeviceServer/Specific/Machine/Vide/VacuumValve
+VacuumBaking			        DeviceServer/Specific/Machine/Vide/VacuumBaking
+VacuumInterlockViewer           DeviceServer/Specific/Machine/Vide/VacuumInterlockViewer
+PenningGauge			        DeviceServer/Specific/Machine/Vide/PenningGauge
+PiraniGauge			            DeviceServer/Specific/Machine/Vide/PiraniGauge
+PrePumpingGroup			        DeviceServer/Specific/Machine/Vide/PrePumpingGroup
+PrePumpingGroupAlcatel			DeviceServer/Specific/Machine/Vide/PrePumpingGroupAlcatel
+PrePumpingGroup_VA				DeviceServer/Specific/Machine/Vide/PrePumpingGroup_VA
+TitaniumSublimator              DeviceServer/Specific/Machine/Vide/TitaniumSublimator
+HotCathodeGauge                 DeviceServer/Specific/Machine/Vide/HotCathodeGauge
+TriggerGauge                    DeviceServer/Specific/Machine/Vide/TriggerGauge
+TCSurvey						DeviceServer/Specific/Machine/Vide/TCSurvey
+FastVacuumValve                 DeviceServer/Specific/Machine/Vide/FastVacuumValve
+BeamStopper                     DeviceServer/Specific/Machine/Vide/BeamStopper
+WaterFlowMeter                  DeviceServer/Specific/Machine/Vide/WaterFlowMeter
+ManualVacuumValve               DeviceServer/Specific/Machine/Vide/ManualVacuumValve
+PfeifferGauge                   DeviceServer/Specific/Machine/Vide/PfeifferGauge
+VacuumThermocouple              DeviceServer/Specific/Machine/Vide/VacuumThermocouple
+BakingMobileRack                DeviceServer/Specific/Machine/Vide/BakingMobileRack
+FrontEnd                        DeviceServer/Specific/Machine/Vide/FrontEnd
+EXAFGasValve                    DeviceServer/Specific/Machine/Vide/EXAFGasValve
+FrontEndIR                      DeviceServer/Specific/Machine/Vide/FrontEndIR
+CryoCoolerVacuumInterlocks	    DeviceServer/Specific/Machine/Vide/CryoCoolerVacuumInterlocks
+ICT                             DeviceServer/Specific/Machine/Diags/ICT
+PentaxIris                      DeviceServer/Specific/Machine/Diags/PentaxIris
+FlipFlopElement                 DeviceServer/Specific/Machine/Diags/FlipFlopElement
+BPSManager                      DeviceServer/Specific/Machine/Diags/BPSManager
+BPS                             DeviceServer/Specific/Machine/Diags/BPS
+BackLight                       DeviceServer/Specific/Machine/Diags/BackLight
+BOO_BPM_MANAGER                 DeviceServer/Specific/Machine/Diags/BOO_BPM_MANAGER
+ARMO                            DeviceServer/Specific/Machine/Diags/ARMO
+FOFBSniffer                     DeviceServer/Specific/Machine/Diags/FOFBSniffer
+FOFBManager                     DeviceServer/Specific/Machine/Diags/FOFBManager
+BOO_DCCT                        DeviceServer/Specific/Machine/Diags/BOO_DCCT
+DCCTBergoz                      DeviceServer/Specific/Machine/Diags/DCCTBergoz
+DCCTAnS                         DeviceServer/Specific/Machine/Diags/DCCTAnS
+DCCTAnsNI4071                   DeviceServer/Specific/Machine/Diags/DCCTAnsNI4071
+MRSV_Instabilite_MotCntrl	    DeviceServer/Specific/Machine/Diags/MRSV_Instabilite_MotCntrl
+MRSV_Instabilite_PLCCntrl	    DeviceServer/Specific/Machine/Diags/MRSV_Instabilite_PLCCntrl
+MachineFilling					DeviceServer/Specific/Machine/Diags/MachineFilling
+RedLionPAXCD                    DeviceServer/Specific/Machine/Diags/RedLionPAXCD
+RateMeter                       DeviceServer/Specific/Machine/Diags/RateMeter
+BeamPositionInterlock           DeviceServer/Specific/Machine/Diags/BeamPositionInterlock
+Steerer                         DeviceServer/Specific/Machine/Diags/Steerer
+AnsBpmManager                   DeviceServer/Specific/Machine/Diags/AnsBpmManager
+MPLManager                      DeviceServer/Specific/Machine/Diags/MPLManager
+ANSEmittance                    DeviceServer/Specific/Machine/Diags/ANSEmittance
+PHCAttenuator                   DeviceServer/Specific/Machine/Diags/PHCAttenuator
+MPurete                         DeviceServer/Specific/Machine/Diags/MPurete
+Alim_MPUR						DeviceServer/Specific/Machine/Diags/Alim_MPUR
+PowerSupplyHazemeyerV2		    DeviceServer/Specific/Machine/Alim/PowerSupplyHazemeyerV2
+PowerSupplyLT2			        DeviceServer/Specific/Machine/Alim/PowerSupplyLT2
+PowerSupplySLS			        DeviceServer/Specific/Machine/Alim/PowerSupplySLS
+PSDipoleAns						DeviceServer/Specific/Machine/Alim/PSDipoleAns
+correcteurs			            DeviceServer/Specific/Machine/Alim/correcteurs
+BMC_8			                DeviceServer/Specific/Machine/Alim/BMC_8
+BMC_6			                DeviceServer/Specific/Machine/Alim/BMC_6
+BoosterDipole                   DeviceServer/Specific/Machine/Alim/BoosterDipole
+BOOPSModeManager                DeviceServer/Specific/Machine/Alim/BOOPSModeManager
+CorrecteurChicanePX2			DeviceServer/Specific/Machine/Alim/CorrecteurChicanePX2
+PSSLSCompensation  			    DeviceServer/Specific/Machine/Alim/PSSLSCompensation
+Interlock 			            DeviceServer/Specific/Machine/AlarmMonitoring/Interlock
+FirstInterlockCell      	    DeviceServer/Specific/Machine/AlarmMonitoring/FirstInterlockCell
+MagnetSurvey 			        DeviceServer/Specific/Machine/AlarmMonitoring/MagnetSurvey
+KickerPowerSupply               DeviceServer/Specific/Machine/ElementPulse/KickerPowerSupply
+PassiveSeptumPowerSupply        DeviceServer/Specific/Machine/ElementPulse/PassiveSeptumPowerSupply
+KickerPulser                    DeviceServer/Specific/Machine/ElementPulse/KickerPulser
+PassiveSeptumMagnet             DeviceServer/Specific/Machine/ElementPulse/PassiveSeptumMagnet
+KickerMagnet                    DeviceServer/Specific/Machine/ElementPulse/KickerMagnet
+PassiveSeptumPulser             DeviceServer/Specific/Machine/ElementPulse/PassiveSeptumPulser
+DofMagnet			            DeviceServer/Specific/Machine/ElementPulse/DofMagnet
+DofPowerSupply                  DeviceServer/Specific/Machine/ElementPulse/DofPowerSupply
+ActiveSeptumPowerSupply         DeviceServer/Specific/Machine/ElementPulse/ActiveSeptumPowerSupply
+ActiveSeptumMagnet              DeviceServer/Specific/Machine/ElementPulse/ActiveSeptumMagnet
+ActiveSeptumPulser              DeviceServer/Specific/Machine/ElementPulse/ActiveSeptumPulser
+BeamStatisticsViewer            DeviceServer/Specific/Machine/Fonctionnement/BeamStatisticsViewer
+WIFI                            DeviceServer/Specific/Machine/Fonctionnement/WIFI
+ProxyLocker						DeviceServer/Specific/Machine/Fonctionnement/ProxyLocker
+MotorisedInsertion              DeviceServer/Specific/Machine/Insertion/MotorisedInsertion
+GenericMotorizedInsertionDevice	DeviceServer/Specific/Machine/Insertion/GenericMotorizedInsertionDevice
+PowerSupplyDanFysik             DeviceServer/Specific/Machine/Insertion/PowerSupplyDanFysik
+CorrecteurEmphu					DeviceServer/Specific/Machine/Insertion/CorrecteurEmphu
+PSSLSEmphu						DeviceServer/Specific/Machine/Insertion/PSSLSEmphu
+PsDanFysik8800                  DeviceServer/Specific/Machine/Insertion/PsDanFysik8800
+HU640                           DeviceServer/Specific/Machine/Insertion/HU640
+HU256Spi						DeviceServer/Specific/Machine/Insertion/HU256Spi
+HU640-V4                        DeviceServer/Specific/Machine/Insertion/HU640-V4
+Apple2                          DeviceServer/Specific/Machine/Insertion/Apple2
+InVacuumUndulator               DeviceServer/Specific/Machine/Insertion/InVacuumUndulator
+InsertionMagnetReset            DeviceServer/Specific/Machine/Insertion/InsertionMagnetReset
+OndulatorMask                   DeviceServer/Specific/Machine/Insertion/OndulatorMask
+HU256                           DeviceServer/Specific/Machine/Insertion/HU256
+HU256ToEnergy                   DeviceServer/Specific/Machine/Insertion/HU256ToEnergy
+BeamlineInVacuumUndulator       DeviceServer/Specific/Machine/Insertion/BeamlineInVacuumUndulator
+Apple2ToEnergy                  DeviceServer/Specific/Machine/Insertion/Apple2ToEnergy
+CorrectorsPowerSupplyDanFysik   DeviceServer/Specific/Machine/Insertion/CorrectorsPowerSupplyDanFysik
+SoleilMotorizedInsertionDevice	DeviceServer/Specific/Machine/Insertion/SoleilMotorizedInsertionDevice
+Emphu							DeviceServer/Specific/Machine/Insertion/Emphu
+GMID2Energy						DeviceServer/Specific/Machine/Insertion/GMID2Energy
+BBFDataViewer                   DeviceServer/Specific/Machine/MultibunchFeedback/BBFDataViewer
+FirCoefficients					DeviceServer/Specific/Machine/MultibunchFeedback/FirCoefficients
+RF_CABTF 			            DeviceServer/Specific/Machine/RF/RF_CABTF
+RFAmpli75A250A					DeviceServer/Specific/Machine/RF/RFAmpli75A250A
+RFAnalogRetrig                  DeviceServer/Specific/Machine/RF/RFAnalogRetrig
+RFEventViewer                   DeviceServer/Specific/Machine/RF/RFEventViewer
+RFMicroControl                  DeviceServer/Specific/Machine/RF/RFMicroControl
+RFModule                        DeviceServer/Specific/Machine/RF/RFModule
+RFMotors                        DeviceServer/Specific/Machine/RF/RFMotors
+RFPostMortem                    DeviceServer/Specific/Machine/RF/RFPostMortem
+RF_AMPLI                        DeviceServer/Specific/Machine/RF/RF_AMPLI
+RF_CAVITE                       DeviceServer/Specific/Machine/RF/RF_CAVITE
+RF_LLE                          DeviceServer/Specific/Machine/RF/RF_LLE
+RF_TRANSFO                      DeviceServer/Specific/Machine/RF/RF_TRANSFO
+RF_PLC_BOO                      DeviceServer/Specific/Machine/RF/RF_PLC_BOO
+RF_RetrigAO                     DeviceServer/Specific/Machine/RF/RF_RetrigAO
+RF_AMPLI_ANS                    DeviceServer/Specific/Machine/RF/RF_AMPLI_ANS
+RF_CAVITE_ANS                   DeviceServer/Specific/Machine/RF/RF_CAVITE_ANS
+RF_LLE_ANS                      DeviceServer/Specific/Machine/RF/RF_LLE_ANS
+RF_PLC_ANS                      DeviceServer/Specific/Machine/RF/RF_PLC_ANS
+RF_TRANSFO_ANS                  DeviceServer/Specific/Machine/RF/RF_TRANSFO_ANS
+RFFB                            DeviceServer/Specific/Machine/RF/RFFB
+RohdeSchwarzSM1                 DeviceServer/Specific/Machine/RF/RohdeSchwarzSM1
+TimingLocalSystem		        DeviceServer/Specific/Machine/Timing/TimingLocalSystem
+TimingCentralSystem             DeviceServer/Specific/Machine/Timing/TimingCentralSystem
+TimingLinacSystem               DeviceServer/Specific/Machine/Timing/TimingLinacSystem
+Lakeshore_218 			        DeviceServer/Specific/Sensor/Lakeshore_218
+Lakeshore_331 			        DeviceServer/Specific/Sensor/Lakeshore_331
+Lakeshore_340 			        DeviceServer/Specific/Sensor/Lakeshore_340
+DigitalCTS 			            DeviceServer/Specific/Sensor/DigitalCTS
+RelaisStates                    DeviceServer/Specific/Machine/PSS/RelaisStates
+AbstractPSSRelay                DeviceServer/Specific/Machine/PSS/AbstractPSSRelay
+PssZone                         DeviceServer/Specific/Machine/PSS/PssZone
+SiemensPLC_Relay                DeviceServer/Specific/Machine/PSS/SiemensPLC_Relay
+Daresbury                       DeviceServer/Specific/Machine/PSS/Daresbury
+HLSConfigurationTool            DeviceServer/Specific/Machine/Alignement/HLSConfigurationTool
+HLS                             DeviceServer/Specific/Machine/Alignement/HLS
+HLSDRawData                     DeviceServer/Specific/Machine/Alignement/HLSDRawData
+HLSNumericalAnalysis            DeviceServer/Specific/Machine/Alignement/HLSNumericalAnalysis
+MachineStatus                   DeviceServer/Specific/Machine/MachineStatus
+SecurityAgent                   DeviceServer/Specific/Machine/SecurityAgent
+OFFFManager                     DeviceServer/Specific/Machine/Insertion/OFFFManager
+
+
+
+# -------------------------------------------------------------------------
+#  chemin Devive Server CommonInterface
+# -------------------------------------------------------------------------
+#CommonInterface 		        DeviceServer/CommonInterface
+
+# -------------------------------------------------------------------------
+# LIBRARIES
+# -------------------------------------------------------------------------
+NI660Xsl			            Libraries/NI660Xsl
+StockageDonneesExp              Libraries/StockageDonneesExp
+HKL                             Libraries/HKL
+Monochromator                   Libraries/Monochromator
+GratingMonochromator            Libraries/GratingMonochromator
+DataFitterLib                   Libraries/DataFitterLib
+Exceptions                      Libraries/Exceptions
+GSL                             Libraries/GSL
+Interpolator                    Libraries/Interpolator
+IDOP                            Libraries/Insertion/IDOP
+Utils                           Libraries/Utils
+Average                         Libraries/Average
+FFT                             Libraries/FFT
+FFTW                            Libraries/FFTW
+HLSlib                          Libraries/HLSLib
+CppUnit                         Libraries/CppUnit
+ICL                             Libraries/ICL
+ISL                             Libraries/ISL
+CCDSL                           Libraries/CCDSL
+ADTB                            Libraries/ADTB
+CtrlValLib                      Libraries/CtrlValLib
+GenericBender                   Libraries/GenericBender
+JTangoServer					Libraries/JTangoServer
+JTangoCommons					Libraries/JTangoCommons
+JTangoClientLang				Libraries/JTangoClientLang
+JTangoServerLang				Libraries/JTangoServerLang
+Mirror                          Libraries/Mirror
+BeamLineEnergy                  Libraries/BeamLineEnergy
+OpenCV                          Libraries/OpenCV
+ElectrometersLibrary            Libraries/ElectrometersLibrary
+ProfibusServerProxy             Libraries/ProfibusServerProxy
+PLCServerProxy                  Libraries/PLCServerProxy
+YAT                             Libraries/YAT
+YAT4tango                       Libraries/YAT4tango
+dtu                             Libraries/java/DynamicTangoUtilities
+SoleilPattern                   Libraries/java/SoleilPattern
+MacroManager					Libraries/java/MacroManager
+NumericalComputing				Libraries/java/NumericalComputing
+DetectorTableDLL                Libraries/proxima1/DetectorTableDLL
+ISBinding                       Libraries/ISBinding
+Tango			            	Libraries/Tango
+AdbArchivingApi					Libraries/java/AdbArchivingApi
+CDMAUtilities			Libraries/java/CDMAUtilities
+CAR								Libraries/CAR
+RegulationAlgorithm				Libraries/RegulationAlgorithm
+
+# -------------------------------------------------------------------------
+# GUI
+# -------------------------------------------------------------------------
+ATKTrendFiler                   GUI/Tools/ATKTrendFiler # release_1_0
+salsa				            GUI/Tools/Salsa # moved to sourceforge
+LuciaMotors			            GUI/Tools/LuciaMotors
+LuciaXBPMgui			        GUI/Tools/LuciaXbpm
+LuciaPrimSlits			        GUI/Tools/LuciaPrimSlits
+UserLuciaMotors 		        GUI/Tools/UserLuciaMotors
+LuciaPicos			            GUI/Tools/LuciaPicos
+LuciaLauncher			        GUI/Tools/LuciaLauncher
+AcqLucia			            GUI/Tools/AcqLucia
+LpsDiff4C		       	        GUI/Tools/LpsDiff4C
+Trend    			            GUI/Tools/Trend
+DataReduction					GUI/Tools/DataReduction
+ImageReducer					GUI/Tools/DataReduction/ImageReducer
+SpectrumReducer					GUI/Tools/DataReduction/SpectrumReducer
+DataReducer						GUI/Tools/DataReduction/DataReducer
+ExperimentViewer 				GUI/Tools/DataReduction/ExperimentViewer
+AntaresVisualization			GUI/Tools/DataReduction/Specific/AntaresVisualization
+MotorBean			            GUI/Panels/MotorBean # release_1_0
+HSlitBean			            GUI/Panels/HSlitBean
+UserMotorBean			        GUI/Panels/UserMotorBean
+Diff4cBean                      GUI/Panels/Diff4cBean # release_0_2
+OrtecBean                       GUI/Panels/OrtecBean # release_1_0
+VSlitBean			            GUI/Panels/VSlitBean
+LuciaBeamEnergy 		        GUI/Panels/LuciaBeamEnergy
+PicoBean			            GUI/Panels/PicoBean
+AlarmDiaryBean                  GUI/Panels/AlarmDiaryBean
+AcqPrincetonBean                GUI/Panels/AcqPrincetonBean
+StateDiaryBean                  GUI/Panels/StateDiaryBean
+SambaMono                       GUI/Panels/SambaMono
+MCABean                         GUI/Panels/MCABean
+DataFitterBean                  GUI/Panels/DataFitterBean
+MachineStatusBean               GUI/Panels/MachineStatusBean
+ScientaBean                     GUI/Panels/ScientaBean
+RontecBean                      GUI/Panels/RontecBean
+ImgAnalyzerVideoGrabberBean     GUI/Panels/ImgAnalyzerVideoGrabberBean
+SamplesBean                     GUI/Panels/SamplesBean
+IHMPasserelle-Specific                                GUI/Passerelle/IHMPasserelle-Specific
+IHMPasserelle-Specific-Cassiopee                      GUI/Passerelle/IHMPasserelle-Specific-Cassiopee
+IHMPasserelle-Specific-NomProjet                      GUI/Passerelle/IHMPasserelle-Specific-NomProjet
+IHMPasserelle-Specific-Ode                            GUI/Passerelle/IHMPasserelle-Specific-Ode
+IHMPasserelle-Specific-Proxima                        GUI/Passerelle/IHMPasserelle-Specific-Proxima
+IHMPasserelle-Specific-Samba                          GUI/Passerelle/IHMPasserelle-Specific-Samba
+IHMPasserelle-Specific-SuperGeneric                   GUI/Passerelle/IHMPasserelle-Specific-SuperGeneric
+passerelle-HMI                                        GUI/Passerelle/passerelle-HMI
+PasserelleWidget									  GUI/Passerelle/PasserelleWidget
+AppliAlimAnneau                 GUI/GlobalScreen/AppliAlimAnneau # release_2_0
+AppliDiagAnneau                 GUI/GlobalScreen/AppliDiagAnneau # release_2_0
+AppliFBT                 	    GUI/GlobalScreen/AppliFBT
+AppliGeneraleBooster            GUI/GlobalScreen/AppliGeneraleBooster # release_3_0
+AppliGeneraleLT1                GUI/GlobalScreen/AppliGeneraleLT1 # release_2_0
+AppliGeneraleLT2                GUI/GlobalScreen/AppliGeneraleLT2 # release_2_0
+AppliInsertion                  GUI/GlobalScreen/AppliInsertion # release_1_0
+AppliInterlock                  GUI/GlobalScreen/AppliInterlock # release_1_0
+AppliRFAnneau                   GUI/GlobalScreen/AppliRFAnneau # release_1_0
+AppliTDL                        GUI/GlobalScreen/AppliTDL # release_1_0
+AppliVideAnneau                 GUI/GlobalScreen/AppliVideAnneau # release_1_0
+ATKCoreSoleil                   GUI/Tools/Library/ATKCoreSoleil
+ATKWidgetSoleil                 GUI/Tools/Library/ATKWidgetSoleil
+Booster_RF                      GUI/GlobalScreen/Booster_RF # release_2_0
+DiffabsSupervision              GUI/GlobalScreen/DiffabsSupervision # release_1_1_0
+OdeSupervision                  GUI/GlobalScreen/OdeSupervision # release_2_3_0
+SambaSupervision                GUI/GlobalScreen/SambaSupervision # release_1_3_0
+DeimosSupervision               GUI/GlobalScreen/DeimosSupervision
+DesirsSupervision               GUI/GlobalScreen/DesirsSupervision # release_1_1_0
+DiscoSupervision                GUI/GlobalScreen/DiscoSupervision
+HermesSupervision				GUI/GlobalScreen/HermesSupervision
+PasserelleLibrary				GUI/GlobalScreen/PasserelleLibrary
+PleiadesSupervision             GUI/GlobalScreen/PleiadesSupervision
+Proxima1Supervision             GUI/GlobalScreen/Proxima1Supervision # release_1_2_0
+Proxima2aSupervision            GUI/GlobalScreen/Proxima2aSupervision # release_1_2_0
+PsicheSupervision				GUI/GlobalScreen/PsicheSupervision
+TempoSupervision                GUI/GlobalScreen/TempoSupervision
+Maestro				            GUI/GlobalScreen/Maestro/Maestro
+GalaxiesSupervision				GUI/GlobalScreen/GalaxiesSupervision
+MetrologieSupervision			GUI/GlobalScreen/MetrologieSupervision
+CristalSupervision              GUI/GlobalScreen/CristalSupervision # release_1_1_0
+CassiopeeSupervision            GUI/GlobalScreen/CassiopeeSupervision
+AilesSupervision                GUI/GlobalScreen/AilesSupervision
+AntaresSupervision              GUI/GlobalScreen/AntaresSupervision
+MarsSupervision                 GUI/GlobalScreen/MarsSupervision
+MicrofocusSupervision           GUI/GlobalScreen/MicrofocusSupervision
+NanoscopiumSupervision			GUI/GlobalScreen/NanoscopiumSupervision
+SextantsSupervision             GUI/GlobalScreen/SextantsSupervision
+SixsSupervision                 GUI/GlobalScreen/SixsSupervision
+SiriusSupervision				GUI/GlobalScreen/SiriusSupervision
+SmisSupervision                 GUI/GlobalScreen/SmisSupervision # release_1_0_0
+SwingSupervision                GUI/GlobalScreen/SwingSupervision # release_1_0_0
+PssApplication                  GUI/GlobalScreen/PssApplication # release_3_0
+SoleilBean                      GUI/GlobalScreen/SoleilBean # release_2_5
+VideBooster                     GUI/GlobalScreen/VideBooster
+AppliAlarmes                    GUI/GlobalScreen/AppliAlarmes
+AppliFcAnneau			        GUI/GlobalScreen/AppliFcAnneau
+AppliAlignementAnneau		    GUI/GlobalScreen/AppliAlignementAnneau
+LuciaSupervision                GUI/GlobalScreen/LuciaSupervision
+elog                            GUI/elog
+SoleilUtilities                 GUI/Tools/Library/SoleilUtilities
+Kolo                            GUI/Tools/Kolo
+Capoeira                        GUI/Tools/Capoeira
+FoxTrot							GUI/Tools/FoxTrot
+Flamenco						GUI/Tools/Flamenco
+LinearityCorrection				GUI/Tools/LinearityCorrection
+
+# -------------------------------------------------------------------------
+# GLOBALSCREEN
+# -------------------------------------------------------------------------
+GLOBAL_ROOT                     System/GLOBAL_ROOT
+BeamLineLibrary			        System/GLOBAL_ROOT/lib/BeamLineLibrary
+LibrairieMachine		        System/GLOBAL_ROOT/lib/LibrairieMachine
+SoleilLibrary			        System/GLOBAL_ROOT/lib/SoleilLibrary
+
+# -------------------------------------------------------------------------
+# ECA
+# -------------------------------------------------------------------------
+TimEX                           ECA/SchemaCarte/TimEX
+CO.0.11-BAI-0170_CA_PLC-01      ECA/PLC/CO.0.11-BAI-0170_CA_PLC-01
+CO.0.11-BAI-0824_CA_PLC-01      ECA/PLC/CO.0.11-BAI-0824_CA_PLC-01
+MOS                             ECA/MOS
+
+# -------------------------------------------------------------------------
+# TANGO
+# -------------------------------------------------------------------------
+tango-soleil-win32              System/Tango/tango-soleil-win32
+tango-soleil-rhel-gcc344        System/Tango/tango-soleil-rhel-gcc344
+tango-soleil-linux		        System/Tango/tango-soleil-linux
+DeviceServers                   System/Tango/DeviceServers
+PyTangoRoot			System/Tango/PyTangoRoot802
+PyNeXusRoot			System/Tango/PyNeXusRoot
+PyScientificRoot		System/Tango/PyScientificRoot
+PyValidatorRoot			System/Tango/PyValidatorRoot
+PyCommandRoot			System/Tango/PyCommandRoot
+FirefoxRoot			System/Tango/FirefoxRoot
+
+# -------------------------------------------------------------------------
+# PROCESS
+# -------------------------------------------------------------------------
+passerelle-soleil               Process/Passerelle/soleil
+passerelle_beans				Process/Passerelle/passerelle-beans
+passerelle_gui                  ContinuousIntegration/maven/projets/passerelle/passerelle_gui
+passerelle_core                 ContinuousIntegration/maven/projets/passerelle/passerelle_core
+Spyc				Process/Spyc
+FlyScanServer   			Process/FlyScanServer
+
+# -------------------------------------------------------------------------
+#  GD
+# -------------------------------------------------------------------------
+RecordingConfigurations         GD/RecordingConfigurations
+ConfigManagerBean				GD/GUI/Panels/ConfigManagerBean
+
+
+# -------------------------------------------------------------------------
+#  PACKAGING
+# -------------------------------------------------------------------------
+global-root-assembler           ContinuousIntegration/maven/projets/global-root-assembler
+
+# -------------------------------------------------------------------------
+#  WEB
+# -------------------------------------------------------------------------
+tangowebserver                  Web/tangowebserver
+
+# -------------------------------------------------------------------------
+#  Misc
+# -------------------------------------------------------------------------
+standard-desktop	            System/standard-desktop
+ezupdate                        System/neoware/ezupdate
+matlabML				        System/RCM/matlabML
+
+# -------------------------------------------------------------------------
+#  META MODULES
+# -------------------------------------------------------------------------
+#posto1                           &BeamLineEnergy &ADTB &DataFitterLib &Exceptions &GenericBender
+#posto2                           &GratingMonochromator &GSL &Interpolator &Mirror &Monochromator &Utils
+
+# -------------------------------------------------------------------------
+#  TESTs
+# -------------------------------------------------------------------------
+test                             System/scripts/TEST
+TESTMAVEN                        System/TESTMAVEN
+
+admin
+	ViewVC Help
+Powered by ViewVC 1.0.5
