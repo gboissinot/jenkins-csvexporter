@@ -6,7 +6,6 @@ import com.boissinot.jenkins.csvexporter.batch.delegator.JobItemReaderRemoteInst
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.FunctionalJobTypeRetriever;
-import com.boissinot.jenkins.csvexporter.service.http.HttpConnectionRetriever;
 import com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
@@ -23,8 +22,7 @@ import java.util.Map;
  */
 public class JobItemReader implements ItemReader<InputSBJobObj> {
 
-
-    private ResourceContentFetcher  resourceContentFetcher;
+    private ResourceContentFetcher resourceContentFetcher;
 
     public JobItemReader(ResourceContentFetcher resourceContentFetcher) {
         this.resourceContentFetcher = resourceContentFetcher;
@@ -78,9 +76,6 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
                 return null;
             }
             String url = urls.remove(0);
-
-            //TODO PUT IN A DEDICATED FILE
-            //System.out.println("Read Job " + url);
             return readJob(url);
 
         } catch (Exception e) {
@@ -93,17 +88,13 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
         String jobName = delegator.getJobName(jobURL);
         FunctionalJobTypeRetriever jobTypeRetriever = new FunctionalJobTypeRetriever();
         FunctionalJobTypeRetriever.JOB_TYPE jobType = jobTypeRetriever.getJobType(jobName);
-
-
-        String configXmlContent = resourceContentFetcher.getContent(jobURL+"/config.xml");
-
+        String configXmlContent = resourceContentFetcher.getContent(jobURL + "/config.xml");
         InputSBJobObj inputSBJobObj =
                 new InputSBJobObj(
                         jobName,
                         jobType.getType(),
                         jobType.getLanguage(),
                         configXmlContent, moduleMap);
-                        //delegator.getConfigXML(jobURL), moduleMap);
 
         return inputSBJobObj;
     }
