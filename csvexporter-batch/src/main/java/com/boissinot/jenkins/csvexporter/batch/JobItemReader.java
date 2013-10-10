@@ -30,9 +30,12 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
     @BeforeStep
     @SuppressWarnings({"unused", "unchecked"})
     private void beforeAnyRead(StepExecution stepExecution) {
+
         JobExecution jobExecution = stepExecution.getJobExecution();
         ExecutionContext executionContext = jobExecution.getExecutionContext();
         contextMap = (Map<String, Map<String, String>>) executionContext.get("mapContext");
+
+        urls = jenkinsReader.buildURLs();
     }
 
     @Override
