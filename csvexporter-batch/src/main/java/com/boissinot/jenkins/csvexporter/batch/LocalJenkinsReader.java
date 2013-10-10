@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.batch.delegator;
+package com.boissinot.jenkins.csvexporter.batch;
 
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.apache.commons.io.IOUtils;
@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * @author Gregory Boissinot
  */
-public class JobItemReaderFolderDelegator implements JobItemReaderDelegator {
+public class LocalJenkinsReader implements JenkinsReader {
 
     private String folderPath;
 
-    public JobItemReaderFolderDelegator(String folderPath) {
+    public LocalJenkinsReader(String folderPath) {
         if (folderPath == null) {
             throw new NullPointerException("A folder path must be provided.");
         }

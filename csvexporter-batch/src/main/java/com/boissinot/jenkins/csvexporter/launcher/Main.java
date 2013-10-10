@@ -15,7 +15,10 @@ public class Main {
 
     public static void main(String[] args) throws JobInstanceAlreadyCompleteException, JobParametersInvalidException, JobRestartException, JobExecutionAlreadyRunningException {
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext-csv.xml");
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext();
+        applicationContext.getEnvironment().setActiveProfiles("remote");
+        applicationContext.setConfigLocation("applicationContext-csv.xml");
+        applicationContext.refresh();
 
         JobLauncher jobLauncher = applicationContext.getBean("jobLauncher", JobLauncher.class);
         Job job = applicationContext.getBean("extract-jenkins-job", Job.class);

@@ -17,11 +17,11 @@ import java.net.URL;
 /**
  * @author Gregory Boissinot
  */
-public class ResourceContentFetcher {
+public class HttpResourceContentFetcher {
 
     private HttpConnectionRetriever httpConnectionRetriever;
 
-    public ResourceContentFetcher(HttpConnectionRetriever httpConnectionRetriever) {
+    public HttpResourceContentFetcher(HttpConnectionRetriever httpConnectionRetriever) {
         this.httpConnectionRetriever = httpConnectionRetriever;
     }
 

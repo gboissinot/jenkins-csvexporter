@@ -1,7 +1,7 @@
 package com.boissinot.jenkins.csvexporter.batch;
 
 import com.boissinot.jenkins.csvexporter.service.extractor.cvs.ModulesFileExtractor;
-import com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher;
+import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -13,11 +13,11 @@ import org.springframework.batch.repeat.RepeatStatus;
  */
 public class CVSModulesLoaderTasklet implements Tasklet {
 
-    private ResourceContentFetcher resourceContentFetcher;
+    private HttpResourceContentFetcher resourceContentFetcher;
 
     private String cvsModuleURL;
 
-    public void setResourceContentFetcher(ResourceContentFetcher resourceContentFetcher) {
+    public void setResourceContentFetcher(HttpResourceContentFetcher resourceContentFetcher) {
         this.resourceContentFetcher = resourceContentFetcher;
     }
 

@@ -5,24 +5,35 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
     http://www.springframework.org/schema/batch
-    http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+    http://www.springframework.org/schema/batch/spring-batch.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <context:component-scan base-package="com.boissinot.jenkins.csvexporter.domain.generated"/>
+    <context:property-placeholder location="infra.properties"/>
 
     <import resource="classpath:batch-infra.xml"/>
     <import resource="classpath:extract-spi.xml"/>
 
-    <context:component-scan base-package="com.boissinot.jenkins.csvexporter.domain.generated"/>
-    <context:property-placeholder location="infra.properties"/>
+    <bean id="httpResourceContentFetcher"
+          class="com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher">
+        <constructor-arg>
+            <bean id="httpConnectionRetriever"
+                  class="com.boissinot.jenkins.csvexporter.service.http.HttpConnectionRetriever">
+                <constructor-arg value="${vcs.nonProxyHost}" index="0"/>
+                <constructor-arg value="${vcs.httpProxyHost}" index="1"/>
+                <constructor-arg value="${vcs.httpProxyPort}" index="2"/>
+            </bean>
+        </constructor-arg>
+    </bean>
 
     <batch:job id="extract-jenkins-job">
         <batch:step id="loadCVSModules" next="extractInfos">
             <batch:tasklet>
                 <bean class="com.boissinot.jenkins.csvexporter.batch.CVSModulesLoaderTasklet">
-                    <property name="resourceContentFetcher" ref="resourceContentFetcher"/>
+                    <property name="resourceContentFetcher" ref="httpResourceContentFetcher"/>
                     <property name="cvsModuleURL" value="${cvs.module.url}"/>
                 </bean>
                 <batch:listeners>
@@ -54,13 +65,11 @@
     </bean>
 
     <bean id="exportBatchListener" class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"/>
+
     <bean id="reader"
           class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
           scope="step">
-        <constructor-arg ref="resourceContentFetcher"/>
-        <property name="onFolder" value="#{jobParameters['on.folder']}"/>
-        <property name="jenkinsURL" value="#{jobParameters['jenkins.url']}"/>
-        <property name="folderPath" value="#{jobParameters['folder.path']}"/>
+        <property name="jenkinsReader" ref="jenkinsReader"/>
     </bean>
 
     <bean id="writer"
@@ -86,22 +95,10 @@
         </property>
     </bean>
 
-    <bean id="resourceContentFetcher"
-          class="com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher">
-        <constructor-arg>
-            <bean id="httpConnectionRetriever"
-                  class="com.boissinot.jenkins.csvexporter.service.http.HttpConnectionRetriever">
-                <constructor-arg value="${vcs.nonProxyHost}" index="0"/>
-                <constructor-arg value="${vcs.httpProxyHost}" index="1"/>
-                <constructor-arg value="${vcs.httpProxyPort}" index="2"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
     <bean id="abstractJobExtractor"
           class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.JobExtractorSupport"
           abstract="true">
-        <constructor-arg ref="resourceContentFetcher"/>
+        <constructor-arg ref="httpResourceContentFetcher"/>
         <constructor-arg>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor"/>
         </constructor-arg>
@@ -116,5 +113,21 @@
           class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.FreestyleJobExtractor"
           parent="abstractJobExtractor"/>
 
+    <beans profile="local">
+        <bean id="jenkinsReader"
+              class="com.boissinot.jenkins.csvexporter.batch.LocalJenkinsReader"
+              scope="step">
+            <constructor-arg value="#{jobParameters['folder.path']}"/>
+        </bean>
+    </beans>
+
+    <beans profile="remote">
+        <bean id="jenkinsReader"
+              class="com.boissinot.jenkins.csvexporter.batch.RemoteJenkinsReader"
+              scope="step">
+            <constructor-arg ref="httpResourceContentFetcher"/>
+            <constructor-arg value="#{jobParameters['jenkins.url']}"/>
+        </bean>
+    </beans>
 
 </beans>

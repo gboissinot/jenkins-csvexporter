@@ -1,11 +1,11 @@
-package com.boissinot.jenkins.csvexporter.batch.delegator;
+package com.boissinot.jenkins.csvexporter.batch;
 
 import java.util.List;
 
 /**
  * @author Gregory Boissinot
  */
-public interface JobItemReaderDelegator {
+public interface JenkinsReader {
 
     public abstract List<String> buildURLs();
 

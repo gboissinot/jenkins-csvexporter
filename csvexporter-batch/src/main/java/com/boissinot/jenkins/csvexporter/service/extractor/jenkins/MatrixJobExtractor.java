@@ -2,7 +2,7 @@ package com.boissinot.jenkins.csvexporter.service.extractor.jenkins;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.command.BuildersElementRetriever;
-import com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher;
+import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor;
 import org.springframework.xml.transform.StringSource;
 import org.springframework.xml.xpath.Jaxp13XPathTemplate;
@@ -15,7 +15,7 @@ import javax.xml.transform.Source;
  */
 public class MatrixJobExtractor extends JobExtractorSupport {
 
-    public MatrixJobExtractor(ResourceContentFetcher contentFetcher, POMDeveloperSectionExtractor pomDeveloperSectionExtractor, String csvViewerRootUrl) {
+    public MatrixJobExtractor(HttpResourceContentFetcher contentFetcher, POMDeveloperSectionExtractor pomDeveloperSectionExtractor, String csvViewerRootUrl) {
         super(contentFetcher, pomDeveloperSectionExtractor, csvViewerRootUrl);
     }
 

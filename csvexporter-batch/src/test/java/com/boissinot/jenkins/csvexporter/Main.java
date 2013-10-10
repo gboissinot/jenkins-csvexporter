@@ -1,6 +1,6 @@
 package com.boissinot.jenkins.csvexporter;
 
-import com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher;
+import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext-csv.xml");
-        ResourceContentFetcher resourceContentFetcher = applicationContext.getBean("resourceContentFetcher", ResourceContentFetcher.class);
+        HttpResourceContentFetcher resourceContentFetcher = applicationContext.getBean("resourceContentFetcher", HttpResourceContentFetcher.class);
 
         String url = "http://controle/cgi-bin/viewvc.cgi/GD/Tools/NxExtractor/pom.xml?revision=release_1_17_1";
 

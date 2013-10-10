@@ -11,7 +11,7 @@ import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.scm.GITElemen
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.scm.SVNElementBuilder;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor;
-import com.boissinot.jenkins.csvexporter.service.http.ResourceContentFetcher;
+import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import com.sun.org.apache.xerces.internal.dom.DeferredElementNSImpl;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageHeaders;
@@ -29,11 +29,11 @@ import static com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders.*;
  */
 public abstract class JobExtractorSupport extends CommonElementRetriever implements JobExtractor {
 
-    private ResourceContentFetcher contentFetcher;
+    private HttpResourceContentFetcher contentFetcher;
     private POMDeveloperSectionExtractor pomDeveloperSectionExtractor;
     private String csvViewerRootUrl;
 
-    protected JobExtractorSupport(ResourceContentFetcher contentFetcher, POMDeveloperSectionExtractor pomDeveloperSectionExtractor, String csvViewerRootUrl) {
+    protected JobExtractorSupport(HttpResourceContentFetcher contentFetcher, POMDeveloperSectionExtractor pomDeveloperSectionExtractor, String csvViewerRootUrl) {
         this.contentFetcher = contentFetcher;
         this.pomDeveloperSectionExtractor = pomDeveloperSectionExtractor;
         this.csvViewerRootUrl = csvViewerRootUrl;
