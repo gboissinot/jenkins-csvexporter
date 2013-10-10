@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws JobInstanceAlreadyCompleteException, JobParametersInvalidException, JobRestartException, JobExecutionAlreadyRunningException {
 
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext();
-        applicationContext.getEnvironment().setActiveProfiles("local");
+        applicationContext.getEnvironment().setActiveProfiles("remote");
         applicationContext.setConfigLocation("applicationContext-csv.xml");
         applicationContext.refresh();
 
