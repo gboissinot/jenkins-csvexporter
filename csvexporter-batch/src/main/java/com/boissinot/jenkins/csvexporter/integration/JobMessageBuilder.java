@@ -20,7 +20,7 @@ public class JobMessageBuilder {
                 .setHeader(HEADER_JOB_NAME, jobObj.getJobName())
                 .setHeader(HEADER_FUNCTIONAL_JOB_TYPE, jobObj.getFunctionalJobType())
                 .setHeader(HEADER_FUNCTIONAL_JOB_LANGUAGE, jobObj.getFunctionalJobLanguage())
-                .setHeader(HEADER_FUNCTIONAL_MODULE_MAP, jobObj.getModuleMap())
+                .setHeader(HEADER_FUNCTIONAL_MODULE_MAP, jobObj.getContextMap())
                 .build();
     }
 }

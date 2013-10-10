@@ -39,6 +39,7 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         this.csvViewerRootUrl = csvViewerRootUrl;
     }
 
+    @SuppressWarnings("unchecked")
     public OutputCSVJobObj getCVSObj(Message jobMessage) {
 
         MessageHeaders headers = jobMessage.getHeaders();
@@ -46,7 +47,7 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         String functionalJobType = headers.get(HEADER_FUNCTIONAL_JOB_TYPE, String.class);
         String jenkinsJobType = headers.get(HEADER_JENKINS_JOB_TYPE, String.class);
         String functionalJobLanguage = headers.get(HEADER_FUNCTIONAL_JOB_LANGUAGE, String.class);
-        Map<String, String> moduleMap = headers.get(HEADER_FUNCTIONAL_MODULE_MAP, Map.class);
+        Map<String, Map<String, String>> contextMap = headers.get(HEADER_FUNCTIONAL_MODULE_MAP, Map.class);
 
         OutputCSVJobObj.Builder builder = new OutputCSVJobObj.Builder();
 
@@ -109,7 +110,7 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         buildCVSObj(builder, configXML);
 
 
-        POMFileInfoExtractor pomFileInfoExtractor = new POMFileInfoExtractor(moduleMap, csvViewerRootUrl);
+        POMFileInfoExtractor pomFileInfoExtractor = new POMFileInfoExtractor(contextMap, csvViewerRootUrl);
         ConfigJob configJob = new ConfigJob();
         configJob.setCvsBranche(cvsBranche);
         configJob.setCvsModule(cvsModule);
@@ -117,7 +118,7 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
         configJob.setSvnURL(svnURL);
         configJob.setJobName(jobName);
 
-        POMRemoteObj pomObj = pomFileInfoExtractor.getPOMUrls(configJob);
+        POMRemoteObj pomObj = pomFileInfoExtractor.getPomUrl(configJob);
         PomFile pomFile = null;
         try {
             if (pomObj != null) {

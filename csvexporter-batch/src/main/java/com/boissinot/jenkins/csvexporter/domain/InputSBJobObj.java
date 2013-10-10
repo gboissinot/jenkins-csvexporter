@@ -11,14 +11,14 @@ public class InputSBJobObj {
     private String functionalJobType;
     private String functionalJobLanguage;
     private String configXML;
-    private Map<String, String> moduleMap;
+    private Map<String, Map<String, String>> contextMap;
 
-    public InputSBJobObj(String jobName, String functionalJobType, String functionalJobLanguage, String configXML, Map<String, String> moduleMap) {
+    public InputSBJobObj(String jobName, String functionalJobType, String functionalJobLanguage, String configXML, Map<String, Map<String, String>> contextMap) {
         this.jobName = jobName;
         this.functionalJobType = functionalJobType;
         this.functionalJobLanguage = functionalJobLanguage;
         this.configXML = configXML;
-        this.moduleMap = moduleMap;
+        this.contextMap = contextMap;
     }
 
     public String getJobName() {
@@ -37,8 +37,8 @@ public class InputSBJobObj {
         return configXML;
     }
 
-    public Map<String, String> getModuleMap() {
-        return moduleMap;
+    public Map<String, Map<String, String>> getContextMap() {
+        return contextMap;
     }
 
     @Override

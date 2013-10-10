@@ -12,17 +12,17 @@ public class POMFileInfoExtractor {
 
     private String csvViewerRootUrl;
 
-    private Map<String, String> cvsModuleMap;
+    private Map<String, Map<String, String>> contextModuleMap;
 
-    public POMFileInfoExtractor(Map<String, String> cvsModuleMap, String csvViewerRootUrl) {
-        if (cvsModuleMap == null) {
+    public POMFileInfoExtractor(Map<String, Map<String, String>> contextMap, String csvViewerRootUrl) {
+        if (contextMap == null) {
             throw new NullPointerException("A CVS Module map is required.");
         }
-        this.cvsModuleMap = cvsModuleMap;
+        this.contextModuleMap = contextMap;
         this.csvViewerRootUrl = csvViewerRootUrl;
     }
 
-    public POMRemoteObj getPOMUrls(ConfigJob configJob) {
+    public POMRemoteObj getPomUrl(ConfigJob configJob) {
 
         //Remove Template JOB
         if (configJob.getJobName().contains("template")) {
@@ -41,7 +41,8 @@ public class POMFileInfoExtractor {
 
         if (configJob.getCvsModule() != null) {
             String cvsModule = configJob.getCvsModule();
-            String modulePath = cvsModuleMap.get(cvsModule) == null ? cvsModule : cvsModuleMap.get(cvsModule);
+            final Map<String, String> cvsMap = contextModuleMap.get("cvs");
+            String modulePath = cvsMap.get(cvsModule) == null ? cvsModule : cvsMap.get(cvsModule);
             if (configJob.getCvsBranche() != null) {
                 return new POMRemoteObj(configJob.getJobName(), csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche());
             } else {

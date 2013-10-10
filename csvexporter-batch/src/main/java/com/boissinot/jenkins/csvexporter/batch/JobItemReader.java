@@ -5,7 +5,8 @@ import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.FunctionalJob
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.item.*;
+import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ItemReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,22 +21,22 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
     /* Computed */
     private List<String> urls = new ArrayList<String>();
     private JenkinsReader jenkinsReader;
-    private Map<String, String> moduleMap;
+    private Map<String, Map<String, String>> contextMap;
 
     public void setJenkinsReader(JenkinsReader jenkinsReader) {
         this.jenkinsReader = jenkinsReader;
     }
 
     @BeforeStep
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "unchecked"})
     private void beforeAnyRead(StepExecution stepExecution) {
         JobExecution jobExecution = stepExecution.getJobExecution();
         ExecutionContext executionContext = jobExecution.getExecutionContext();
-        moduleMap = (Map<String, String>) executionContext.get("moduleMap");
+        contextMap = (Map<String, Map<String, String>>) executionContext.get("mapContext");
     }
 
     @Override
-    public InputSBJobObj read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public InputSBJobObj read() throws Exception {
         if (urls.size() == 0) {
             return null;
         }
@@ -48,13 +49,11 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
         FunctionalJobTypeRetriever jobTypeRetriever = new FunctionalJobTypeRetriever();
         FunctionalJobTypeRetriever.JOB_TYPE jobType = jobTypeRetriever.getJobType(jobName);
         String configXmlContent = jenkinsReader.getConfigXML(jobURL + "/config.xml");
-        InputSBJobObj inputSBJobObj =
-                new InputSBJobObj(
-                        jobName,
-                        jobType.getType(),
-                        jobType.getLanguage(),
-                        configXmlContent, moduleMap);
-        return inputSBJobObj;
+        return new InputSBJobObj(
+                jobName,
+                jobType.getType(),
+                jobType.getLanguage(),
+                configXmlContent, contextMap);
     }
 
 }
