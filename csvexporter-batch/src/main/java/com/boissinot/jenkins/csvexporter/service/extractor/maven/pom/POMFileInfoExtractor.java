@@ -42,11 +42,13 @@ public class POMFileInfoExtractor {
         if (configJob.getCvsModule() != null) {
             String cvsModule = configJob.getCvsModule();
             final Map<String, String> cvsMap = contextModuleMap.get("CVS");
-            String modulePath = cvsMap.get(cvsModule) == null ? cvsModule : cvsMap.get(cvsModule);
-            if (configJob.getCvsBranche() != null) {
-                return new POMRemoteObj(configJob.getJobName(), csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche());
-            } else {
-                return new POMRemoteObj(configJob.getJobName(), csvViewerRootUrl + modulePath + "/pom.xml?view=co");
+            if (cvsMap != null) {
+                String modulePath = cvsMap.get(cvsModule) == null ? cvsModule : cvsMap.get(cvsModule);
+                if (configJob.getCvsBranche() != null) {
+                    return new POMRemoteObj(configJob.getJobName(), csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche());
+                } else {
+                    return new POMRemoteObj(configJob.getJobName(), csvViewerRootUrl + modulePath + "/pom.xml?view=co");
+                }
             }
         }
 
