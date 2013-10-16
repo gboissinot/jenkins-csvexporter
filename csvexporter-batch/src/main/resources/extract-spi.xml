@@ -16,7 +16,7 @@
                  service-interface="org.springframework.batch.item.ItemProcessor"
                  default-request-channel="jobs"
                  default-reply-channel="csvJobs"
-                 default-reply-timeout="10"/>
+                 default-reply-timeout="305"/>
 
     <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
     <int:channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj"/>
