@@ -6,9 +6,8 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/integration
         http://www.springframework.org/schema/integration/spring-integration.xsd
-    http://www.springframework.org/schema/integration/xml
-    http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd       http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+        http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
+        http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!--  Spring Integration workflow -->
     <int:gateway id="processor"
@@ -18,7 +17,7 @@
                  default-reply-timeout="2000"/>
 
     <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
-    <int:channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj"/>
+    <int:publish-subscribe-channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj"/>
 
     <int:channel id="transformedJobs" datatype="java.lang.String"/>
     <int:transformer input-channel="jobs"
@@ -181,5 +180,9 @@
     </int:chain>
 
     <int:logging-channel-adapter channel="errorChannel" log-full-message="true" level="DEBUG"/>
+
+    <int:service-activator input-channel="csvJobs">
+        <bean class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"/>
+    </int:service-activator>
 
 </beans>
