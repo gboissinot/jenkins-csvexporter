@@ -89,11 +89,13 @@ public class OutputObjBuilder {
         configJob.setSvnURL(scmElementBuilder.getSvnURL());
         configJob.setJobName(jobName);
         POMRemoteObj pomObj = pomFileInfoExtractor.getPomUrl(configJob, (Map) message.getHeaders().get("MODULE_MAP"));
-        String pomContent = httpResourceContentFetcher.getContent(pomObj.getHttpURL());
-        POMDeveloperSectionExtractor sectionExtractor = new POMDeveloperSectionExtractor();
-        List<Developer> developers = sectionExtractor.extract(pomContent);
-        DeveloperElementRetriever retriever = new DeveloperElementRetriever();
-        builder.developers(retriever.buildDeveloperSection(developers));
+        if (pomObj != null) {
+            String pomContent = httpResourceContentFetcher.getContent(pomObj.getHttpURL());
+            POMDeveloperSectionExtractor sectionExtractor = new POMDeveloperSectionExtractor();
+            List<Developer> developers = sectionExtractor.extract(pomContent);
+            DeveloperElementRetriever retriever = new DeveloperElementRetriever();
+            builder.developers(retriever.buildDeveloperSection(developers));
+        }
 
         return builder.build();
     }
