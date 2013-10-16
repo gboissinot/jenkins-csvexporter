@@ -137,7 +137,7 @@ public abstract class JobExtractorSupport extends CommonElementRetriever impleme
 //            builder.developers(pomFile.getEmailContent());
 //        }
 
-        return null;
+        return new OutputCSVJobObj();
 //        return new OutputCSVJobObj(builder);
     }
 
