@@ -92,6 +92,10 @@ public class OutputCSVJobObj {
         return cvsModule;
     }
 
+    public String getCvsBranche() {
+        return cvsBranche;
+    }
+
     public String getSvnURL() {
         return svnURL;
     }
