@@ -26,6 +26,7 @@ public class Main {
         JobExecution jobExecution = jobLauncher.run(job, getJobParameters());
         System.out.println(jobExecution.getExitStatus());
         System.out.println(jobExecution.getFailureExceptions());
+        jobExecution.stop();
     }
 
     private static JobParameters getJobParameters() {
