@@ -40,7 +40,7 @@ public class LocalJenkinsReader implements JenkinsReader {
     public String getJobName(String jobURL) {
         File configFile = new File(jobURL);
         String configFileName = configFile.getName();
-        if (configFileName.startsWith("config-")){
+        if (configFileName.startsWith("config-")) {
             configFileName = configFileName.substring(7);
         }
         return configFileName;

@@ -30,6 +30,9 @@
     </bean>
 
     <batch:job id="extract-jenkins-job">
+        <batch:step id="removePreviousOutputFile" next="loadCVSModules">
+            <batch:tasklet ref="removePreviousOutputFileTasklet"/>
+        </batch:step>
         <batch:step id="loadCVSModules" next="extractInfos">
             <batch:tasklet ref="batchContextLoader">
                 <batch:listeners>
@@ -56,7 +59,7 @@
             </batch:tasklet>
             <batch:listeners>
                 <batch:listener>
-                    <bean class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"/>
+                    <ref bean="skipExportListener"/>
                 </batch:listener>
             </batch:listeners>
         </batch:step>
@@ -69,7 +72,8 @@
     </bean>
 
     <bean id="writer"
-          class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+          class="org.springframework.batch.item.file.FlatFileItemWriter"
+          scope="step">
         <property name="resource" value="file:#{jobParameters['exportcsv.filepath']}"/>
         <property name="shouldDeleteIfExists" value="true"/>
         <property name="headerCallback">
@@ -91,14 +95,16 @@
         </property>
     </bean>
 
-    <bean id="abstractJobExtractor"
-          class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.JobExtractorSupport"
-          abstract="true">
-        <constructor-arg ref="httpResourceContentFetcher"/>
-        <constructor-arg>
-            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor"/>
-        </constructor-arg>
-        <constructor-arg value="${cvs.viewer.rootUrl}"/>
+    <bean id="removePreviousOutputFileTasklet"
+          class="com.boissinot.jenkins.csvexporter.batch.RemovePreviousOutputFileTasklet"
+          scope="step">
+        <property name="errorCSVFilePath" value="#{jobParameters['error.exportcsv.filepath']}"/>
+    </bean>
+
+    <bean id="skipExportListener"
+          class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"
+          scope="step">
+        <property name="errorCSVFilePath" value="#{jobParameters['error.exportcsv.filepath']}"/>
     </bean>
 
     <beans profile="local">

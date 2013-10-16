@@ -1,11 +1,9 @@
 package com.boissinot.jenkins.csvexporter.maven.extractor;
 
-import com.boissinot.jenkins.csvexporter.domain.maven.pom.Developer;
 import com.boissinot.jenkins.csvexporter.domain.maven.pom.PomFile;
-import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor;
+import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 /**

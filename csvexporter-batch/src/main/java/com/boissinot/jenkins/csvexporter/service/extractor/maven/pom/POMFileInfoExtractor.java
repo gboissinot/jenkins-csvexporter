@@ -16,7 +16,7 @@ public class POMFileInfoExtractor {
         this.csvViewerRootUrl = csvViewerRootUrl;
     }
 
-    public POMRemoteObj getPomUrl(ConfigJob configJob, Map<String, Map<String,String>> contextModuleMap) {
+    public POMRemoteObj getPomUrl(ConfigJob configJob, Map<String, Map<String, String>> contextModuleMap) {
 
         //Remove Template JOB
         if (configJob.getJobName().contains("template")) {

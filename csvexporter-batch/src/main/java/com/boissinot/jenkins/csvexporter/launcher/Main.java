@@ -55,6 +55,14 @@ public class Main {
             parametersBuilder.addString("exportcsv.filepath", exportJobsPath);
         }
 
+        final String errorJobsPath = System.getProperty("exportJobsPath");
+        if (errorJobsPath == null) {
+            parametersBuilder.addString("error.exportcsv.filepath", "export-jobs-errors.txt");
+        } else {
+            parametersBuilder.addString("error.exportcsv.filepath", exportJobsPath);
+        }
+
+
         return parametersBuilder.toJobParameters();
     }
 }

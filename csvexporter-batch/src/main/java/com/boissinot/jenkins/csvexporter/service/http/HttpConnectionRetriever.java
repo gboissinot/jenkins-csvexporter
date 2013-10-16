@@ -8,8 +8,6 @@ import java.net.URL;
 
 /**
  * @author Gregory Boissinot
- *
- * Version Control System (VCS) Retriever for CVS
  */
 public class HttpConnectionRetriever {
 
@@ -28,7 +26,7 @@ public class HttpConnectionRetriever {
         HttpURLConnection httpURLConnection;
         //TODO
 //        if (httpURL.startsWith(nonProxyHost)) {
-        if (httpURL.contains("http://controle/") ||  httpURL.contains("http://calypso/")){
+        if (httpURL.contains("http://controle/") || httpURL.contains("http://calypso/")) {
             httpURLConnection = (HttpURLConnection) url.openConnection();
         } else {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, httpProxyPort));
