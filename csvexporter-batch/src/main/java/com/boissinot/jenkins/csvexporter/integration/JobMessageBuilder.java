@@ -14,6 +14,7 @@ public class JobMessageBuilder {
     public Message buildJobMessage(Message message) {
 
         InputSBJobObj jobObj = (InputSBJobObj) message.getPayload();
+        System.out.println(String.format("Processing '%s'", jobObj.getJobName()));
         return MessageBuilder
                 .withPayload(jobObj.getConfigXML())
                 .copyHeaders(message.getHeaders())
