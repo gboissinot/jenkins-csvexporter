@@ -11,7 +11,6 @@
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!--  Spring Integration workflow -->
-
     <int:gateway id="processor"
                  service-interface="org.springframework.batch.item.ItemProcessor"
                  default-request-channel="jobs"
@@ -39,7 +38,7 @@
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="matrixJob"/>
         </int:header-enricher>
-        <!--<int:service-activator ref="matrixJobExtractor"/>-->
+
         <!-- spec -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="spec" evaluation-type="STRING_RESULT" xpath-expression="//spec"/>
@@ -65,7 +64,7 @@
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
 
-        <int:delayer id="delayer" default-delay="1000" />
+        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
@@ -87,7 +86,7 @@
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="mavenJob"/>
         </int:header-enricher>
-        <!--<int:service-activator ref="mavenJobExtractor"/>-->
+
         <!-- spec -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="spec" evaluation-type="STRING_RESULT" xpath-expression="//spec"/>
@@ -113,7 +112,7 @@
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//goals"/>
         </int-xml:xpath-header-enricher>
 
-        <int:delayer id="delayer" default-delay="1000" />
+        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
@@ -163,7 +162,7 @@
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
 
-        <int:delayer id="delayer" default-delay="1000" />
+        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
@@ -182,6 +181,5 @@
     </int:chain>
 
     <int:logging-channel-adapter channel="errorChannel" log-full-message="true" level="DEBUG"/>
-
 
 </beans>
