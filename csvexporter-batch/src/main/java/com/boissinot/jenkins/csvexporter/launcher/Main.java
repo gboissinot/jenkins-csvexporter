@@ -5,7 +5,6 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -26,7 +25,7 @@ public class Main {
         JobExecution jobExecution = jobLauncher.run(job, getJobParameters());
         System.out.println(jobExecution.getExitStatus());
         System.out.println(jobExecution.getFailureExceptions());
-        jobExecution.stop();
+        applicationContext.close();
     }
 
     private static JobParameters getJobParameters() {
