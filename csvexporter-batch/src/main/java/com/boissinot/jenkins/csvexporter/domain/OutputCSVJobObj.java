@@ -26,15 +26,17 @@ public class OutputCSVJobObj {
     private String cvsRoot;
     @ExportElement(order = 8, label = "CVS_MODULE")
     private String cvsModule;
-    @ExportElement(order = 9, label = "SVN_URL")
+    @ExportElement(order = 9, label = "CVS_BRANCHE")
+    private String cvsBranche;
+    @ExportElement(order = 10, label = "SVN_URL")
     private String svnURL;
-    @ExportElement(order = 10, label = "GIT_URL")
+    @ExportElement(order = 11, label = "GIT_URL")
     private String gitURL;
-    @ExportElement(order = 11, label = "TRIGGER")
+    @ExportElement(order = 12, label = "TRIGGER")
     private String trigger;
-    @ExportElement(order = 12, label = "COMMANDS")
+    @ExportElement(order = 13, label = "COMMANDS")
     private String buildSteps;
-    @ExportElement(order = 13, label = "DEVELOPERS")
+    @ExportElement(order = 14, label = "DEVELOPERS")
     private String developers;
 
     public OutputCSVJobObj() {
@@ -50,6 +52,7 @@ public class OutputCSVJobObj {
         this.functionalJobLanguage = cellProcessor.getCSVAware(builder.functionalJobLanguage);
         this.cvsRoot = cellProcessor.getCSVAware(builder.cvsRoot);
         this.cvsModule = cellProcessor.getCSVAware(builder.cvsModule);
+        this.cvsBranche = cellProcessor.getCSVAware(builder.cvsBranche);
         this.svnURL = cellProcessor.getCSVAware(builder.svnURL);
         this.gitURL = cellProcessor.getCSVAware(builder.gitURL);
         this.trigger = cellProcessor.getCSVAware(builder.trigger);
@@ -119,6 +122,7 @@ public class OutputCSVJobObj {
         private String functionalJobLanguage;
         private String cvsRoot;
         private String cvsModule;
+        private String cvsBranche;
         private String svnURL;
         private String gitURL;
         private String trigger;
@@ -175,6 +179,11 @@ public class OutputCSVJobObj {
 
         public Builder cvsModule(String cvsModule) {
             this.cvsModule = cvsModule;
+            return this;
+        }
+
+        public Builder cvsBranche(String cvsBranche) {
+            this.cvsBranche = cvsBranche;
             return this;
         }
 

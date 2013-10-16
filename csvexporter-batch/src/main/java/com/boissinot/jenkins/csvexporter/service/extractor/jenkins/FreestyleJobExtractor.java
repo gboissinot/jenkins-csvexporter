@@ -19,7 +19,7 @@ public class FreestyleJobExtractor extends JobExtractorSupport {
         super(contentFetcher, pomDeveloperSectionExtractor, csvViewerRootUrl);
     }
 
-    public void buildCVSObj(OutputCSVJobObj.Builder builder, String configXML) {
+    protected void buildCVSObj(OutputCSVJobObj.Builder builder, String configXML) {
         Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
         Source configXMLSource = new StringSource(configXML);
         Node buildersNode = template.evaluateAsNode("//builders", configXMLSource);

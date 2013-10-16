@@ -28,9 +28,9 @@ public class POMEmailExtractorTask implements Callable<PomFile> {
 
         PomFile pomFile = new PomFile();
 
-        String pomContent = contentFetcher.getContent(httpURL);
-        List<Developer> developers = pomDeveloperSectionExtractor.extract(pomContent);
-        pomFile.setDeveloperList(developers);
+//        String pomContent = contentFetcher.getContent(httpURL);
+//        List<Developer> developers = pomDeveloperSectionExtractor.extract(pomContent);
+//        pomFile.setDeveloperList(developers);
 
         return pomFile;
     }

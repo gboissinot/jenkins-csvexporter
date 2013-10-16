@@ -109,6 +109,28 @@
           class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.FreestyleJobExtractor"
           parent="abstractJobExtractor"/>
 
+
+    <bean id="toto" class="com.boissinot.jenkins.csvexporter.maven.extractor.PomDevelopersMessageSIService">
+        <property name="httpResourceContentFetcher">
+            <bean id="httpResourceContentFetcher"
+                  class="com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher">
+                <constructor-arg>
+                    <bean id="httpConnectionRetriever"
+                          class="com.boissinot.jenkins.csvexporter.service.http.HttpConnectionRetriever">
+                        <constructor-arg value="${vcs.nonProxyHost}" index="0"/>
+                        <constructor-arg value="${vcs.httpProxyHost}" index="1"/>
+                        <constructor-arg value="${vcs.httpProxyPort}" index="2"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="pomFileInfoExtractor">
+            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
+                <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
+            </bean>
+        </property>
+    </bean>
+
     <beans profile="local">
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader">
         </bean>
@@ -137,5 +159,7 @@
             <constructor-arg value="#{jobParameters['jenkins.url']}"/>
         </bean>
     </beans>
+
+
 
 </beans>

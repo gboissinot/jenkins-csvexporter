@@ -12,17 +12,11 @@ public class POMFileInfoExtractor {
 
     private String csvViewerRootUrl;
 
-    private Map<String, Map<String, String>> contextModuleMap;
-
-    public POMFileInfoExtractor(Map<String, Map<String, String>> contextMap, String csvViewerRootUrl) {
-        if (contextMap == null) {
-            throw new NullPointerException("A CVS Module map is required.");
-        }
-        this.contextModuleMap = contextMap;
+    public void setCsvViewerRootUrl(String csvViewerRootUrl) {
         this.csvViewerRootUrl = csvViewerRootUrl;
     }
 
-    public POMRemoteObj getPomUrl(ConfigJob configJob) {
+    public POMRemoteObj getPomUrl(ConfigJob configJob, Map<String, Map<String,String>> contextModuleMap) {
 
         //Remove Template JOB
         if (configJob.getJobName().contains("template")) {
