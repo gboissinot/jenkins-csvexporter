@@ -113,7 +113,7 @@ public class OutputObjBuilder {
                     .append(outputCSVJobObj.getName())
                     .append(";")
                     .append(outputCSVJobObj.getDevelopers())
-                    .append("\n");
+                    .append(",");
 
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
