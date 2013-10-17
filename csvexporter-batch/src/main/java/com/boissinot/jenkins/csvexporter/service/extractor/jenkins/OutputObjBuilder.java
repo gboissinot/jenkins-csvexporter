@@ -109,7 +109,12 @@ public class OutputObjBuilder {
             fileWriter = new FileWriter(jobEmailsFile, true);
             bufferedWriter = new BufferedWriter(fileWriter);
             printWriter = new PrintWriter(bufferedWriter);
-            printWriter.append(outputCSVJobObj.getName()).append(";").append(outputCSVJobObj.getDevelopers());
+            printWriter
+                    .append(outputCSVJobObj.getName())
+                    .append(";")
+                    .append(outputCSVJobObj.getDevelopers())
+                    .append("\n");
+
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } finally {
