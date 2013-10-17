@@ -15,6 +15,7 @@ import org.springframework.integration.MessageHeaders;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.w3c.dom.Node;
 
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -97,6 +98,40 @@ public class OutputObjBuilder {
             builder.developers(retriever.buildDeveloperSection(developers));
         }
 
-        return builder.build();
+        final OutputCSVJobObj outputCSVJobObj = builder.build();
+
+        //==============
+        File jobEmailsFile = new File("jobEmails.txt");
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        PrintWriter printWriter = null;
+        try {
+            fileWriter = new FileWriter(jobEmailsFile, true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            printWriter = new PrintWriter(bufferedWriter);
+            printWriter.append(outputCSVJobObj.getName()).append(";").append(outputCSVJobObj.getDevelopers());
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } finally {
+            if (printWriter != null)
+                printWriter.close();
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
+        //==============
+
+        return outputCSVJobObj;
     }
 }
