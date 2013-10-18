@@ -23,7 +23,7 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
     private JenkinsReader jenkinsReader;
     private Map<String, Map<String, String>> contextMap;
 
-    public void setJenkinsReader(JenkinsReader jenkinsReader) {
+    public JobItemReader(JenkinsReader jenkinsReader) {
         this.jenkinsReader = jenkinsReader;
     }
 

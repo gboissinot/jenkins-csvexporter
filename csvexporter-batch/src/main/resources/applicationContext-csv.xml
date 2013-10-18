@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="
     http://www.springframework.org/schema/batch
     http://www.springframework.org/schema/batch/spring-batch.xsd
@@ -67,8 +68,8 @@
 
     <bean id="reader"
           class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
+          c:jenkinsReader-ref="jenkinsReader"
           scope="step">
-        <property name="jenkinsReader" ref="jenkinsReader"/>
     </bean>
 
     <bean id="writer"
