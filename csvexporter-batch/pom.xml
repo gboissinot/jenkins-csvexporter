@@ -13,11 +13,11 @@
     <name>csvexporter-batch</name>
 
     <properties>
-        <spring.integration.version>2.2.0.RELEASE</spring.integration.version>
-        <spring.batch.version>2.1.9.RELEASE</spring.batch.version>
-        <spring.xml.version>2.1.2.RELEASE</spring.xml.version>
+        <spring.integration.version>2.2.6.RELEASE</spring.integration.version>
+        <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
+        <spring.xml.version>2.1.4.RELEASE</spring.xml.version>
         <log4j.version>1.2.17</log4j.version>
-        <junit.version>4.9</junit.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencies>
@@ -25,6 +25,12 @@
         <dependency>
             <groupId>com.boissinot.jenkins</groupId>
             <artifactId>csvexporter-apt-lib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>3.2.4.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -71,15 +77,40 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>3.0.0.RELEASE</version>
+            <artifactId>spring-aop</artifactId>
+            <version>3.2.4.RELEASE</version>
         </dependency>
 
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.7.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.7.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-full</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+
+
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-web</artifactId>-->
+        <!--<version>3.0.0.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>commons-httpclient</groupId>-->
+        <!--<artifactId>commons-httpclient</artifactId>-->
+        <!--<version>3.1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>junit</groupId>

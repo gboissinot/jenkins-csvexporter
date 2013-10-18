@@ -13,17 +13,11 @@
     <int:gateway id="processor"
                  service-interface="org.springframework.batch.item.ItemProcessor"
                  default-request-channel="jobs"
-                 default-reply-channel="csvJobs"
                  default-reply-timeout="2000"/>
 
     <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
-    <int:channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj">
-        <int:interceptors>
-            <int:ref bean="csvOutputInterceptor"/>
-        </int:interceptors>
-    </int:channel>
-
     <int:channel id="transformedJobs" datatype="java.lang.String"/>
+
     <int:transformer input-channel="jobs"
                      output-channel="transformedJobs">
         <bean class="com.boissinot.jenkins.csvexporter.integration.JobMessageBuilder"/>
@@ -71,10 +65,7 @@
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-
                 <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-
-
                 <property name="pomFileInfoExtractor">
                     <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
                         <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
@@ -82,7 +73,6 @@
                 </property>
             </bean>
         </int:service-activator>
-
     </int:chain>
 
     <int:chain input-channel="mavenJobs">
@@ -119,10 +109,7 @@
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-
                 <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-
-
                 <property name="pomFileInfoExtractor">
                     <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
                         <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
@@ -130,7 +117,6 @@
                 </property>
             </bean>
         </int:service-activator>
-
     </int:chain>
 
     <int:chain input-channel="freestyleJobs">
@@ -169,10 +155,7 @@
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-
                 <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-
-
                 <property name="pomFileInfoExtractor">
                     <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
                         <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
@@ -180,10 +163,8 @@
                 </property>
             </bean>
         </int:service-activator>
-
     </int:chain>
 
     <int:logging-channel-adapter channel="errorChannel" log-full-message="true" level="DEBUG"/>
 
-    <bean id="csvOutputInterceptor" class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"/>
 </beans>

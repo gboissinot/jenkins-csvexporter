@@ -1,38 +1,53 @@
 package com.boissinot.jenkins.csvexporter.integration;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
-import org.springframework.integration.Message;
-import org.springframework.integration.MessageChannel;
-import org.springframework.integration.channel.ChannelInterceptor;
-import org.springframework.integration.channel.interceptor.ChannelInterceptorAdapter;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+
+import java.io.*;
 
 /**
  * @author Gregory Boissinot
  */
-public class EmailMapViewer extends ChannelInterceptorAdapter{
+@Aspect
+public class EmailMapViewer {
 
-    @Override
-    public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        return super.preSend(message, channel);    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void postSend(Message<?> message, MessageChannel channel, boolean sent) {
-        super.postSend(message, channel, sent);    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Message<?> postReceive(Message<?> message, MessageChannel channel) {
-        return super.postReceive(message, channel);    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean preReceive(MessageChannel channel) {
-        System.out.println("TOTO");
-        return true;
-    }
-
+    @AfterReturning(value = "execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))", returning = "outputCSVJobObj")
     public void display(OutputCSVJobObj outputCSVJobObj) {
-        System.out.println(outputCSVJobObj.getName() + "-->" + outputCSVJobObj.getDevelopers());
+        System.out.println("Aspect");
+        File jobEmailsFile = new File("jobEmails.txt");
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        PrintWriter printWriter = null;
+        try {
+            fileWriter = new FileWriter(jobEmailsFile, true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            printWriter = new PrintWriter(bufferedWriter);
+            printWriter
+                    .append(outputCSVJobObj.getName())
+                    .append(";")
+                    .append(outputCSVJobObj.getDevelopers())
+                    .append(",");
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } finally {
+            if (printWriter != null)
+                printWriter.close();
+            if (bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
     }
 }
