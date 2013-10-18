@@ -62,6 +62,12 @@ public class Main {
             parametersBuilder.addString("error.exportcsv.filepath", exportJobsPath);
         }
 
+        final String updateEmailFilePath = System.getProperty("exportJobsPath");
+        if (errorJobsPath == null) {
+            parametersBuilder.addString("update.email.filepath", "jobEmails.txt");
+        } else {
+            parametersBuilder.addString("update.email.filepath", updateEmailFilePath);
+        }
 
         return parametersBuilder.toJobParameters();
     }

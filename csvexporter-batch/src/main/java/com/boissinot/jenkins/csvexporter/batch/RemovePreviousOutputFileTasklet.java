@@ -15,22 +15,34 @@ import java.io.File;
 public class RemovePreviousOutputFileTasklet implements Tasklet, InitializingBean {
 
     private String errorCSVFilePath;
+    private String updateEmailFilePath;
 
-    public RemovePreviousOutputFileTasklet(String errorCSVFilePath) {
+    public RemovePreviousOutputFileTasklet(String errorCSVFilePath, String updateEmailFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
+        this.updateEmailFilePath=updateEmailFilePath;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         Assert.notNull(errorCSVFilePath, "The error CSV file path must be set");
+        Assert.notNull(updateEmailFilePath, "The update email file path must be set");
     }
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+
+        //Error CSV File
         File errorCSVFile = new File(errorCSVFilePath);
         if (errorCSVFile.exists()) {
             errorCSVFile.delete();
         }
+
+        //Update Email File
+        File updateEmailFile = new File(updateEmailFilePath);
+        if (updateEmailFile.exists()) {
+            updateEmailFile.delete();
+        }
+
         return null;
     }
 

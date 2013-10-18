@@ -102,6 +102,7 @@
     <bean id="removePreviousOutputFileTasklet"
           class="com.boissinot.jenkins.csvexporter.batch.RemovePreviousOutputFileTasklet"
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
+          c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
           scope="step"/>
 
     <bean id="skipExportListener"
@@ -109,7 +110,10 @@
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           scope="step"/>
 
-    <bean id="emailMapViewer" class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"/>
+    <bean id="emailMapViewer"
+          class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"
+          c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
+          scope="step"/>
 
     <aop:aspectj-autoproxy>
         <aop:include name="emailMapViewer"/>

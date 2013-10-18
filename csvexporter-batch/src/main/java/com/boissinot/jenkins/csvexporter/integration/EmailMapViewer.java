@@ -12,14 +12,20 @@ import java.io.*;
 @Aspect
 public class EmailMapViewer {
 
+    private String updateEmailFilePath;
+
+    public EmailMapViewer(String updateEmailFilePath) {
+        this.updateEmailFilePath = updateEmailFilePath;
+    }
+
     @AfterReturning(value = "execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))", returning = "outputCSVJobObj")
     public void display(OutputCSVJobObj outputCSVJobObj) {
-        System.out.println("Aspect");
-        File jobEmailsFile = new File("jobEmails.txt");
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         PrintWriter printWriter = null;
         try {
+            File jobEmailsFile = new File(updateEmailFilePath);
+            jobEmailsFile.createNewFile();
             fileWriter = new FileWriter(jobEmailsFile, true);
             bufferedWriter = new BufferedWriter(fileWriter);
             printWriter = new PrintWriter(bufferedWriter);
