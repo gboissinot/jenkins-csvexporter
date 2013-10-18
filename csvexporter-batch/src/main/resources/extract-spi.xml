@@ -17,7 +17,11 @@
                  default-reply-timeout="2000"/>
 
     <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
-    <int:publish-subscribe-channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj"/>
+    <int:channel id="csvJobs" datatype="com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj">
+        <int:interceptors>
+            <int:ref bean="csvOutputInterceptor"/>
+        </int:interceptors>
+    </int:channel>
 
     <int:channel id="transformedJobs" datatype="java.lang.String"/>
     <int:transformer input-channel="jobs"
@@ -181,8 +185,5 @@
 
     <int:logging-channel-adapter channel="errorChannel" log-full-message="true" level="DEBUG"/>
 
-    <int:service-activator input-channel="csvJobs">
-        <bean class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"/>
-    </int:service-activator>
-
+    <bean id="csvOutputInterceptor" class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"/>
 </beans>
