@@ -14,7 +14,7 @@ public class SkipExportListener extends SkipListenerSupport {
 
     private String errorCSVFilePath;
 
-    public void setErrorCSVFilePath(String errorCSVFilePath) {
+    public SkipExportListener(String errorCSVFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
     }
 

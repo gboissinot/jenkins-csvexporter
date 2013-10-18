@@ -98,24 +98,20 @@
 
     <bean id="removePreviousOutputFileTasklet"
           class="com.boissinot.jenkins.csvexporter.batch.RemovePreviousOutputFileTasklet"
-          scope="step">
-        <property name="errorCSVFilePath" value="#{jobParameters['error.exportcsv.filepath']}"/>
-    </bean>
+          c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
+          scope="step"/>
 
     <bean id="skipExportListener"
           class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"
-          scope="step">
-        <property name="errorCSVFilePath" value="#{jobParameters['error.exportcsv.filepath']}"/>
-    </bean>
+          c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
+          scope="step"/>
 
     <beans profile="local">
-        <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader">
-        </bean>
+        <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader"/>
         <bean id="jenkinsReader"
               class="com.boissinot.jenkins.csvexporter.batch.LocalJenkinsReader"
-              scope="step">
-            <constructor-arg value="#{jobParameters['folder.path']}"/>
-        </bean>
+              c:folderPath="#{jobParameters['folder.path']}"
+              scope="step"/>
     </beans>
 
     <beans profile="remote">
@@ -131,9 +127,9 @@
         </bean>
         <bean id="jenkinsReader"
               class="com.boissinot.jenkins.csvexporter.batch.RemoteJenkinsReader"
+              c:httpResourceContentFetcher-ref="httpResourceContentFetcher"
+              c:jenkinsURL="#{jobParameters['jenkins.url']}"
               scope="step">
-            <constructor-arg ref="httpResourceContentFetcher"/>
-            <constructor-arg value="#{jobParameters['jenkins.url']}"/>
         </bean>
     </beans>
 

@@ -16,7 +16,7 @@ public class RemovePreviousOutputFileTasklet implements Tasklet, InitializingBea
 
     private String errorCSVFilePath;
 
-    public void setErrorCSVFilePath(String errorCSVFilePath) {
+    public RemovePreviousOutputFileTasklet(String errorCSVFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
     }
 
