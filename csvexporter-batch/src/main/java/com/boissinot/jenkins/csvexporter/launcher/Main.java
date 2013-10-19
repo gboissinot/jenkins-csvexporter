@@ -16,7 +16,7 @@ public class Main {
 
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext();
         applicationContext.getEnvironment().setActiveProfiles("remote");
-        applicationContext.setConfigLocation("applicationContext-csv.xml");
+        applicationContext.setConfigLocation("application-config.xml");
         applicationContext.refresh();
 
         JobLauncher jobLauncher = applicationContext.getBean("jobLauncher", JobLauncher.class);
