@@ -5,7 +5,6 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:c="http://www.springframework.org/schema/c"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
     http://www.springframework.org/schema/batch
     http://www.springframework.org/schema/batch/spring-batch.xsd
@@ -111,13 +110,12 @@
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           scope="step"/>
 
-    <bean id="emailMapViewer"
-          class="com.boissinot.jenkins.csvexporter.integration.EmailMapViewer"
-          c:updateEmailFilePath="jobEmails.txt"
-          />
+    <bean id="derivedJobAndEmailsFileProducer"
+          class="com.boissinot.jenkins.csvexporter.integration.DerivedJobAndEmailsFileProducer"
+          c:updateEmailFilePath="jobEmails.txt"/>
 
     <aop:aspectj-autoproxy>
-        <aop:include name="emailMapViewer"/>
+        <aop:include name="derivedJobAndEmailsFileProducer"/>
     </aop:aspectj-autoproxy>
 
     <beans profile="local">

@@ -14,12 +14,12 @@ import java.io.File;
  */
 public class RemovePreviousOutputFileTasklet implements Tasklet, InitializingBean {
 
-    private String errorCSVFilePath;
-    private String updateEmailFilePath;
+    private final String errorCSVFilePath;
+    private final String updateEmailFilePath;
 
     public RemovePreviousOutputFileTasklet(String errorCSVFilePath, String updateEmailFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
-        this.updateEmailFilePath=updateEmailFilePath;
+        this.updateEmailFilePath = updateEmailFilePath;
     }
 
     @Override

@@ -10,11 +10,11 @@ import java.io.*;
  * @author Gregory Boissinot
  */
 @Aspect
-public class EmailMapViewer {
+public class DerivedJobAndEmailsFileProducer {
 
-    private String updateEmailFilePath;
+    private final String updateEmailFilePath;
 
-    public EmailMapViewer(String updateEmailFilePath) {
+    public DerivedJobAndEmailsFileProducer(String updateEmailFilePath) {
         this.updateEmailFilePath = updateEmailFilePath;
     }
 

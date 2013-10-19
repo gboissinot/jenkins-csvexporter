@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class LocalJenkinsReader implements JenkinsReader {
 
-    private String folderPath;
+    private final String folderPath;
 
     public LocalJenkinsReader(String folderPath) {
         if (folderPath == null) {

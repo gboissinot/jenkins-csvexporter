@@ -12,7 +12,7 @@ import java.io.*;
  */
 public class SkipExportListener extends SkipListenerSupport {
 
-    private String errorCSVFilePath;
+    private final String errorCSVFilePath;
 
     public SkipExportListener(String errorCSVFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;

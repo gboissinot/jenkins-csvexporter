@@ -11,12 +11,12 @@ import java.net.URL;
  */
 public class HttpConnectionRetriever {
 
-    private String nonProxyHost;
-    private String httpProxyHost;
-    private int httpProxyPort;
+    private final String nonProxyHosts;
+    private final String httpProxyHost;
+    private final int httpProxyPort;
 
-    public HttpConnectionRetriever(String nonProxyHost, String httpProxyHost, int httpProxyPort) {
-        this.nonProxyHost = nonProxyHost;
+    public HttpConnectionRetriever(String nonProxyHosts, String httpProxyHost, int httpProxyPort) {
+        this.nonProxyHosts = nonProxyHosts;
         this.httpProxyHost = httpProxyHost;
         this.httpProxyPort = httpProxyPort;
     }
@@ -24,9 +24,7 @@ public class HttpConnectionRetriever {
     public HttpURLConnection getConnection(String httpURL) throws IOException {
         URL url = new URL(httpURL);
         HttpURLConnection httpURLConnection;
-        //TODO
-//        if (httpURL.startsWith(nonProxyHost)) {
-        if (httpURL.contains("http://controle/") || httpURL.contains("http://calypso/")) {
+        if (isShouldUseProxy(httpURL)) {
             httpURLConnection = (HttpURLConnection) url.openConnection();
         } else {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, httpProxyPort));
@@ -34,4 +32,18 @@ public class HttpConnectionRetriever {
         }
         return httpURLConnection;
     }
+
+    private boolean isShouldUseProxy(String httpURL) {
+        if (nonProxyHosts == null) {
+            return true;
+        }
+        final String[] excludedProxies = nonProxyHosts.split(",");
+        for (String excludedProxy : excludedProxies) {
+            if (httpURL.contains(excludedProxy)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

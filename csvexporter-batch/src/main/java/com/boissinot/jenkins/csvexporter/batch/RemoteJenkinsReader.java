@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class RemoteJenkinsReader implements JenkinsReader {
 
-    private String jenkinsURL;
+    private final String jenkinsURL;
 
-    private HttpResourceContentFetcher httpResourceContentFetcher;
+    private final HttpResourceContentFetcher httpResourceContentFetcher;
 
     public RemoteJenkinsReader(String jenkinsURL, HttpResourceContentFetcher httpResourceContentFetcher) {
         if (jenkinsURL.endsWith("/")) {
