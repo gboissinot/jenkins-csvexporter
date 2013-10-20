@@ -10,6 +10,7 @@ import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.scm.SCMElemen
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor;
 import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageHeaders;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -28,10 +29,12 @@ public class OutputObjBuilder {
     private HttpResourceContentFetcher httpResourceContentFetcher;
     private POMFileInfoExtractor pomFileInfoExtractor;
 
+    @Required
     public void setHttpResourceContentFetcher(HttpResourceContentFetcher httpResourceContentFetcher) {
         this.httpResourceContentFetcher = httpResourceContentFetcher;
     }
 
+    @Required
     public void setPomFileInfoExtractor(POMFileInfoExtractor pomFileInfoExtractor) {
         this.pomFileInfoExtractor = pomFileInfoExtractor;
     }
@@ -95,8 +98,6 @@ public class OutputObjBuilder {
             builder.developers(retriever.buildDeveloperSection(developers));
         }
 
-        final OutputCSVJobObj outputCSVJobObj = builder.build();
-
-        return outputCSVJobObj;
+        return builder.build();
     }
 }

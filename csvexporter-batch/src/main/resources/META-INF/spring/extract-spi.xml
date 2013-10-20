@@ -13,7 +13,7 @@
     <int:gateway id="processor"
                  service-interface="org.springframework.batch.item.ItemProcessor"
                  default-request-channel="jobs"
-                 default-reply-timeout="2000"/>
+                 default-reply-timeout="5000"/>
 
     <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
     <int:channel id="transformedJobs" datatype="java.lang.String"/>
@@ -164,7 +164,5 @@
             </bean>
         </int:service-activator>
     </int:chain>
-
-    <int:logging-channel-adapter channel="errorChannel" log-full-message="true" level="DEBUG"/>
 
 </beans>
