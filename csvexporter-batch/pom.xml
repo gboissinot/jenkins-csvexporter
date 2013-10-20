@@ -13,11 +13,17 @@
     <name>csvexporter-batch</name>
 
     <properties>
+        <spring.core.version>3.2.4.RELEASE</spring.core.version>
         <spring.integration.version>2.2.6.RELEASE</spring.integration.version>
         <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
         <spring.xml.version>2.1.4.RELEASE</spring.xml.version>
+        <common.io.version>2.2</common.io.version>
         <log4j.version>1.2.17</log4j.version>
+        <aspect.version>1.7.3</aspect.version>
+        <cglib.full.version>2.0.2</cglib.full.version>
         <junit.version>4.11</junit.version>
+        <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
+        <maven.shade.plugin.version>2.1</maven.shade.plugin.version>
     </properties>
 
     <dependencies>
@@ -30,7 +36,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring.core.version}</version>
         </dependency>
 
         <dependency>
@@ -58,59 +64,46 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.ws</groupId>
             <artifactId>spring-xml</artifactId>
             <version>${spring.xml.version}</version>
         </dependency>
 
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${common-io.version}</version>
+            <version>${common.io.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring.core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.7.3</version>
+            <version>${aspect.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.7.3</version>
+            <version>${aspect.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-full</artifactId>
-            <version>2.0.2</version>
+            <version>${cglib.full.version}</version>
         </dependency>
-
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-web</artifactId>-->
-        <!--<version>3.0.0.RELEASE</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>commons-httpclient</groupId>-->
-        <!--<artifactId>commons-httpclient</artifactId>-->
-        <!--<version>3.1</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>junit</groupId>
@@ -140,7 +133,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
+                <version>${maven.shade.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -164,7 +157,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>${maven.jar.plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
