@@ -45,10 +45,17 @@
             <version>${spring.core.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.batch</groupId>-->
+        <!--<artifactId>spring-batch-core</artifactId>-->
+        <!--<version>${spring.batch.version}</version>-->
+        <!--</dependency>-->
+
+
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-            <version>${spring.batch.version}</version>
+            <version>3.0.0.BUILD-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -113,6 +120,14 @@
         </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>spring-s3</id>
+            <name>Spring Maven Snapshot Repository</name>
+            <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

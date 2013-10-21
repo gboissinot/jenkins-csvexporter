@@ -1,25 +1,33 @@
-package com.boissinot.jenkins.csvexporter.integration;
+package com.boissinot.jenkins.csvexporter.integration.aspect;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
+import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
 /**
  * @author Gregory Boissinot
  */
+@Component
 @Aspect
 public class DerivedJobAndEmailsFileProducer {
 
-    private final String updateEmailFilePath;
+    private String updateEmailFilePath;
 
-    public DerivedJobAndEmailsFileProducer(String updateEmailFilePath) {
+    public void setUpdateEmailFilePath(String updateEmailFilePath) {
         this.updateEmailFilePath = updateEmailFilePath;
     }
 
     @AfterReturning(value = "execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))", returning = "outputCSVJobObj")
     public void display(OutputCSVJobObj outputCSVJobObj) {
+
+        if (updateEmailFilePath==null){
+            updateEmailFilePath="jobEmails.txt";
+        }
+
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         PrintWriter printWriter = null;
@@ -35,23 +43,23 @@ public class DerivedJobAndEmailsFileProducer {
                     .append(outputCSVJobObj.getDevelopers())
                     .append(",");
 
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException ioe) {
+            throw new ExportException(ioe);
         } finally {
             if (printWriter != null)
                 printWriter.close();
             if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
-                } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (IOException ioe) {
+                    throw new ExportException(ioe);
                 }
             }
             if (fileWriter != null) {
                 try {
                     fileWriter.close();
-                } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (IOException ioe) {
+                    throw new ExportException(ioe);
                 }
             }
         }

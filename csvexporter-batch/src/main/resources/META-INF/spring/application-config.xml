@@ -3,19 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="
     http://www.springframework.org/schema/batch
     http://www.springframework.org/schema/batch/spring-batch.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <context:component-scan base-package="com.boissinot.jenkins.csvexporter.domain.generated"/>
+    <context:component-scan
+            base-package="com.boissinot.jenkins.csvexporter.domain.generated,com.boissinot.jenkins.csvexporter.config"/>
     <context:property-placeholder location="infra-config.properties"/>
 
     <import resource="batch-infra.xml"/>
@@ -75,8 +73,7 @@
     <bean id="reader"
           class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
           c:jenkinsReader-ref="jenkinsReader"
-          scope="step">
-    </bean>
+          scope="step"/>
 
     <bean id="writer"
           class="org.springframework.batch.item.file.FlatFileItemWriter"
@@ -115,14 +112,6 @@
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           scope="step"/>
 
-    <bean id="derivedJobAndEmailsFileProducer"
-          class="com.boissinot.jenkins.csvexporter.integration.DerivedJobAndEmailsFileProducer"
-          c:updateEmailFilePath="jobEmails.txt"/>
-
-    <aop:aspectj-autoproxy>
-        <aop:include name="derivedJobAndEmailsFileProducer"/>
-    </aop:aspectj-autoproxy>
-
     <beans profile="local">
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader"/>
         <bean id="jenkinsReader"
@@ -146,8 +135,7 @@
               class="com.boissinot.jenkins.csvexporter.batch.RemoteJenkinsReader"
               c:httpResourceContentFetcher-ref="httpResourceContentFetcher"
               c:jenkinsURL="#{jobParameters['jenkins.url']}"
-              scope="step">
-        </bean>
+              scope="step"/>
     </beans>
 
 </beans>
