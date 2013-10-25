@@ -12,24 +12,32 @@
     <!--  Spring Integration workflow -->
     <int:gateway id="processor"
                  service-interface="org.springframework.batch.item.ItemProcessor"
-                 default-request-channel="jobs"
+                 default-request-channel="queueJobChannel"
                  default-reply-timeout="5000"/>
 
-    <int:channel id="jobs" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
-    <int:channel id="transformedJobs" datatype="java.lang.String"/>
+    <int:channel id="queueJobChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj">
+        <int:queue capacity="200"/>
+    </int:channel>
 
-    <int:transformer input-channel="jobs"
-                     output-channel="transformedJobs">
-        <bean class="com.boissinot.jenkins.csvexporter.integration.JobMessageBuilder"/>
-    </int:transformer>
+    <int:bridge input-channel="queueJobChannel" output-channel="jobsChannel">
+        <int:poller fixed-delay="1000">
+            <int:transactional/>
+        </int:poller>
+    </int:bridge>
 
-    <int:router input-channel="transformedJobs">
-        <bean class="com.boissinot.jenkins.csvexporter.integration.JobMessageRouter"/>
-    </int:router>
+    <int:channel id="jobsChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
 
-    <int:channel id="matrixJobs" datatype="java.lang.String"/>
-    <int:channel id="mavenJobs" datatype="java.lang.String"/>
-    <int:channel id="freestyleJobs" datatype="java.lang.String"/>
+    <int:chain input-channel="jobsChannel">
+        <int:transformer ref="jobMessageBuilder"/>
+        <int:router ref="jobMessageRouter"/>
+    </int:chain>
+
+    <bean id="jobMessageBuilder" class="com.boissinot.jenkins.csvexporter.integration.JobMessageBuilder"/>
+    <bean id="jobMessageRouter" class="com.boissinot.jenkins.csvexporter.integration.JobMessageRouter"/>
+
+    <int:channel id="matrixJobsChannel" datatype="java.lang.String"/>
+    <int:channel id="mavenJobsChannel" datatype="java.lang.String"/>
+    <int:channel id="freestyleJobsChannel" datatype="java.lang.String"/>
 
     <int:chain input-channel="matrixJobs">
         <int:header-enricher>
@@ -60,8 +68,6 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
-
-        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
@@ -104,8 +110,6 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//goals"/>
         </int-xml:xpath-header-enricher>
-
-        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
@@ -150,8 +154,6 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
-
-        <int:delayer id="delayer" default-delay="1000"/>
 
         <int:service-activator>
             <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
