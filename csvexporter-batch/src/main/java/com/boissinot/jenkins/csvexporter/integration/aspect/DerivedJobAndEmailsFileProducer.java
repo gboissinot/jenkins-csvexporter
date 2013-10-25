@@ -4,6 +4,7 @@ import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -17,15 +18,15 @@ public class DerivedJobAndEmailsFileProducer {
 
     private String updateEmailFilePath;
 
-    public void setUpdateEmailFilePath(String updateEmailFilePath) {
+    public void setUpdateEmailFilePath(@Value("#{jobParameters['update.email.filepath']}") String updateEmailFilePath) {
         this.updateEmailFilePath = updateEmailFilePath;
     }
 
     @AfterReturning(value = "execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))", returning = "outputCSVJobObj")
     public void display(OutputCSVJobObj outputCSVJobObj) {
 
-        if (updateEmailFilePath==null){
-            updateEmailFilePath="jobEmails.txt";
+        if (updateEmailFilePath == null) {
+            updateEmailFilePath = "jobEmails.txt";
         }
 
         FileWriter fileWriter = null;

@@ -61,9 +61,6 @@
             </batch:tasklet>
             <batch:listeners>
                 <batch:listener>
-                    <ref bean="errorItemProcessListener"/>
-                </batch:listener>
-                <batch:listener>
                     <ref bean="skipExportListener"/>
                 </batch:listener>
             </batch:listeners>
@@ -104,8 +101,6 @@
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
           scope="step"/>
-
-    <bean id="errorItemProcessListener" class="com.boissinot.jenkins.csvexporter.integration.ErrorItemProcessListener"/>
 
     <bean id="skipExportListener"
           class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"
