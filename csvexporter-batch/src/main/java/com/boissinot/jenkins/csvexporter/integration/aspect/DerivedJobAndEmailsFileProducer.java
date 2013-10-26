@@ -1,10 +1,13 @@
 package com.boissinot.jenkins.csvexporter.integration.aspect;
 
+import com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders;
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Value;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.integration.MessageHeaders;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -16,23 +19,22 @@ import java.io.*;
 @Aspect
 public class DerivedJobAndEmailsFileProducer {
 
-    private String updateEmailFilePath;
-
-    public void setUpdateEmailFilePath(@Value("#{jobParameters['update.email.filepath']}") String updateEmailFilePath) {
-        this.updateEmailFilePath = updateEmailFilePath;
+    @Pointcut("execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))")
+    public void buildObj() {
     }
 
-    @AfterReturning(value = "execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))", returning = "outputCSVJobObj")
-    public void display(OutputCSVJobObj outputCSVJobObj) {
-
-        if (updateEmailFilePath == null) {
-            updateEmailFilePath = "jobEmails.txt";
-        }
+    @AfterReturning(value = "buildObj()", returning = "outputCSVJobObj")
+    public void display(JoinPoint joinPoint, OutputCSVJobObj outputCSVJobObj) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         PrintWriter printWriter = null;
         try {
+            final MessageHeaders messageHeaders = (MessageHeaders) (joinPoint.getArgs()[0]);
+            final String updateEmailFilePath = (String) messageHeaders.get(JobMessageHeaders.HEADER_EMAIL_FILE_PATH);
+            if (updateEmailFilePath == null) {
+                throw new ExportException("The update Email file path must be set");
+            }
             File jobEmailsFile = new File(updateEmailFilePath);
             jobEmailsFile.createNewFile();
             fileWriter = new FileWriter(jobEmailsFile, true);
@@ -44,8 +46,8 @@ public class DerivedJobAndEmailsFileProducer {
                     .append(outputCSVJobObj.getDevelopers())
                     .append(",");
 
-        } catch (IOException ioe) {
-            throw new ExportException(ioe);
+        } catch (Throwable e) {
+            throw new ExportException(e);
         } finally {
             if (printWriter != null)
                 printWriter.close();

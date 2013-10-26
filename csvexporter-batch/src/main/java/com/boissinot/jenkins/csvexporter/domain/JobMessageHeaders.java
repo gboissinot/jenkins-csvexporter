@@ -10,5 +10,6 @@ public class JobMessageHeaders {
     public static final String HEADER_FUNCTIONAL_JOB_LANGUAGE = "FUNCTIONAL_JOBLANGUAGE";
     public static final String HEADER_JENKINS_JOB_TYPE = "JENKINS_JOBTYPE";
     public static final String HEADER_FUNCTIONAL_MODULE_MAP = "MODULE_MAP";
+    public static final String HEADER_EMAIL_FILE_PATH = "UPDATE_EMAIL_FILE_PATH";
 
 }

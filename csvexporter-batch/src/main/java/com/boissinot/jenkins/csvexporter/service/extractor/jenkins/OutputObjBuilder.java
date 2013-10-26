@@ -11,7 +11,6 @@ import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDevelope
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor;
 import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.integration.Message;
 import org.springframework.integration.MessageHeaders;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.w3c.dom.Node;
@@ -40,9 +39,8 @@ public class OutputObjBuilder {
     }
 
     @ServiceActivator
-    public OutputCSVJobObj buildObj(Message message) {
+    public OutputCSVJobObj buildObj(MessageHeaders headers) {
         OutputCSVJobObj.Builder builder = new OutputCSVJobObj.Builder();
-        MessageHeaders headers = message.getHeaders();
 
         //jobName
         String jobName = headers.get(HEADER_JOB_NAME, String.class);
@@ -89,7 +87,7 @@ public class OutputObjBuilder {
         configJob.setGitURL(scmElementBuilder.getGitURL());
         configJob.setSvnURL(scmElementBuilder.getSvnURL());
         configJob.setJobName(jobName);
-        POMRemoteObj pomObj = pomFileInfoExtractor.getPomUrl(configJob, (Map) message.getHeaders().get("MODULE_MAP"));
+        POMRemoteObj pomObj = pomFileInfoExtractor.getPomUrl(configJob, (Map) headers.get("MODULE_MAP"));
         if (pomObj != null) {
             String pomContent = httpResourceContentFetcher.getContent(pomObj.getHttpURL());
             POMDeveloperSectionExtractor sectionExtractor = new POMDeveloperSectionExtractor();

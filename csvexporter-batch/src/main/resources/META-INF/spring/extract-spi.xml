@@ -9,23 +9,13 @@
         http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
         http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <!--  Spring Integration workflow -->
-    <int:gateway id="processor"
-                 service-interface="org.springframework.batch.item.ItemProcessor"
-                 default-request-channel="queueJobChannel"
-                 default-reply-timeout="5000"/>
-
-    <int:channel id="queueJobChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj">
-        <int:queue capacity="200"/>
-    </int:channel>
-
-    <int:bridge input-channel="queueJobChannel" output-channel="jobsChannel">
-        <int:poller fixed-delay="1000">
-            <int:transactional/>
-        </int:poller>
-    </int:bridge>
-
+    <int:channel id="inputChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
     <int:channel id="jobsChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
+
+    <int:delayer id="delayer"
+                 input-channel="inputChannel"
+                 output-channel="jobsChannel"
+                 default-delay="500"/>
 
     <int:chain input-channel="jobsChannel">
         <int:transformer ref="jobMessageBuilder"/>
@@ -39,132 +29,89 @@
     <int:channel id="mavenJobsChannel" datatype="java.lang.String"/>
     <int:channel id="freestyleJobsChannel" datatype="java.lang.String"/>
 
-    <int:chain input-channel="matrixJobs">
+    <int:chain input-channel="matrixJobsChannel">
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="matrixJob"/>
         </int:header-enricher>
-
         <!-- spec -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="spec" evaluation-type="STRING_RESULT" xpath-expression="//spec"/>
         </int-xml:xpath-header-enricher>
-
         <!-- disabled -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="disabled" evaluation-type="BOOLEAN_RESULT" xpath-expression="//disabled"/>
         </int-xml:xpath-header-enricher>
-
         <!-- description -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="description" evaluation-type="STRING_RESULT" xpath-expression="//description"/>
         </int-xml:xpath-header-enricher>
-
         <!-- scm -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="scm" evaluation-type="NODE_RESULT" xpath-expression="//scm"/>
         </int-xml:xpath-header-enricher>
-
         <!-- builders -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
-
-        <int:service-activator>
-            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-                <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-                <property name="pomFileInfoExtractor">
-                    <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
-                        <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
-                    </bean>
-                </property>
-            </bean>
-        </int:service-activator>
+        <!-- build final object -->
+        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
     </int:chain>
 
-    <int:chain input-channel="mavenJobs">
+    <int:chain input-channel="mavenJobsChannel">
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="mavenJob"/>
         </int:header-enricher>
-
         <!-- spec -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="spec" evaluation-type="STRING_RESULT" xpath-expression="//spec"/>
         </int-xml:xpath-header-enricher>
-
         <!-- disabled -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="disabled" evaluation-type="BOOLEAN_RESULT" xpath-expression="//disabled"/>
         </int-xml:xpath-header-enricher>
-
         <!-- description -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="description" evaluation-type="STRING_RESULT" xpath-expression="//description"/>
         </int-xml:xpath-header-enricher>
-
         <!-- scm -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="scm" evaluation-type="NODE_RESULT" xpath-expression="//scm"/>
         </int-xml:xpath-header-enricher>
-
         <!-- builders -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//goals"/>
         </int-xml:xpath-header-enricher>
-
-        <int:service-activator>
-            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-                <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-                <property name="pomFileInfoExtractor">
-                    <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
-                        <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
-                    </bean>
-                </property>
-            </bean>
-        </int:service-activator>
+        <!-- build final object -->
+        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
     </int:chain>
 
-    <int:chain input-channel="freestyleJobs">
-
+    <int:chain input-channel="freestyleJobsChannel">
         <!-- JENKINS_JOBTYPE -->
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="freestyleJob"/>
         </int:header-enricher>
-
         <!-- spec -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="spec" evaluation-type="STRING_RESULT" xpath-expression="//spec"/>
         </int-xml:xpath-header-enricher>
-
         <!-- disabled -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="disabled" evaluation-type="BOOLEAN_RESULT" xpath-expression="//disabled"/>
         </int-xml:xpath-header-enricher>
-
         <!-- description -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="description" evaluation-type="STRING_RESULT" xpath-expression="//description"/>
         </int-xml:xpath-header-enricher>
-
         <!-- scm -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="scm" evaluation-type="NODE_RESULT" xpath-expression="//scm"/>
         </int-xml:xpath-header-enricher>
-
         <!-- builders -->
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
-
-        <int:service-activator>
-            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
-                <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-                <property name="pomFileInfoExtractor">
-                    <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
-                        <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
-                    </bean>
-                </property>
-            </bean>
-        </int:service-activator>
+        <!-- build final object -->
+        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
     </int:chain>
 
 </beans>

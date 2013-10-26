@@ -20,7 +20,7 @@
         <common.io.version>2.2</common.io.version>
         <log4j.version>1.2.17</log4j.version>
         <aspect.version>1.7.3</aspect.version>
-        <cglib.full.version>2.0.2</cglib.full.version>
+        <cglib.nodep.version>2.2.2</cglib.nodep.version>
         <junit.version>4.11</junit.version>
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
         <maven.shade.plugin.version>2.1</maven.shade.plugin.version>
@@ -45,17 +45,10 @@
             <version>${spring.core.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.batch</groupId>-->
-        <!--<artifactId>spring-batch-core</artifactId>-->
-        <!--<version>${spring.batch.version}</version>-->
-        <!--</dependency>-->
-
-
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-            <version>3.0.0.BUILD-SNAPSHOT</version>
+            <version>${spring.batch.version}</version>
         </dependency>
 
         <dependency>
@@ -108,8 +101,8 @@
 
         <dependency>
             <groupId>cglib</groupId>
-            <artifactId>cglib-full</artifactId>
-            <version>${cglib.full.version}</version>
+            <artifactId>cglib-nodep</artifactId>
+            <version>${cglib.nodep.version}</version>
         </dependency>
 
         <dependency>

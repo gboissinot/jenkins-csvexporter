@@ -19,6 +19,8 @@
     <import resource="batch-infra.xml"/>
     <import resource="extract-spi.xml"/>
 
+    <context:annotation-config/>
+
     <bean id="httpResourceContentFetcher"
           class="com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher">
         <constructor-arg>
@@ -32,10 +34,10 @@
     </bean>
 
     <batch:job id="extract-jenkins-job">
-        <batch:step id="removePreviousOutputFile" next="loadCVSModules">
-            <batch:tasklet ref="removePreviousOutputFileTasklet"/>
+        <batch:step id="cleanupOutputFilesStep" next="loadCVSModulesStep">
+            <batch:tasklet ref="cleanupOutputFilesTasklet"/>
         </batch:step>
-        <batch:step id="loadCVSModules" next="extractInfos">
+        <batch:step id="loadCVSModulesStep" next="extractInfosStep">
             <batch:tasklet ref="batchContextLoader">
                 <batch:listeners>
                     <batch:listener>
@@ -47,12 +49,12 @@
                 </batch:listeners>
             </batch:tasklet>
         </batch:step>
-        <batch:step id="extractInfos">
+        <batch:step id="extractInfosStep">
             <batch:tasklet>
                 <batch:chunk reader="reader"
                              processor="processor"
                              writer="writer"
-                             commit-interval="10"
+                             commit-interval="2"
                              skip-limit="200">
                     <batch:skippable-exception-classes>
                         <batch:include class="java.lang.Throwable"/>
@@ -71,6 +73,11 @@
           class="com.boissinot.jenkins.csvexporter.batch.JobItemReader"
           c:jenkinsReader-ref="jenkinsReader"
           scope="step"/>
+
+    <bean id="processor"
+          class="com.boissinot.jenkins.csvexporter.batch.JobItemProcessor"
+          scope="step">
+    </bean>
 
     <bean id="writer"
           class="org.springframework.batch.item.file.FlatFileItemWriter"
@@ -96,8 +103,8 @@
         </property>
     </bean>
 
-    <bean id="removePreviousOutputFileTasklet"
-          class="com.boissinot.jenkins.csvexporter.batch.RemovePreviousOutputFileTasklet"
+    <bean id="cleanupOutputFilesTasklet"
+          class="com.boissinot.jenkins.csvexporter.batch.CleanupOutputFilesTasklet"
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
           scope="step"/>
@@ -106,6 +113,16 @@
           class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           scope="step"/>
+
+    <bean id="outputObjBuilder"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
+        <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
+        <property name="pomFileInfoExtractor">
+            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
+                <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
+            </bean>
+        </property>
+    </bean>
 
     <beans profile="local">
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader"/>

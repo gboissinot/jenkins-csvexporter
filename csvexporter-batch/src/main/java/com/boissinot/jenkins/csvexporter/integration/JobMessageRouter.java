@@ -12,14 +12,14 @@ public class JobMessageRouter {
     public String getNextChannel(String configXML) {
 
         if (configXML.contains(matrixHeader)) {
-            return "matrixJobs";
+            return "matrixJobsChannel";
         }
 
         if (configXML.contains(mavenHeader)) {
-            return "mavenJobs";
+            return "mavenJobsChannel";
         }
 
-        return "freestyleJobs";
+        return "freestyleJobsChannel";
     }
 
 }

@@ -12,12 +12,12 @@ import java.io.File;
 /**
  * @author Gregory Boissinot
  */
-public class RemovePreviousOutputFileTasklet implements Tasklet, InitializingBean {
+public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
 
     private final String errorCSVFilePath;
     private final String updateEmailFilePath;
 
-    public RemovePreviousOutputFileTasklet(String errorCSVFilePath, String updateEmailFilePath) {
+    public CleanupOutputFilesTasklet(String errorCSVFilePath, String updateEmailFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
         this.updateEmailFilePath = updateEmailFilePath;
     }

@@ -12,8 +12,8 @@ import static com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders.*;
 public class JobMessageBuilder {
 
     @SuppressWarnings("unused")
-    public Message buildJobMessage(Message message) {
-        InputSBJobObj jobObj = (InputSBJobObj) message.getPayload();
+    public Message<String> buildJobMessage(Message<InputSBJobObj> message) {
+        InputSBJobObj jobObj = message.getPayload();
         System.out.println(String.format("Processing '%s'", jobObj.getJobName()));
         return MessageBuilder
                 .withPayload(jobObj.getConfigXML())

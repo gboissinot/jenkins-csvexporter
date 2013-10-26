@@ -52,7 +52,7 @@ public class CVSModulesFileExtractor implements ContextExtractor {
             try {
                 br.close();
             } catch (IOException ioe) {
-                //Ignore
+                throw new ExportException(ioe);
             }
         }
 
