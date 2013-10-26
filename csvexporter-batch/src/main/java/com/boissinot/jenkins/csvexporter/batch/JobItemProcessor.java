@@ -3,13 +3,13 @@ package com.boissinot.jenkins.csvexporter.batch;
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders;
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
+import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageChannel;
-import org.springframework.integration.MessageHeaders;
 import org.springframework.integration.core.MessagePostProcessor;
 import org.springframework.integration.core.MessagingTemplate;
 import org.springframework.integration.support.MessageBuilder;
@@ -37,16 +37,30 @@ public class JobItemProcessor implements ItemProcessor<InputSBJobObj, OutputCSVJ
     @Override
     public OutputCSVJobObj process(InputSBJobObj inputSBJobObj) throws Exception {
         MessagingTemplate messagingTemplate = new MessagingTemplate();
-        return (OutputCSVJobObj) messagingTemplate.convertSendAndReceive(inputChannel, inputSBJobObj, new MessagePostProcessor() {
+        messagingTemplate.setReceiveTimeout(5000l);
+        Object result = messagingTemplate.convertSendAndReceive(inputChannel, inputSBJobObj, new MessagePostProcessor() {
             @Override
             public Message<?> postProcessMessage(Message<?> message) {
                 return MessageBuilder.fromMessage(message)
-                        .setHeader(MessageHeaders.REPLY_CHANNEL, "inputChannel")
-                        .setHeader(MessageHeaders.EXPIRATION_DATE, 5000l)
                         .setHeader(JobMessageHeaders.HEADER_EMAIL_FILE_PATH, updateEmailFilePath)
                         .build();
             }
         });
+
+        //Case of message filter or timeout
+        if (result == null) {
+            throw new ExportException("Item was filtered or time out occured.");
+        }
+
+        if (result instanceof OutputCSVJobObj) {
+            return (OutputCSVJobObj) result;
+        }
+
+        if (result instanceof Throwable) {
+            throw new ExportException("Unexpected exception on business flow", (Throwable) result);
+        }
+
+        throw new ExportException("Unexpected use case.");
     }
 
 }

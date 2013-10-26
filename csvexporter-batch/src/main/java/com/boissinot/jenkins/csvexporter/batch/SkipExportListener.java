@@ -62,6 +62,11 @@ public class SkipExportListener extends SkipListenerSupport {
             }
             if (t instanceof ExportException) {
                 errorLine.append(t.getMessage());
+                final Throwable cause = t.getCause();
+                if (cause != null) {
+                    errorLine.append("\n");
+                    errorLine.append(cause.getMessage());
+                }
                 t.printStackTrace();
             } else if ((t.getCause() != null) && (t.getCause() instanceof ExportException)) {
                 errorLine.append(t.getCause().getMessage());
