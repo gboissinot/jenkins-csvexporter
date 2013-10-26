@@ -9,7 +9,7 @@ import static com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders.*;
 /**
  * @author Gregory Boissinot
  */
-public class JobMessageBuilder {
+public class XMLPayloadJobTransformer {
 
     @SuppressWarnings("unused")
     public Message<String> buildJobMessage(Message<InputSBJobObj> message) {

@@ -7,6 +7,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.integration.Message;
 import org.springframework.integration.MessageHeaders;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ import java.io.*;
 @Aspect
 public class DerivedJobAndEmailsFileProducer {
 
-    @Pointcut("within(com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder) && args(org.springframework.integration.MessageHeaders)")
+    @Pointcut("within(com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder) && args(org.springframework.integration.Message)")
     private void buildObjPointcut() {
     }
 
@@ -30,7 +31,8 @@ public class DerivedJobAndEmailsFileProducer {
         BufferedWriter bufferedWriter = null;
         PrintWriter printWriter = null;
         try {
-            final MessageHeaders messageHeaders = (MessageHeaders) (joinPoint.getArgs()[0]);
+            final Message<OutputCSVJobObj> messageOutputCSVJobObj = (Message<OutputCSVJobObj>) (joinPoint.getArgs()[0]);
+            MessageHeaders messageHeaders = messageOutputCSVJobObj.getHeaders();
             final String updateEmailFilePath = (String) messageHeaders.get(JobMessageHeaders.HEADER_EMAIL_FILE_PATH);
             if (updateEmailFilePath == null) {
                 throw new ExportException("The email file path must be set");

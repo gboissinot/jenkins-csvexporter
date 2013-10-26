@@ -124,6 +124,9 @@
         </property>
     </bean>
 
+    <bean id="configObjPayloadJobTransformer"
+          class="com.boissinot.jenkins.csvexporter.service.integration.ConfigObjPayloadJobTransformer"/>
+
     <beans profile="local">
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader"/>
         <bean id="jenkinsReader"

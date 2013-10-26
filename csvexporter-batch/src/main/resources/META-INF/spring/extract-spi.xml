@@ -18,11 +18,12 @@
                  default-delay="500"/>
 
     <int:chain input-channel="jobsChannel">
-        <int:transformer ref="jobMessageBuilder"/>
+        <int:transformer ref="xmlPayloadJobTransformer"/>
         <int:router ref="jobMessageRouter"/>
     </int:chain>
 
-    <bean id="jobMessageBuilder" class="com.boissinot.jenkins.csvexporter.service.integration.JobMessageBuilder"/>
+    <bean id="xmlPayloadJobTransformer"
+          class="com.boissinot.jenkins.csvexporter.service.integration.XMLPayloadJobTransformer"/>
     <bean id="jobMessageRouter" class="com.boissinot.jenkins.csvexporter.service.integration.JobMessageRouter"/>
 
     <int:channel id="matrixJobsChannel" datatype="java.lang.String"/>
@@ -53,8 +54,11 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
+        <!-- Generate the Config Job Object -->
+        <int:transformer expression="@configObjPayloadJobTransformer.buildConfigObj(headers)"/>
         <!-- build final object -->
-        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
+        <int:service-activator ref="outputObjBuilder"/>
+
     </int:chain>
 
     <int:chain input-channel="mavenJobsChannel">
@@ -81,8 +85,11 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//goals"/>
         </int-xml:xpath-header-enricher>
+        <!-- Generate the Config Job Object -->
+        <int:transformer expression="@configObjPayloadJobTransformer.buildConfigObj(headers)"/>
         <!-- build final object -->
-        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
+        <int:service-activator ref="outputObjBuilder"/>
+
     </int:chain>
 
     <int:chain input-channel="freestyleJobsChannel">
@@ -110,8 +117,11 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
+        <!-- Generate the Config Job Object -->
+        <int:transformer expression="@configObjPayloadJobTransformer.buildConfigObj(headers)"/>
         <!-- build final object -->
-        <int:service-activator expression="@outputObjBuilder.buildObj(headers)"/>
+        <int:service-activator ref="outputObjBuilder"/>
+
     </int:chain>
 
 </beans>
