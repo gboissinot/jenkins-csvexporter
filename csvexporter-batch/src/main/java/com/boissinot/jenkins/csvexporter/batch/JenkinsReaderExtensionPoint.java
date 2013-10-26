@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Gregory Boissinot
  */
-public interface JenkinsReader {
+public interface JenkinsReaderExtensionPoint {
 
     public abstract List<String> buildURLs();
 

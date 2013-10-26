@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Gregory Boissinot
  */
-public class RemoteJenkinsReader implements JenkinsReader {
+public class RemoteJenkinsReader implements JenkinsReaderExtensionPoint {
 
     private final String jenkinsURL;
 
@@ -26,6 +26,7 @@ public class RemoteJenkinsReader implements JenkinsReader {
         this.httpResourceContentFetcher = httpResourceContentFetcher;
     }
 
+    @Override
     public List<String> buildURLs() {
         List<String> urls = new ArrayList<String>();
         String str = httpResourceContentFetcher.getContent(jenkinsURL + "api/xml");
@@ -39,10 +40,12 @@ public class RemoteJenkinsReader implements JenkinsReader {
         return urls;
     }
 
+    @Override
     public String getJobName(String jobURL) {
         return jobURL.substring(jobURL.lastIndexOf("/job/") + 5, jobURL.length() - 1);
     }
 
+    @Override
     public String getConfigXML(String jobURL) {
         return httpResourceContentFetcher.getContent(jobURL);
     }

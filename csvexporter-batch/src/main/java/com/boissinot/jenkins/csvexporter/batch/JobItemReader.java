@@ -18,13 +18,13 @@ import java.util.Map;
  */
 public class JobItemReader implements ItemReader<InputSBJobObj> {
 
-    private final JenkinsReader jenkinsReader;
+    private final JenkinsReaderExtensionPoint jenkinsReader;
 
     /* Computed */
     private List<String> urls = new ArrayList<String>();
     private Map<String, Map<String, String>> contextMap;
 
-    public JobItemReader(JenkinsReader jenkinsReader) {
+    public JobItemReader(JenkinsReaderExtensionPoint jenkinsReader) {
         this.jenkinsReader = jenkinsReader;
     }
 

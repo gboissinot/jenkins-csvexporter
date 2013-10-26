@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Gregory Boissinot
  */
-public class LocalJenkinsReader implements JenkinsReader {
+public class LocalJenkinsReader implements JenkinsReaderExtensionPoint {
 
     private final String folderPath;
 
@@ -24,6 +24,7 @@ public class LocalJenkinsReader implements JenkinsReader {
         this.folderPath = folderPath;
     }
 
+    @Override
     public List<String> buildURLs() {
         List<String> urls = new ArrayList<String>();
         File configDir = new File(folderPath);
@@ -37,6 +38,7 @@ public class LocalJenkinsReader implements JenkinsReader {
         return urls;
     }
 
+    @Override
     public String getJobName(String jobURL) {
         File configFile = new File(jobURL);
         String configFileName = configFile.getName();
@@ -46,6 +48,7 @@ public class LocalJenkinsReader implements JenkinsReader {
         return configFileName;
     }
 
+    @Override
     public String getConfigXML(String jobURL) {
         try {
             return IOUtils.toString(new InputStreamReader(new FileInputStream(jobURL)));
