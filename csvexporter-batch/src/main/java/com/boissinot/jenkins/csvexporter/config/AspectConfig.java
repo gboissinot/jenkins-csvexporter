@@ -10,5 +10,5 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @ComponentScan("com.boissinot.jenkins.csvexporter.integration.aspect")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-public class AppConfig {
+public class AspectConfig {
 }
