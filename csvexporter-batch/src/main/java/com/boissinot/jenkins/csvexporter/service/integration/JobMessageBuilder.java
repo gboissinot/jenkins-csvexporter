@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.integration;
+package com.boissinot.jenkins.csvexporter.service.integration;
 
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import org.springframework.integration.Message;

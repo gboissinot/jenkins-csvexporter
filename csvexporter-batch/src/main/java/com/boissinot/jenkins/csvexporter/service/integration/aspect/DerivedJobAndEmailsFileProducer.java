@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.integration.aspect;
+package com.boissinot.jenkins.csvexporter.service.integration.aspect;
 
 import com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders;
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
@@ -19,12 +19,12 @@ import java.io.*;
 @Aspect
 public class DerivedJobAndEmailsFileProducer {
 
-    @Pointcut("execution(* com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder.buildObj(*))")
-    public void buildObj() {
+    @Pointcut("within(com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder) && args(org.springframework.integration.MessageHeaders)")
+    private void buildObjPointcut() {
     }
 
-    @AfterReturning(value = "buildObj()", returning = "outputCSVJobObj")
-    public void display(JoinPoint joinPoint, OutputCSVJobObj outputCSVJobObj) {
+    @AfterReturning(value = "buildObjPointcut()", returning = "outputCSVJobObj")
+    private void writeDerivedJobEmailsFile(JoinPoint joinPoint, OutputCSVJobObj outputCSVJobObj) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
@@ -33,7 +33,7 @@ public class DerivedJobAndEmailsFileProducer {
             final MessageHeaders messageHeaders = (MessageHeaders) (joinPoint.getArgs()[0]);
             final String updateEmailFilePath = (String) messageHeaders.get(JobMessageHeaders.HEADER_EMAIL_FILE_PATH);
             if (updateEmailFilePath == null) {
-                throw new ExportException("The update Email file path must be set");
+                throw new ExportException("The email file path must be set");
             }
             File jobEmailsFile = new File(updateEmailFilePath);
             jobEmailsFile.createNewFile();

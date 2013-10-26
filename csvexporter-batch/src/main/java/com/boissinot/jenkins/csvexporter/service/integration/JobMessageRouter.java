@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.integration;
+package com.boissinot.jenkins.csvexporter.service.integration;
 
 /**
  * @author Gregory Boissinot

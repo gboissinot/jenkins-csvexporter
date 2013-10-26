@@ -22,8 +22,8 @@
         <int:router ref="jobMessageRouter"/>
     </int:chain>
 
-    <bean id="jobMessageBuilder" class="com.boissinot.jenkins.csvexporter.integration.JobMessageBuilder"/>
-    <bean id="jobMessageRouter" class="com.boissinot.jenkins.csvexporter.integration.JobMessageRouter"/>
+    <bean id="jobMessageBuilder" class="com.boissinot.jenkins.csvexporter.service.integration.JobMessageBuilder"/>
+    <bean id="jobMessageRouter" class="com.boissinot.jenkins.csvexporter.service.integration.JobMessageRouter"/>
 
     <int:channel id="matrixJobsChannel" datatype="java.lang.String"/>
     <int:channel id="mavenJobsChannel" datatype="java.lang.String"/>

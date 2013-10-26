@@ -39,6 +39,7 @@ public class OutputObjBuilder {
     }
 
     @ServiceActivator
+    @SuppressWarnings("unused")
     public OutputCSVJobObj buildObj(MessageHeaders headers) {
         OutputCSVJobObj.Builder builder = new OutputCSVJobObj.Builder();
 
