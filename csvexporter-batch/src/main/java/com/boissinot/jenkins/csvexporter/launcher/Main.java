@@ -36,7 +36,7 @@ public class Main {
     private static JobParameters getBatchJobParameters() throws IOException {
         JobParametersBuilder parametersBuilder = new JobParametersBuilder();
 
-        final Properties properties = PropertiesLoaderUtils.loadAllProperties("default-batch-param.properties");
+        final Properties properties = PropertiesLoaderUtils.loadAllProperties("default-batch-params.properties");
         for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             String paramKey = (String) entry.getKey();
             final String systemPropertyValue = System.getProperty(paramKey);
