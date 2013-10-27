@@ -1,18 +1,23 @@
 package com.boissinot.jenkins.csvexporter.launcher;
 
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Gregory Boissinot
  */
 public class Main {
 
-    public static void main(String[] args) throws JobInstanceAlreadyCompleteException, JobParametersInvalidException, JobRestartException, JobExecutionAlreadyRunningException {
+    public static void main(String[] args) throws Exception {
 
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext();
         applicationContext.getEnvironment().setActiveProfiles("remote");
@@ -22,53 +27,28 @@ public class Main {
         JobLauncher jobLauncher = applicationContext.getBean("jobLauncher", JobLauncher.class);
         Job job = applicationContext.getBean("extract-jenkins-job", Job.class);
 
-        JobExecution jobExecution = jobLauncher.run(job, getJobParameters());
+        JobExecution jobExecution = jobLauncher.run(job, getBatchJobParameters());
         System.out.println(jobExecution.getExitStatus());
         System.out.println(jobExecution.getFailureExceptions());
         applicationContext.close();
     }
 
-    private static JobParameters getJobParameters() {
+    private static JobParameters getBatchJobParameters() throws IOException {
         JobParametersBuilder parametersBuilder = new JobParametersBuilder();
 
-        final String onFolder = System.getProperty("onFolder");
-        if (onFolder == null) {
-            parametersBuilder.addString("on.folder", "false");
-            final String jenkinsURL = System.getProperty("jenkinsURL");
-            if (jenkinsURL == null) {
-                parametersBuilder.addString("jenkins.url", "http://calypso/jenkins/");
+        final Properties properties = PropertiesLoaderUtils.loadAllProperties("default-batch-param.properties");
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            String paramKey = (String) entry.getKey();
+            final String systemPropertyValue = System.getProperty(paramKey);
+            if (systemPropertyValue == null) {
+
+                String paramValue = (String) entry.getValue();
+                parametersBuilder.addString(paramKey, paramValue);
             } else {
-                parametersBuilder.addString("jenkins.url", jenkinsURL);
-            }
-        } else {
-            if (Boolean.valueOf(onFolder)) {
-                parametersBuilder.addString("on.folder", onFolder);
-                final String folderPath = System.getProperty("folderPath");
-                parametersBuilder.addString("folder.path", folderPath);
+                parametersBuilder.addString(paramKey, systemPropertyValue);
             }
         }
-
-        final String exportJobsPath = System.getProperty("exportJobsPath");
-        if (exportJobsPath == null) {
-            parametersBuilder.addString("exportcsv.filepath", "export-jobs.csv");
-        } else {
-            parametersBuilder.addString("exportcsv.filepath", exportJobsPath);
-        }
-
-        final String errorJobsPath = System.getProperty("exportJobsPath");
-        if (errorJobsPath == null) {
-            parametersBuilder.addString("error.exportcsv.filepath", "export-jobs-errors.txt");
-        } else {
-            parametersBuilder.addString("error.exportcsv.filepath", exportJobsPath);
-        }
-
-        final String updateEmailFilePath = System.getProperty("exportJobsPath");
-        if (errorJobsPath == null) {
-            parametersBuilder.addString("update.email.filepath", "jobEmails.txt");
-        } else {
-            parametersBuilder.addString("update.email.filepath", updateEmailFilePath);
-        }
-
         return parametersBuilder.toJobParameters();
     }
+
 }
