@@ -47,7 +47,7 @@ public class StartGenerator {
             long endtime = System.currentTimeMillis();
             final Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(endtime - starttime);
-            logger.info(String.format("Took %s m and %s s.", calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND)));
+            logger.info(String.format("Took %sm and %ss.", calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND)));
 
         } catch (IOException ioe) {
             throw new ExportException(ioe);
