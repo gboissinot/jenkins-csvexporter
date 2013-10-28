@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Properties;
 
@@ -24,9 +25,9 @@ public class StartGenerator {
 
     public void generate() throws ExportException {
         try {
-            long startime = System.nanoTime();
+            long starttime = System.currentTimeMillis();
 
-            logger.info("Generating a CSV reporting file from Jenkins instance");
+            logger.info("Generating a CSV reporting file from a Jenkins instance.");
             logger.info("Starting...");
 
             ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext();
@@ -40,9 +41,13 @@ public class StartGenerator {
             JobExecution jobExecution = jobLauncher.run(job, getBatchJobParameters());
             logger.info(String.valueOf(jobExecution.getExitStatus()));
             logger.info(String.valueOf(jobExecution.getFailureExceptions()));
+            logger.info("Stopping...");
             applicationContext.close();
-            long endtime = System.nanoTime();
-            logger.info(String.format("Stopping in %s ms", (endtime - startime)));
+
+            long endtime = System.currentTimeMillis();
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(endtime - starttime);
+            logger.info(String.format("Took %s m and %s s.", calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND)));
 
         } catch (IOException ioe) {
             throw new ExportException(ioe);
