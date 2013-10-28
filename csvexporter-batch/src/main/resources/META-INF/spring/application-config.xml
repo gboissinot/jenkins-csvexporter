@@ -107,6 +107,7 @@
           class="com.boissinot.jenkins.csvexporter.batch.CleanupOutputFilesTasklet"
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
+          c:logFilePath="#{jobParameters['log.filepath']}"
           scope="step"/>
 
     <bean id="skipExportListener"
@@ -139,10 +140,9 @@
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader">
             <property name="extractorList">
                 <list>
-                    <bean class="com.boissinot.jenkins.csvexporter.batch.loader.CVSModulesFileExtractor">
-                        <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-                        <property name="cvsModuleURL" value="${cvs.module.url}"/>
-                    </bean>
+                    <bean class="com.boissinot.jenkins.csvexporter.batch.loader.CVSModulesFileExtractor"
+                          c:cvsModuleURL="${cvs.module.url}"
+                          c:httpResourceContentFetcher-ref="httpResourceContentFetcher"/>
                 </list>
             </property>
         </bean>

@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class BatchContextLoader implements Tasklet {
 
-    private List<? extends ContextExtractor> extractorList = new ArrayList<ContextExtractor>();
+    private List<? extends ContextExtractorExtensionPoint> extractorList = new ArrayList<ContextExtractorExtensionPoint>();
 
-    public void setExtractorList(List<? extends ContextExtractor> extractorList) {
+    public void setExtractorList(List<? extends ContextExtractorExtensionPoint> extractorList) {
         this.extractorList = extractorList;
     }
 
@@ -26,7 +26,7 @@ public class BatchContextLoader implements Tasklet {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         Map<String, Map<String, String>> mapContext = new HashMap<String, Map<String, String>>();
         if (extractorList != null) {
-            for (ContextExtractor contextExtractor : extractorList) {
+            for (ContextExtractorExtensionPoint contextExtractor : extractorList) {
                 mapContext.put(contextExtractor.getKey(), contextExtractor.getContextualInfo());
             }
         }

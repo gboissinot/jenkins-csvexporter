@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
  */
 public class CSVCellProcessor {
 
-
     public String getCSVAware(@Nullable String content) {
         if (content == null) {
             return null;

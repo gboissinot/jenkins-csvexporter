@@ -12,17 +12,14 @@ import java.util.Map;
 /**
  * @author Gregory Boissinot
  */
-public class CVSModulesFileExtractor implements ContextExtractor {
+public class CVSModulesFileExtractor implements ContextExtractorExtensionPoint {
 
     private HttpResourceContentFetcher httpResourceContentFetcher;
 
     private String cvsModuleURL;
 
-    public void setHttpResourceContentFetcher(HttpResourceContentFetcher httpResourceContentFetcher) {
+    public CVSModulesFileExtractor(HttpResourceContentFetcher httpResourceContentFetcher, String cvsModuleURL) {
         this.httpResourceContentFetcher = httpResourceContentFetcher;
-    }
-
-    public void setCvsModuleURL(String cvsModuleURL) {
         this.cvsModuleURL = cvsModuleURL;
     }
 

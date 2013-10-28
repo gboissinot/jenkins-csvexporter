@@ -4,6 +4,7 @@ import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.command.BuildersElementRetriever;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.scm.SCMElementBuilder;
 import org.springframework.integration.MessageHeaders;
+import org.springframework.integration.annotation.ServiceActivator;
 import org.w3c.dom.Node;
 
 import static com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders.*;
@@ -13,6 +14,8 @@ import static com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders.*;
  */
 public class ConfigObjPayloadJobTransformer {
 
+    @ServiceActivator
+    @SuppressWarnings("unused")
     public ConfigJob buildConfigObj(MessageHeaders headers) {
 
         ConfigJob configJob = new ConfigJob();

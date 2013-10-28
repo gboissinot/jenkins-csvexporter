@@ -16,16 +16,20 @@ public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
 
     private final String errorCSVFilePath;
     private final String updateEmailFilePath;
+    private final String logFilePath;
 
-    public CleanupOutputFilesTasklet(String errorCSVFilePath, String updateEmailFilePath) {
+    public CleanupOutputFilesTasklet(String errorCSVFilePath, String updateEmailFilePath, String logFilePath) {
         this.errorCSVFilePath = errorCSVFilePath;
         this.updateEmailFilePath = updateEmailFilePath;
+        this.logFilePath = logFilePath;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         Assert.notNull(errorCSVFilePath, "The error CSV file path must be set");
         Assert.notNull(updateEmailFilePath, "The update email file path must be set");
+        Assert.notNull(logFilePath, "The log file path must be set");
+
     }
 
     @Override
@@ -41,6 +45,12 @@ public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
         File updateEmailFile = new File(updateEmailFilePath);
         if (updateEmailFile.exists()) {
             updateEmailFile.delete();
+        }
+
+        //Log File
+        File logFile = new File(logFilePath);
+        if (logFile.exists()) {
+            logFile.delete();
         }
 
         return null;

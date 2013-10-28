@@ -1,6 +1,8 @@
 package com.boissinot.jenkins.csvexporter.service.extractor.maven.pom;
 
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -8,6 +10,8 @@ import java.util.Map;
  * @author Gregory Boisisnot
  */
 public class POMFileInfoExtractor {
+
+    private final Logger logger = LoggerFactory.getLogger(POMFileInfoExtractor.class);
 
     private String csvViewerRootUrl;
 
@@ -17,18 +21,28 @@ public class POMFileInfoExtractor {
 
     public String getPomUrl(ConfigJob configJob, Map<String, Map<String, String>> contextModuleMap) {
 
+        final String jobName = configJob.getName();
+
         //Remove Template JOBs
-        if (configJob.getName().contains("template")) {
-            System.out.println("Exclude Template JOB");
+        if (jobName.contains("template")) {
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Exclude VCS for the template JOB '%s'", jobName));
+            }
             return null;
         }
 
         if (configJob.getSvnURL() != null) {
-            return configJob.getSvnURL() + "/pom.xml";
+            final String svnURL = configJob.getSvnURL() + "/pom.xml";
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Processing job '%s' with SVN URL '%s'", jobName, svnURL));
+            }
+            return svnURL;
         }
 
         if (configJob.getGitURL() != null) {
-            System.out.println("GIT URL with pom.xml " + configJob.getGitURL() + "/pom.xml");
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Exclude processing job '%s' for GIT URL '%s'", jobName, configJob.getGitURL() + "/pom.xml"));
+            }
             return null;
         }
 
@@ -38,9 +52,17 @@ public class POMFileInfoExtractor {
             if (cvsMap != null) {
                 String modulePath = cvsMap.get(cvsModule) == null ? cvsModule : cvsMap.get(cvsModule);
                 if (configJob.getCvsBranche() != null) {
-                    return csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche();
+                    final String cvsURL = csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche();
+                    if (logger.isDebugEnabled()) {
+                        logger.debug(String.format("Processing job '%s' with CVS URL '%s'", jobName, cvsURL));
+                    }
+                    return cvsURL;
                 } else {
-                    return csvViewerRootUrl + modulePath + "/pom.xml?view=co";
+                    final String cvsURL = csvViewerRootUrl + modulePath + "/pom.xml?view=co";
+                    if (logger.isDebugEnabled()) {
+                        logger.debug(String.format("Processing job '%s' with CVS URL '%s'", jobName, cvsURL));
+                    }
+                    return cvsURL;
                 }
             }
         }

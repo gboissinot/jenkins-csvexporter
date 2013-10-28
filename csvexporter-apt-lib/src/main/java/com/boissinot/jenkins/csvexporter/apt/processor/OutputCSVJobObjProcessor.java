@@ -94,7 +94,6 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
             return false;
         }
 
-
         return true;
     }
 

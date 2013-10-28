@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @author Gregory Boissinot
  */
-public interface ContextExtractor {
+public interface ContextExtractorExtensionPoint {
 
     public String getKey();
 
