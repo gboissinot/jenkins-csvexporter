@@ -10,7 +10,7 @@ public class BuildersElementRetriever {
 
     public String buildCommandSection(Node buildersNode) {
 
-        if (buildersNode == null){
+        if (buildersNode == null) {
             throw new NullPointerException("A builders not must be set.");
         }
 
@@ -28,11 +28,14 @@ public class BuildersElementRetriever {
                 ShellElementRetriever shellElementRetriever = new ShellElementRetriever();
                 builder.append(shellElementRetriever.buildShellCommand(builderNode));
             } else {
-                // throw new UnsupportedOperationException("Only Shell and Maven command supported.");
+                //TODO MANAGE WINDOWS BATCH COMMAND
             }
         }
 
-        builder.delete(0, 1);
+        if (builder.length() > 0) {
+            builder.delete(0, 1);
+        }
+
         return builder.toString();
     }
 }
