@@ -24,7 +24,7 @@ public class HttpConnectionRetriever {
     public HttpURLConnection getConnection(String httpURL) throws IOException {
         URL url = new URL(httpURL);
         HttpURLConnection httpURLConnection;
-        if (isShouldUseProxy(httpURL)) {
+        if (!isShouldUseProxy(httpURL)) {
             httpURLConnection = (HttpURLConnection) url.openConnection();
         } else {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, httpProxyPort));
