@@ -4,8 +4,6 @@ import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import com.boissinot.jenkins.csvexporter.domain.JobMessageHeaders;
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +21,9 @@ import org.springframework.util.Assert;
  */
 public class JobItemProcessor implements ItemProcessor<InputSBJobObj, OutputCSVJobObj>, InitializingBean {
 
-    private final Logger logger = LoggerFactory.getLogger(JobItemProcessor.class);
     @Autowired
     private MessageChannel inputChannel;
+
     @Autowired
     @Value("#{jobParameters['update.email.filepath']}")
     private String updateEmailFilePath;
@@ -38,7 +36,6 @@ public class JobItemProcessor implements ItemProcessor<InputSBJobObj, OutputCSVJ
 
     @Override
     public OutputCSVJobObj process(InputSBJobObj inputSBJobObj) throws Exception {
-        logger.info(String.format("Processing '%s'", inputSBJobObj.getJobName()));
         MessagingTemplate messagingTemplate = new MessagingTemplate();
         messagingTemplate.setReceiveTimeout(5000l);
         Object result = messagingTemplate.convertSendAndReceive(inputChannel, inputSBJobObj, new MessagePostProcessor() {
