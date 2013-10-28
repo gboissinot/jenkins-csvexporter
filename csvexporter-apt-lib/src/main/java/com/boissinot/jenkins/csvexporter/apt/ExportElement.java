@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * @author Gregory Boissinot
  */
-
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Documented
