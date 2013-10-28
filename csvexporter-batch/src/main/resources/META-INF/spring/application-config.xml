@@ -4,17 +4,21 @@
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
     http://www.springframework.org/schema/batch
     http://www.springframework.org/schema/batch/spring-batch.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <context:component-scan
             base-package="com.boissinot.jenkins.csvexporter.domain.generated,com.boissinot.jenkins.csvexporter.javaconfig"/>
-    <context:property-placeholder location="infra-config.properties"/>
+
+    <context:property-placeholder properties-ref="configProps"/>
 
     <import resource="batch-infra.xml"/>
     <import resource="extract-spi.xml"/>
@@ -134,7 +138,11 @@
           class="com.boissinot.jenkins.csvexporter.service.integration.ConfigObjPayloadJobTransformer"/>
 
     <beans profile="local">
+
+        <util:properties id="configProps" location="config/local/infra-config.properties"/>
+
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader"/>
+
         <bean id="jenkinsReader"
               class="com.boissinot.jenkins.csvexporter.batch.LocalJenkinsReader"
               c:folderPath="#{jobParameters['folder.path']}"
@@ -142,6 +150,9 @@
     </beans>
 
     <beans profile="remote">
+
+        <util:properties id="configProps" location="config/remote/infra-config.properties"/>
+
         <bean id="batchContextLoader" class="com.boissinot.jenkins.csvexporter.batch.loader.BatchContextLoader">
             <property name="extractorList">
                 <list>
@@ -151,6 +162,7 @@
                 </list>
             </property>
         </bean>
+
         <bean id="jenkinsReader"
               class="com.boissinot.jenkins.csvexporter.batch.RemoteJenkinsReader"
               c:httpResourceContentFetcher-ref="httpResourceContentFetcher"
