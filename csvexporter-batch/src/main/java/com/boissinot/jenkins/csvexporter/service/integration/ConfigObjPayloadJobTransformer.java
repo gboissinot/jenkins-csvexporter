@@ -54,9 +54,11 @@ public class ConfigObjPayloadJobTransformer {
 
         //builders
         final Node buildersNode = (Node) headers.get("builders");
-        BuildersElementRetriever buildersElementRetriever = new BuildersElementRetriever();
-        final String buildSteps = buildersElementRetriever.buildCommandSection(buildersNode);
-        configJob.setBuildSteps(buildSteps);
+        if (buildersNode != null) {
+            BuildersElementRetriever buildersElementRetriever = new BuildersElementRetriever();
+            final String buildSteps = buildersElementRetriever.buildCommandSection(buildersNode);
+            configJob.setBuildSteps(buildSteps);
+        }
 
         return configJob;
     }

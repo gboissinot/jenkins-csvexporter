@@ -10,8 +10,11 @@ public class BuildersElementRetriever {
 
     public String buildCommandSection(Node buildersNode) {
 
-        StringBuilder builder = new StringBuilder();
+        if (buildersNode == null){
+            throw new NullPointerException("A builders not must be set.");
+        }
 
+        StringBuilder builder = new StringBuilder();
         NodeList childNodes = buildersNode.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             builder.append("\n");
