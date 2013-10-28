@@ -18,13 +18,13 @@
 
     <task:executor id="taskExecutor" pool-size="10"/>
 
-    <int:delayer id="delayer"
-                 input-channel="inputChannel"
-                 output-channel="jobsChannel"
-                 default-delay="500"/>
+    <!--<int:delayer id="delayer"-->
+                 <!--input-channel="inputChannel"-->
+                 <!--output-channel="jobsChannel"-->
+                 <!--default-delay="500"/>-->
     <int:channel id="jobsChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
 
-    <int:chain input-channel="jobsChannel">
+    <int:chain input-channel="inputChannel">
         <int:transformer ref="xmlPayloadJobTransformer"/>
         <int:router ref="jobMessageRouter"/>
     </int:chain>
