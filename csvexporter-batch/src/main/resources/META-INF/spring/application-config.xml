@@ -105,10 +105,15 @@
 
     <bean id="cleanupOutputFilesTasklet"
           class="com.boissinot.jenkins.csvexporter.batch.CleanupOutputFilesTasklet"
-          c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
-          c:updateEmailFilePath="#{jobParameters['update.email.filepath']}"
-          c:logFilePath="#{jobParameters['log.filepath']}"
-          scope="step"/>
+          scope="step">
+        <constructor-arg>
+            <list>
+                <value>#{jobParameters['error.exportcsv.filepath']}</value>
+                <value>#{jobParameters['update.email.filepath']}</value>
+                <value>#{jobParameters['log.filepath']}</value>
+            </list>
+        </constructor-arg>
+    </bean>
 
     <bean id="skipExportListener"
           class="com.boissinot.jenkins.csvexporter.batch.SkipExportListener"

@@ -8,52 +8,34 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author Gregory Boissinot
  */
 public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
 
-    private final String errorCSVFilePath;
-    private final String updateEmailFilePath;
-    private final String logFilePath;
+    private List<String> filePath2Delete;
 
-    public CleanupOutputFilesTasklet(String errorCSVFilePath, String updateEmailFilePath, String logFilePath) {
-        this.errorCSVFilePath = errorCSVFilePath;
-        this.updateEmailFilePath = updateEmailFilePath;
-        this.logFilePath = logFilePath;
+    public CleanupOutputFilesTasklet(List<String> filePath2Delete) {
+        this.filePath2Delete = filePath2Delete;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.notNull(errorCSVFilePath, "The error CSV file path must be set");
-        Assert.notNull(updateEmailFilePath, "The update email file path must be set");
-        Assert.notNull(logFilePath, "The log file path must be set");
-
+        Assert.notNull(filePath2Delete, "A file list to delete must be set");
     }
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-        //Error CSV File
-        File errorCSVFile = new File(errorCSVFilePath);
-        if (errorCSVFile.exists()) {
-            errorCSVFile.delete();
-        }
-
-        //Update Email File
-        File updateEmailFile = new File(updateEmailFilePath);
-        if (updateEmailFile.exists()) {
-            updateEmailFile.delete();
-        }
-
-        //Log File
-        File logFile = new File(logFilePath);
-        if (logFile.exists()) {
-            logFile.delete();
+        for (String filePath : filePath2Delete) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
         }
 
         return null;
     }
-
 }
