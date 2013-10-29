@@ -2,7 +2,6 @@ package com.boissinot.jenkins.csvexporter.batch.aspect;
 
 import com.boissinot.jenkins.csvexporter.batch.JobItemProcessor;
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -19,13 +18,12 @@ public class JobItemProcessorLogger {
 
     private final Logger logger = LoggerFactory.getLogger(JobItemProcessor.class);
 
-    @Pointcut("within(com.boissinot.jenkins.csvexporter.batch.JobItemProcessor) && args(com.boissinot.jenkins.csvexporter.domain.InputSBJobObj)")
-    private void logger() {
+    @Pointcut("within(com.boissinot.jenkins.csvexporter.batch.JobItemProcessor) && args(inputObj)")
+    private void logger(InputSBJobObj inputObj) {
     }
 
-    @Before(value = "logger()")
-    private void logCurrentJob(JoinPoint joinPoint) {
-        InputSBJobObj inputSBJobObj = (InputSBJobObj) joinPoint.getArgs()[0];
-        logger.info(String.format("Processing '%s'", inputSBJobObj.getJobName()));
+    @Before(value = "logger(inputObj)")
+    private void logCurrentJob(InputSBJobObj inputObj) {
+        logger.info(String.format("Processing '%s'", inputObj.getJobName()));
     }
 }
