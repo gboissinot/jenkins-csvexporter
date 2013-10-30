@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:batch="http://www.springframework.org/schema/batch"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:c="http://www.springframework.org/schema/c"
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
@@ -125,14 +126,30 @@
           scope="step"/>
 
     <bean id="outputObjBuilder"
-          class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder">
+          class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder"
+          p:developerInfoRetriever-ref="developerInfoRetriever"/>
+
+    <bean id="developerInfoRetriever"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.DeveloperInfoRetriever">
         <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
-        <property name="pomFileInfoExtractor">
-            <bean class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor">
-                <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
-            </bean>
+        <property name="strategies">
+            <list>
+                <ref bean="svnRemotePOMURLStrategy"/>
+                <ref bean="gitRemotePOMURLStrategy"/>
+                <ref bean="cvsRemotePOMURLStrategy"/>
+            </list>
         </property>
     </bean>
+
+    <bean id="svnRemotePOMURLStrategy"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.SVNRemotePOMURLStrategy"/>
+    <bean id="gitRemotePOMURLStrategy"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.GITRemotePOMURLStrategy"/>
+    <bean id="cvsRemotePOMURLStrategy"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.CVSRemotePOMURLStrategy">
+        <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
+    </bean>
+
 
     <bean id="configObjPayloadJobTransformer"
           class="com.boissinot.jenkins.csvexporter.service.integration.ConfigObjPayloadJobTransformer"/>

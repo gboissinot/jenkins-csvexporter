@@ -19,10 +19,10 @@ public class JobItemProcessorLogger {
     private final Logger logger = LoggerFactory.getLogger(JobItemProcessor.class);
 
     @Pointcut("within(com.boissinot.jenkins.csvexporter.batch.JobItemProcessor) && args(inputObj)")
-    private void logger(InputSBJobObj inputObj) {
+    private void loggerPointcut(InputSBJobObj inputObj) {
     }
 
-    @Before(value = "logger(inputObj)")
+    @Before(value = "loggerPointcut(inputObj)")
     private void logCurrentJob(InputSBJobObj inputObj) {
         logger.info(String.format("Processing '%s'", inputObj.getJobName()));
     }

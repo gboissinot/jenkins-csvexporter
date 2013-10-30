@@ -2,16 +2,11 @@ package com.boissinot.jenkins.csvexporter.service.extractor.jenkins;
 
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
-import com.boissinot.jenkins.csvexporter.domain.maven.pom.Developer;
-import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.pom.DeveloperElementRetriever;
-import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMDeveloperSectionExtractor;
-import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMFileInfoExtractor;
-import com.boissinot.jenkins.csvexporter.service.http.HttpResourceContentFetcher;
+import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.DeveloperInfoRetriever;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.integration.Message;
 import org.springframework.integration.annotation.ServiceActivator;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,17 +14,11 @@ import java.util.Map;
  */
 public class OutputObjBuilder {
 
-    private HttpResourceContentFetcher httpResourceContentFetcher;
-    private POMFileInfoExtractor pomFileInfoExtractor;
+    private DeveloperInfoRetriever developerInfoRetriever;
 
     @Required
-    public void setHttpResourceContentFetcher(HttpResourceContentFetcher httpResourceContentFetcher) {
-        this.httpResourceContentFetcher = httpResourceContentFetcher;
-    }
-
-    @Required
-    public void setPomFileInfoExtractor(POMFileInfoExtractor pomFileInfoExtractor) {
-        this.pomFileInfoExtractor = pomFileInfoExtractor;
+    public void setDeveloperInfoRetriever(DeveloperInfoRetriever developerInfoRetriever) {
+        this.developerInfoRetriever = developerInfoRetriever;
     }
 
     @ServiceActivator
@@ -53,14 +42,7 @@ public class OutputObjBuilder {
         builder.gitURL(configJob.getGitURL());
 
         final Map module_map = (Map) messageConfigJob.getHeaders().get("MODULE_MAP");
-        String remotePomUrl = pomFileInfoExtractor.getPomUrl(configJob, module_map);
-        if (remotePomUrl != null) {
-            String pomContent = httpResourceContentFetcher.getContent(remotePomUrl);
-            POMDeveloperSectionExtractor sectionExtractor = new POMDeveloperSectionExtractor();
-            List<Developer> developers = sectionExtractor.extract(pomContent);
-            DeveloperElementRetriever retriever = new DeveloperElementRetriever();
-            builder.developers(retriever.buildDeveloperSection(developers));
-        }
+        builder.developers(developerInfoRetriever.getDevelopers(configJob, module_map));
 
         return builder.build();
     }

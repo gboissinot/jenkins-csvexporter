@@ -38,7 +38,6 @@ public class POMDeveloperSectionExtractor {
             XPath xpath = xpathFact.newXPath();
             org.w3c.dom.NodeList developerNodeList = (org.w3c.dom.NodeList) xpath.evaluate("//developer", document, XPathConstants.NODESET);
 
-
             for (int i = 0; i < developerNodeList.getLength(); i++) {
 
                 Developer developer = new Developer();
