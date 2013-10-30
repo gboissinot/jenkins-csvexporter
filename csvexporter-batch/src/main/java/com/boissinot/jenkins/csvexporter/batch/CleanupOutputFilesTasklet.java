@@ -15,21 +15,21 @@ import java.util.List;
  */
 public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
 
-    private List<String> filePath2Delete;
+    private List<String> filePathList2Delete;
 
-    public CleanupOutputFilesTasklet(List<String> filePath2Delete) {
-        this.filePath2Delete = filePath2Delete;
+    public CleanupOutputFilesTasklet(List<String> filePath2ListDelete) {
+        this.filePathList2Delete = filePathList2Delete;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.notNull(filePath2Delete, "A file list to delete must be set");
+        Assert.notNull(filePathList2Delete, "A list of file path for deletion must be set");
     }
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-        for (String filePath : filePath2Delete) {
+        for (String filePath : filePathList2Delete) {
             File file = new File(filePath);
             if (file.exists()) {
                 file.delete();
