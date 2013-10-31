@@ -133,14 +133,6 @@
 
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>spring-s3</id>
-            <name>Spring Maven Snapshot Repository</name>
-            <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
