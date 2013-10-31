@@ -2,7 +2,6 @@ package com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.aspect;
 
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.RemotePOMURLStrategy;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -32,15 +31,14 @@ public class PomExtractionLogger {
         }
     }
 
-    @Pointcut("execution(String com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.RemotePOMURLStrategy.getRemotePomURL(*,*)) && args(configJob, objects)")
-    private void remotePomURLPointcut(ConfigJob configJob, Object... objects) {
+    @Pointcut("execution(String com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.RemotePOMURLStrategy.getRemotePomURL(*,*)) && args(configJob, objects) && target(remoteStrategy)")
+    private void remotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, Object... objects) {
     }
 
-    @AfterReturning(value = "remotePomURLPointcut(configJob, objects)", returning = "pomRemoteURL")
-    private void logGetRemotePomURLPointcut(JoinPoint jointPoint, ConfigJob configJob, String pomRemoteURL, Object... objects) {
+    @AfterReturning(value = "remotePomURLPointcut(configJob, remoteStrategy,objects)", returning = "pomRemoteURL")
+    private void logGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, String pomRemoteURL, Object... objects) {
         if (logger.isDebugEnabled()) {
             String jobName = configJob.getName();
-            RemotePOMURLStrategy remoteStrategy = (RemotePOMURLStrategy) jointPoint.getTarget();
             String beanName = remoteStrategy.getBeanName();
             logger.debug(String.format("Using Spring bean %s.", beanName));
             logger.debug(String.format("Extracted POM content for '%s' job.", jobName));
