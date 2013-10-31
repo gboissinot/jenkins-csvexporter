@@ -150,7 +150,6 @@
         <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
     </bean>
 
-
     <bean id="configObjPayloadJobTransformer"
           class="com.boissinot.jenkins.csvexporter.service.integration.ConfigObjPayloadJobTransformer"/>
 

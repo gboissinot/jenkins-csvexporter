@@ -1,6 +1,7 @@
 package com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.aspect;
 
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
+import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.RemotePOMURLStrategy;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -30,55 +31,30 @@ public class PomExtractionLogger {
         }
     }
 
-
-    @Pointcut("bean(svnRemotePOMURLStrategy) && args(configJob, objects)")
-    private void svnGetRemotePomURLPointcut(ConfigJob configJob, Object... objects) {
+    @Pointcut("bean(svnRemotePOMURLStrategy) && args(configJob, objects) && target(remoteStrategy)")
+    private void svnGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, Object... objects) {
     }
 
-    @Pointcut("bean(gitRemotePOMURLStrategy) && args(configJob, objects)")
-    private void gitGetRemotePomURLPointcut(ConfigJob configJob, Object... objects) {
+    @Pointcut("bean(gitRemotePOMURLStrategy) && args(configJob, objects) && target(remoteStrategy)")
+    private void gitGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, Object... objects) {
     }
 
-    @Pointcut("bean(cvsRemotePOMURLStrategy) && args(configJob, objects)")
-    private void cvsGetRemotePomURLPointcut(ConfigJob configJob, Object... objects) {
+    @Pointcut("bean(cvsRemotePOMURLStrategy) && args(configJob, objects) && target(remoteStrategy)")
+    private void cvsGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, Object... objects) {
     }
 
-    @AfterReturning(value = "svnGetRemotePomURLPointcut(configJob, objects)", returning = "pomRemoteURL")
-    private void svnLogGetRemotePomURLPointcut(ConfigJob configJob, String pomRemoteURL, Object... objects) {
+    @AfterReturning(value = "svnGetRemotePomURLPointcut(configJob, remoteStrategy,objects) || gitGetRemotePomURLPointcut(configJob, remoteStrategy, objects) || cvsGetRemotePomURLPointcut(configJob, remoteStrategy, objects)", returning = "pomRemoteURL")
+    private void svnLogGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, String pomRemoteURL, Object... objects) {
         if (logger.isDebugEnabled()) {
             String jobName = configJob.getName();
-            logger.debug(String.format("Extracted POM Content for %s job with a SVN URL.", jobName));
+            String beanName = remoteStrategy.getBeanName();
+            logger.debug(String.format("Using Spring bean %s.", beanName));
+            logger.debug(String.format("Extracted POM content for '%s' job.", jobName));
             if (pomRemoteURL == null) {
-                logger.debug("Can't compute the SVN URL");
+                logger.debug(String.format("Can't compute the remote %s POM URL", remoteStrategy.getType()));
                 return;
             }
-            logger.debug(String.format("The SVN URL is %s.", pomRemoteURL));
-        }
-    }
-
-    @AfterReturning(value = "gitGetRemotePomURLPointcut(configJob, objects)", returning = "pomRemoteURL")
-    private void gitLogGetRemotePomURLPointcut(ConfigJob configJob, String pomRemoteURL, Object... objects) {
-        if (logger.isDebugEnabled()) {
-            String jobName = configJob.getName();
-            logger.debug(String.format("Extracted POM Content for %s job with a GIT URL.", jobName));
-            if (pomRemoteURL == null) {
-                logger.debug("Can't compute the GIT URL");
-                return;
-            }
-            logger.debug(String.format("The GIT URL is %s.", pomRemoteURL));
-        }
-    }
-
-    @AfterReturning(value = "cvsGetRemotePomURLPointcut(configJob, objects)", returning = "pomRemoteURL")
-    private void cvsLogGetRemotePomURLPointcut(ConfigJob configJob, String pomRemoteURL, Object... objects) {
-        if (logger.isDebugEnabled()) {
-            String jobName = configJob.getName();
-            logger.debug(String.format("Extracted POM Content for %s job with a CVS URL.", jobName));
-            if (pomRemoteURL == null) {
-                logger.debug("Can't compute the CVS URL");
-                return;
-            }
-            logger.debug(String.format("The CVS URL is %s.", pomRemoteURL));
+            logger.debug(String.format("The remote POM URL(%s URL) is '%s'.", remoteStrategy.getType(), pomRemoteURL));
         }
     }
 

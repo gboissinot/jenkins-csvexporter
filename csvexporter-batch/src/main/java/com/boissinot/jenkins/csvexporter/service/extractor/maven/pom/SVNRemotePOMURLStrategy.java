@@ -5,7 +5,7 @@ import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
 /**
  * @author Gregory Boissinot
  */
-public class SVNRemotePOMURLStrategy implements RemotePOMURLStrategy {
+public class SVNRemotePOMURLStrategy extends RemotePOMURLStrategyAdapter {
 
     @Override
     public StrategyType getType() {
@@ -16,4 +16,5 @@ public class SVNRemotePOMURLStrategy implements RemotePOMURLStrategy {
     public String getRemotePomURL(ConfigJob configJob, Object... contextObjects) {
         return configJob.getSvnURL() + "/pom.xml";
     }
+
 }

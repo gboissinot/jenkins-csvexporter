@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @author Gregory Boissinot
  */
-public class CVSRemotePOMURLStrategy implements RemotePOMURLStrategy {
+public class CVSRemotePOMURLStrategy extends RemotePOMURLStrategyAdapter {
 
     private String csvViewerRootUrl;
 

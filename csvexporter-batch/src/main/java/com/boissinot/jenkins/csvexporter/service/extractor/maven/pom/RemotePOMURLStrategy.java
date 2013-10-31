@@ -10,4 +10,7 @@ public interface RemotePOMURLStrategy {
     public String getRemotePomURL(ConfigJob configJob, Object... contextObjects);
 
     public StrategyType getType();
+
+    public String getBeanName();
+
 }
