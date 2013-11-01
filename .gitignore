@@ -6,5 +6,5 @@ target
 *.iws
 *.iml
 work
-/bin
+bin
 jobs
