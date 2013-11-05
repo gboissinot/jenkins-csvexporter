@@ -35,7 +35,7 @@ public class PomExtractionLogger {
     private void remotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, Object... objects) {
     }
 
-    @AfterReturning(value = "remotePomURLPointcut(configJob, remoteStrategy,objects)", returning = "pomRemoteURL")
+    @AfterReturning(value = "remotePomURLPointcut(configJob, remoteStrategy, objects)", returning = "pomRemoteURL")
     private void logGetRemotePomURLPointcut(ConfigJob configJob, RemotePOMURLStrategy remoteStrategy, String pomRemoteURL, Object... objects) {
         if (logger.isDebugEnabled()) {
             String jobName = configJob.getName();
