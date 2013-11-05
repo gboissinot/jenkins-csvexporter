@@ -19,9 +19,9 @@
     <task:executor id="taskExecutor" pool-size="10"/>
 
     <!--<int:delayer id="delayer"-->
-                 <!--input-channel="inputChannel"-->
-                 <!--output-channel="jobsChannel"-->
-                 <!--default-delay="500"/>-->
+    <!--input-channel="inputChannel"-->
+    <!--output-channel="jobsChannel"-->
+    <!--default-delay="500"/>-->
     <int:channel id="jobsChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
 
     <int:chain input-channel="inputChannel">
@@ -37,6 +37,7 @@
     <int:channel id="freestyleJobsChannel" datatype="java.lang.String"/>
 
     <int:chain input-channel="matrixJobsChannel">
+        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="matrixJob"/>
         </int:header-enricher>
@@ -68,6 +69,7 @@
     </int:chain>
 
     <int:chain input-channel="mavenJobsChannel">
+        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="mavenJob"/>
         </int:header-enricher>
@@ -99,6 +101,7 @@
     </int:chain>
 
     <int:chain input-channel="freestyleJobsChannel">
+        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
         <!-- JENKINS_JOBTYPE -->
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="freestyleJob"/>
