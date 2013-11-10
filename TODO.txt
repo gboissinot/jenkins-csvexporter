@@ -1,4 +1,10 @@
+- Mettre un profile DEV sur le POMExtractor
 - Tests unitaires
 - Rajouter un environment de test Spring Batch et Spring Integraiton
 - Rajouter un export PDF avec iText ou autre
-- Faire de la documentation
+- Faire de la documentation README.md
+- Monitoring SI et SB (JMX, SB Admin, etc)
+- Mettre en place un SONAR
+- Réecrire complètement la gestion d'erreurs avec SI
+- Mettre en place des métriques avec YammerMetrics
+- Porter le build Maven en Gradle
