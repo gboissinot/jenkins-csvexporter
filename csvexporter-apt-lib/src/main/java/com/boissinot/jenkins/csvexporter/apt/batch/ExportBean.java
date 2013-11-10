@@ -5,16 +5,28 @@ package com.boissinot.jenkins.csvexporter.apt.batch;
  */
 public class ExportBean implements Comparable<ExportBean> {
 
-    int order;
+    private final int order;
 
-    String name;
+    private final String name;
 
-    String label;
+    private final String label;
 
     public ExportBean(int order, String name, String label) {
         this.order = order;
         this.name = name;
         this.label = label;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public int compareTo(ExportBean orderLabelBean) {
@@ -48,5 +60,4 @@ public class ExportBean implements Comparable<ExportBean> {
         result = 31 * result + (label != null ? label.hashCode() : 0);
         return result;
     }
-
 }

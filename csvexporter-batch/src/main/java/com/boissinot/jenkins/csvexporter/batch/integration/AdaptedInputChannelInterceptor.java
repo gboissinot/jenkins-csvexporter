@@ -11,7 +11,7 @@ import org.springframework.integration.support.MessageBuilder;
  */
 public class AdaptedInputChannelInterceptor extends ChannelInterceptorAdapter {
 
-    private String emailFilePath;
+    private final String emailFilePath;
 
     public AdaptedInputChannelInterceptor(String emailFilePath) {
         this.emailFilePath = emailFilePath;
@@ -19,11 +19,10 @@ public class AdaptedInputChannelInterceptor extends ChannelInterceptorAdapter {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        Message targetMessageFLow = MessageBuilder
+        return MessageBuilder
                 .fromMessage(message)
                 .setHeader(JobMessageHeaders.HEADER_EMAIL_FILE_PATH, emailFilePath)
                 .build();
-        return targetMessageFLow;
     }
 
 

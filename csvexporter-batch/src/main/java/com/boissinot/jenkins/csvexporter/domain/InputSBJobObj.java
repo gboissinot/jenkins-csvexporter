@@ -7,16 +7,15 @@ import java.util.Map;
  */
 public class InputSBJobObj {
 
-    private String jobName;
-    private String functionalJobType;
-    private String functionalJobLanguage;
-    private String configXML;
+    private final String jobName;
+    private final String functionalJobType;
+    private final String functionalJobLanguage;
+    private final String configXML;
 
     /**
      * Technical information
      */
-    private Map<String, Map<String, String>> contextMap;
-    private String emailFilePath;
+    private final Map<String, Map<String, String>> contextMap;
 
     public InputSBJobObj(String jobName, String functionalJobType, String functionalJobLanguage, String configXML, Map<String, Map<String, String>> contextMap) {
         this.jobName = jobName;
@@ -24,10 +23,6 @@ public class InputSBJobObj {
         this.functionalJobLanguage = functionalJobLanguage;
         this.configXML = configXML;
         this.contextMap = contextMap;
-    }
-
-    public void setEmailFilePath(String emailFilePath) {
-        this.emailFilePath = emailFilePath;
     }
 
     public String getJobName() {
@@ -48,10 +43,6 @@ public class InputSBJobObj {
 
     public Map<String, Map<String, String>> getContextMap() {
         return contextMap;
-    }
-
-    public String getEmailFilePath() {
-        return emailFilePath;
     }
 
     @Override

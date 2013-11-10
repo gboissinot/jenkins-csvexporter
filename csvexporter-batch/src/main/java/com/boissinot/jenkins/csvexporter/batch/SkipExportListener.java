@@ -5,6 +5,7 @@ import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.springframework.batch.core.listener.SkipListenerSupport;
 
+import javax.annotation.Nullable;
 import java.io.*;
 
 /**
@@ -44,7 +45,7 @@ public class SkipExportListener extends SkipListenerSupport {
         t.printStackTrace();
     }
 
-    private void writeToErrorFile(String strContext, InputSBJobObj jobElement, Throwable t) {
+    private void writeToErrorFile(String strContext, @Nullable InputSBJobObj jobElement, Throwable t) {
         File errorFile = new File(errorCSVFilePath);
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;

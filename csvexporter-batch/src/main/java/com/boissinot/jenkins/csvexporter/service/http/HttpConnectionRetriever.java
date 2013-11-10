@@ -24,11 +24,11 @@ public class HttpConnectionRetriever {
     public HttpURLConnection getConnection(String httpURL) throws IOException {
         URL url = new URL(httpURL);
         HttpURLConnection httpURLConnection;
-        if (!isShouldUseProxy(httpURL)) {
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-        } else {
+        if (isShouldUseProxy(httpURL)) {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, httpProxyPort));
             httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
+        } else {
+            httpURLConnection = (HttpURLConnection) url.openConnection();
         }
         return httpURLConnection;
     }

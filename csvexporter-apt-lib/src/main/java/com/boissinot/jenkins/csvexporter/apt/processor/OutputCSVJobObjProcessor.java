@@ -62,7 +62,7 @@ public class OutputCSVJobObjProcessor extends AbstractProcessor {
 
                     String className = element.getAnnotation(ExportElementType.class).value();
                     InputStream inputStream = this.getClass().getResourceAsStream("mustache/subClassTemplate.mustache");
-                    StringBuffer sb = new StringBuffer();
+                    StringBuilder sb = new StringBuilder();
                     int c;
                     while ((c = inputStream.read()) != -1) {
                         sb.append((char) c);

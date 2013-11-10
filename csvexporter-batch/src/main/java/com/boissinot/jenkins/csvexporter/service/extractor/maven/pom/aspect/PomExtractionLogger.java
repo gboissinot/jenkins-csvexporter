@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class PomExtractionLogger {
 
-    private Logger logger = LoggerFactory.getLogger(PomExtractionLogger.class);
+    private static final Logger logger = LoggerFactory.getLogger(PomExtractionLogger.class);
 
     @Pointcut("within(com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.DeveloperInfoRetriever) && args(configJob, objects)")
     private void getDevelopersPointcut(ConfigJob configJob, Object... objects) {

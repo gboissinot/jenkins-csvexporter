@@ -17,13 +17,14 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class JobItemProcessorLogger {
 
-    private final Logger logger = LoggerFactory.getLogger(JobItemProcessorServiceAdapter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JobItemProcessorServiceAdapter.class);
 
     @Pointcut("within(com.boissinot.jenkins.csvexporter.batch.integration.JobItemProcessorServiceAdapter) && args(inputObjMessage)")
+    @SuppressWarnings("empty")
     private void loggerPointcut(Message<InputSBJobObj> inputObjMessage) {
     }
 
-    @Before(value = "loggerPointcut(inputObjMessage)")
+    @Before(value = "loggerPointcut(inputObjMessage)", argNames = "inputObjMessage")
     private void logCurrentJob(Message<InputSBJobObj> inputObjMessage) {
         InputSBJobObj inputSBJobObj = inputObjMessage.getPayload();
         logger.info(String.format("Processing '%s'", inputSBJobObj.getJobName()));

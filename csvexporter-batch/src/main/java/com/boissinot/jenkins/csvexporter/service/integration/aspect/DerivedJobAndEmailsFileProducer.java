@@ -31,6 +31,7 @@ public class DerivedJobAndEmailsFileProducer {
         BufferedWriter bufferedWriter = null;
         PrintWriter printWriter = null;
         try {
+            @SuppressWarnings("unchecked")
             final Message<OutputCSVJobObj> messageOutputCSVJobObj = (Message<OutputCSVJobObj>) (joinPoint.getArgs()[0]);
             MessageHeaders messageHeaders = messageOutputCSVJobObj.getHeaders();
             final String updateEmailFilePath = (String) messageHeaders.get(JobMessageHeaders.HEADER_EMAIL_FILE_PATH);

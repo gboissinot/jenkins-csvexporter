@@ -28,7 +28,7 @@ public class ExportBeanListRetrieverTest {
         exportBeanListRetriever = new ExportBeanListRetriever();
     }
 
-    static Name name(final CharSequence content) {
+    private static Name name(final CharSequence content) {
         return new Name() {
             @Override
             public boolean contentEquals(CharSequence cs) {
@@ -63,7 +63,7 @@ public class ExportBeanListRetrieverTest {
         };
     }
 
-    public static TypeMirror noType() {
+    private static TypeMirror noType() {
         return new NoType() {
             @Override
             public <R, P> R accept(TypeVisitor<R, P> v, P p) {
@@ -176,7 +176,7 @@ public class ExportBeanListRetrieverTest {
 
 
     @ExportElementType("WrapperObject")
-    public static class WrapperObject {
+    private static class WrapperObject {
 
         @ExportElement(order = 1, label = "FIELD1")
         private String field1;

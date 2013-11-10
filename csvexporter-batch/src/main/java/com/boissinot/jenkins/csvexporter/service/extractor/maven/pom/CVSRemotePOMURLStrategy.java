@@ -33,6 +33,7 @@ public class CVSRemotePOMURLStrategy extends RemotePOMURLStrategyAdapter {
             throw new IllegalArgumentException("For CVS, a CVS Map context must be given.");
         }
 
+        @SuppressWarnings("unchecked")
         Map<String, Map<String, String>> contextModuleMap = (Map<String, Map<String, String>>) contextObjects[0];
 
         String cvsModule = configJob.getCvsModule();
@@ -40,11 +41,10 @@ public class CVSRemotePOMURLStrategy extends RemotePOMURLStrategyAdapter {
         if (cvsMap != null) {
             String modulePath = cvsMap.get(cvsModule) == null ? cvsModule : cvsMap.get(cvsModule);
             if (configJob.getCvsBranche() != null) {
-                final String cvsURL = csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche();
-                return cvsURL;
+                return csvViewerRootUrl + modulePath + "/pom.xml?revision=" + configJob.getCvsBranche();
+
             } else {
-                final String cvsURL = csvViewerRootUrl + modulePath + "/pom.xml?view=co";
-                return cvsURL;
+                return csvViewerRootUrl + modulePath + "/pom.xml?view=co";
             }
         }
 

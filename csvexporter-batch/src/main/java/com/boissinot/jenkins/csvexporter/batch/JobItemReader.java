@@ -8,7 +8,6 @@ import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class JobItemReader implements ItemReader<InputSBJobObj> {
         return readJob(url);
     }
 
-    private InputSBJobObj readJob(String jobURL) throws IOException {
+    private InputSBJobObj readJob(String jobURL) {
         String jobName = jenkinsReader.getJobName(jobURL);
         FunctionalJobTypeRetriever jobTypeRetriever = new FunctionalJobTypeRetriever();
         FunctionalJobTypeRetriever.JOB_TYPE jobType = jobTypeRetriever.getJobType(jobName);

@@ -23,9 +23,9 @@ public class FunctionalJobTypeRetriever {
         PLUGIN("JAVA", "PLUGIN"),
         OTHER("GENERIC", "NOT DETERMINED");
 
-        private String language;
+        private final String language;
 
-        private String type;
+        private final String type;
 
         private JOB_TYPE(String language, String type) {
             this.language = language;

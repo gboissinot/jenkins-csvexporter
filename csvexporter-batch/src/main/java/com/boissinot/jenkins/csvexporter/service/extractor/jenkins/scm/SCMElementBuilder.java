@@ -8,11 +8,11 @@ import org.w3c.dom.Node;
  */
 public class SCMElementBuilder {
 
-    String cvsRoot = null;
-    String cvsModule = null;
-    String cvsBranche = null;
-    String svnURL = null;
-    String gitURL = null;
+    private String cvsRoot = null;
+    private String cvsModule = null;
+    private String cvsBranche = null;
+    private String svnURL = null;
+    private String gitURL = null;
 
     public String getCvsRoot() {
         return cvsRoot;

@@ -10,7 +10,7 @@ import java.io.Writer;
  */
 public class FlatFileItemWriterHeaderCallback implements FlatFileHeaderCallback {
 
-    public String[] labels;
+    private String[] labels;
 
     public void setLabels(String[] labels) {
         this.labels = labels;

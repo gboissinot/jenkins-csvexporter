@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
  */
 public class HttpResourceContentFetcher {
 
-    private HttpConnectionRetriever httpConnectionRetriever;
+    private final HttpConnectionRetriever httpConnectionRetriever;
 
     public HttpResourceContentFetcher(HttpConnectionRetriever httpConnectionRetriever) {
         this.httpConnectionRetriever = httpConnectionRetriever;

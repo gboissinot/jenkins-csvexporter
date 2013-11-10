@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class CVSModulesFileExtractor implements ContextExtractorExtensionPoint {
 
-    private HttpResourceContentFetcher httpResourceContentFetcher;
+    private final HttpResourceContentFetcher httpResourceContentFetcher;
 
-    private String cvsModuleURL;
+    private final String cvsModuleURL;
 
     public CVSModulesFileExtractor(HttpResourceContentFetcher httpResourceContentFetcher, String cvsModuleURL) {
         this.httpResourceContentFetcher = httpResourceContentFetcher;

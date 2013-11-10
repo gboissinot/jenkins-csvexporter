@@ -9,10 +9,7 @@ public class JobNameFilter {
 
     @Filter
     @SuppressWarnings("unused")
-    public boolean filterTemplateJob(String jobName) {
-        if (jobName == null) {
-            return false;
-        }
-        return jobName.contains("template") ? false : true;
+    public boolean removeTemplateJob(String jobName) {
+        return jobName != null && !jobName.contains("template");
     }
 }

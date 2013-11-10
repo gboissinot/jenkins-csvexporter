@@ -58,7 +58,7 @@
     <int:channel id="freestyleJobsChannel" datatype="java.lang.String"/>
 
     <int:chain input-channel="matrixJobsChannel">
-        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="matrixJob"/>
         </int:header-enricher>
@@ -90,7 +90,7 @@
     </int:chain>
 
     <int:chain input-channel="mavenJobsChannel">
-        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="mavenJob"/>
         </int:header-enricher>
@@ -122,7 +122,7 @@
     </int:chain>
 
     <int:chain input-channel="freestyleJobsChannel">
-        <int:filter expression="@jobNameFilter.filterTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
         <!-- JENKINS_JOBTYPE -->
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="freestyleJob"/>

@@ -13,7 +13,7 @@ public class BeanFieldRetriever {
         for (ExportBean exportBean : sortedSet) {
             stringBuilder.append(",");
             stringBuilder.append("\"");
-            stringBuilder.append(exportBean.name);
+            stringBuilder.append(exportBean.getName());
             stringBuilder.append("\"");
         }
         stringBuilder.delete(0, 1);

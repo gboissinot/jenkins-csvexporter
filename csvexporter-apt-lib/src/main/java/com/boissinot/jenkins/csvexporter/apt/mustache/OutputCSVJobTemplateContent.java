@@ -5,13 +5,13 @@ package com.boissinot.jenkins.csvexporter.apt.mustache;
  */
 public class OutputCSVJobTemplateContent {
 
-    private String originClassName;
+    private final String originClassName;
 
-    private String className;
+    private final String className;
 
-    private String names;
+    private final String names;
 
-    private String nameLabels;
+    private final String nameLabels;
 
     public OutputCSVJobTemplateContent(String originClassName, String className, String names, String nameLabels) {
         this.originClassName = originClassName;

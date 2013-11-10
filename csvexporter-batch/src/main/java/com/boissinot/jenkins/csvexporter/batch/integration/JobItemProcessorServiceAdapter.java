@@ -36,12 +36,11 @@ public class JobItemProcessorServiceAdapter {
                 throw new ExportException("Item was filtered or time out occurred.");
             }
 
-            Message<OutputCSVJobObj> returnMessage =
-                    MessageBuilder
-                            .withPayload(output)
-                            .copyHeaders(inputSBJobObjMessage.getHeaders())
-                            .build();
-            return returnMessage;
+            return MessageBuilder
+                    .withPayload(output)
+                    .copyHeaders(inputSBJobObjMessage.getHeaders())
+                    .build();
+
         } catch (MessagingException me) {
             throw new ExportException("Unexpected exception on business flow", me.getCause());
         }

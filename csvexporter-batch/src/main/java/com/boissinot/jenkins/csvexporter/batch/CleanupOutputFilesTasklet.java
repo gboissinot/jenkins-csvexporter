@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CleanupOutputFilesTasklet implements Tasklet, InitializingBean {
 
-    private List<String> filePathList2Delete;
+    private final List<String> filePathList2Delete;
 
     public CleanupOutputFilesTasklet(List<String> filePathList2Delete) {
         this.filePathList2Delete = filePathList2Delete;

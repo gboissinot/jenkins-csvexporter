@@ -12,7 +12,7 @@ public class HeaderLabelRetriever {
         StringBuilder stringBuilder = new StringBuilder();
         for (ExportBean element : elements) {
             stringBuilder.append(";");
-            stringBuilder.append(element.label);
+            stringBuilder.append(element.getLabel());
         }
         stringBuilder.delete(0, 1);
         return stringBuilder.toString();
