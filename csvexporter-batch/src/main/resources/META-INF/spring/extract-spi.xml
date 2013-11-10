@@ -12,22 +12,43 @@
         http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
         http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <int:channel id="inputChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj">
+    <int:gateway id="processor"
+                 service-interface="org.springframework.batch.item.ItemProcessor"
+                 default-request-channel="inputChannel"/>
+
+    <int:service-activator input-channel="inputChannel">
+        <bean id="itemProcessorServiceAdapter"
+              class="com.boissinot.jenkins.csvexporter.batch.integration.JobItemProcessorServiceAdapter">
+            <property name="itemProcessor" ref="adaptedItemProcessor"/>
+        </bean>
+    </int:service-activator>
+
+    <int:gateway id="adaptedItemProcessor"
+                 service-interface="org.springframework.batch.item.ItemProcessor"
+                 default-reply-timeout="5000"
+                 default-request-channel="adaptedInputChannel"/>
+
+    <int:channel id="adaptedInputChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj">
         <int:dispatcher task-executor="taskExecutor"/>
     </int:channel>
 
+    <int:channel-interceptor pattern="adaptedInputChannel" ref="adaptedInputChannelInterceptor"/>
+    <bean id="adaptedInputChannelInterceptor"
+          class="com.boissinot.jenkins.csvexporter.batch.integration.AdaptedInputChannelInterceptor"
+          scope="step">
+        <constructor-arg value="#{jobParameters['update.email.filepath']}"/>
+    </bean>
+
+
     <task:executor id="taskExecutor" pool-size="10"/>
 
-    <!--<int:delayer id="delayer"-->
-    <!--input-channel="inputChannel"-->
-    <!--output-channel="jobsChannel"-->
-    <!--default-delay="500"/>-->
     <int:channel id="jobsChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj"/>
 
-    <int:chain input-channel="inputChannel">
+    <int:chain input-channel="adaptedInputChannel">
         <int:transformer ref="xmlPayloadJobTransformer"/>
         <int:router ref="jobMessageRouter"/>
     </int:chain>
+
     <bean id="xmlPayloadJobTransformer"
           class="com.boissinot.jenkins.csvexporter.service.integration.XMLPayloadJobTransformer"/>
     <bean id="jobMessageRouter" class="com.boissinot.jenkins.csvexporter.service.integration.JobMessageRouter"/>
