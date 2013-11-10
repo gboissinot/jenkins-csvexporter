@@ -30,9 +30,9 @@
         <constructor-arg>
             <bean id="httpConnectionRetriever"
                   class="com.boissinot.jenkins.csvexporter.service.http.HttpConnectionRetriever">
-                <constructor-arg value="${vcs.nonProxyHost}" index="0"/>
-                <constructor-arg value="${vcs.httpProxyHost}" index="1"/>
-                <constructor-arg value="${vcs.httpProxyPort}" index="2"/>
+                <constructor-arg name="nonProxyHosts" value="${vcs.nonProxyHost}"/>
+                <constructor-arg name="httpProxyHost" value="${vcs.httpProxyHost}"/>
+                <constructor-arg name="httpProxyPort" value="${vcs.httpProxyPort}"/>
             </bean>
         </constructor-arg>
     </bean>

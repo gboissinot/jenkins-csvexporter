@@ -13,9 +13,9 @@ public class HttpConnectionRetriever {
 
     private final String nonProxyHosts;
     private final String httpProxyHost;
-    private final int httpProxyPort;
+    private final String httpProxyPort;
 
-    public HttpConnectionRetriever(String nonProxyHosts, String httpProxyHost, int httpProxyPort) {
+    public HttpConnectionRetriever(String nonProxyHosts, String httpProxyHost, String httpProxyPort) {
         this.nonProxyHosts = nonProxyHosts;
         this.httpProxyHost = httpProxyHost;
         this.httpProxyPort = httpProxyPort;
@@ -25,7 +25,13 @@ public class HttpConnectionRetriever {
         URL url = new URL(httpURL);
         HttpURLConnection httpURLConnection;
         if (isShouldUseProxy(httpURL)) {
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, httpProxyPort));
+            int intHttpProxyPort = 0;
+            try {
+                intHttpProxyPort = Integer.parseInt(httpProxyPort);
+            } catch (NumberFormatException ne) {
+                //Ignore
+            }
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpProxyHost, intHttpProxyPort));
             httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
         } else {
             httpURLConnection = (HttpURLConnection) url.openConnection();
