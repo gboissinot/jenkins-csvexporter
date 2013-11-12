@@ -8,3 +8,4 @@
 - Réecrire complètement la gestion d'erreurs avec SI
 - Mettre en place des métriques avec YammerMetrics
 - Porter le build Maven en Gradle
+- Migrer vers un couple AsyncItemProcessor/AsyncItemWriter

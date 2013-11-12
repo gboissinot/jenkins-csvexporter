@@ -1,4 +1,4 @@
-package com.boissinot.jenkins.csvexporter.service.extractor.jenkins;
+package com.boissinot.jenkins.csvexporter.service.integration;
 
 import org.springframework.integration.annotation.Filter;
 
@@ -9,7 +9,7 @@ public class JobNameFilter {
 
     @Filter
     @SuppressWarnings("unused")
-    public boolean removeTemplateJob(String jobName) {
+    public boolean keepNonTemplateJob(String jobName) {
         return jobName != null && !jobName.contains("template");
     }
 }

@@ -119,7 +119,7 @@
           c:errorCSVFilePath="#{jobParameters['error.exportcsv.filepath']}"
           scope="step"/>
 
-    <bean id="jobNameFilter" class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.JobNameFilter"/>
+    <bean id="jobNameFilter" class="com.boissinot.jenkins.csvexporter.service.integration.JobNameFilter"/>
 
     <bean id="outputObjBuilder"
           class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder"

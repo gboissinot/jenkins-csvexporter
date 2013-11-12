@@ -56,9 +56,12 @@
     <int:channel id="matrixJobsChannel" datatype="java.lang.String"/>
     <int:channel id="mavenJobsChannel" datatype="java.lang.String"/>
     <int:channel id="freestyleJobsChannel" datatype="java.lang.String"/>
+    <int:channel id="skippedJobs" datatype="java.lang.String"/>
 
     <int:chain input-channel="matrixJobsChannel">
-        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter
+                expression="@jobNameFilter.keepNonTemplateJob(headers['JOB_NAME'])"
+                discard-channel="skippedJobs"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="matrixJob"/>
         </int:header-enricher>
@@ -90,7 +93,9 @@
     </int:chain>
 
     <int:chain input-channel="mavenJobsChannel">
-        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter
+                expression="@jobNameFilter.keepNonTemplateJob(headers['JOB_NAME'])"
+                discard-channel="skippedJobs"/>
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="mavenJob"/>
         </int:header-enricher>
@@ -122,7 +127,9 @@
     </int:chain>
 
     <int:chain input-channel="freestyleJobsChannel">
-        <int:filter expression="@jobNameFilter.removeTemplateJob(headers['JOB_NAME'])"/>
+        <int:filter
+                expression="@jobNameFilter.keepNonTemplateJob(headers['JOB_NAME'])"
+                discard-channel="skippedJobs"/>
         <!-- JENKINS_JOBTYPE -->
         <int:header-enricher>
             <int:header name="JENKINS_JOBTYPE" value="freestyleJob"/>
@@ -153,5 +160,10 @@
         <int:service-activator ref="outputObjBuilder"/>
 
     </int:chain>
+
+    <int:service-activator
+            input-channel="skippedJobs"
+            ref="skippedJobsLogger"/>
+    <bean id="skippedJobsLogger" class="com.boissinot.jenkins.csvexporter.service.integration.SkippedJobsLogger"/>
 
 </beans>
