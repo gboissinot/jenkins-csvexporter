@@ -18,6 +18,7 @@
 
     <context:component-scan
             base-package="com.boissinot.jenkins.csvexporter.domain.generated,com.boissinot.jenkins.csvexporter.javaconfig"/>
+
     <context:annotation-config/>
 
     <context:property-placeholder properties-ref="configProps"/>
@@ -142,9 +143,9 @@
     <bean id="gitRemotePOMURLStrategy"
           class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.GITRemotePOMURLStrategy"/>
     <bean id="cvsRemotePOMURLStrategy"
-          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.CVSRemotePOMURLStrategy">
-        <property name="csvViewerRootUrl" value="${cvs.viewer.rootUrl}"/>
-    </bean>
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.CVSRemotePOMURLStrategy"
+          p:csvViewerRootUrl="${cvs.viewer.rootUrl}"/>
+
 
     <bean id="configObjPayloadJobTransformer"
           class="com.boissinot.jenkins.csvexporter.service.integration.ConfigObjPayloadJobTransformer"/>
