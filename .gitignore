@@ -5,6 +5,5 @@ target
 *.ipr
 *.iws
 *.iml
-work
-bin
 jobs
+jobs-origin
