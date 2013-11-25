@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author Gregory Boissinot
  */
-@Retention(value = RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Documented
 public @interface ExportElement {

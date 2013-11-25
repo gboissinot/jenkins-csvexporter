@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author Gregory Boissinot
  */
-@Retention(value = RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
 @Documented
 public @interface ExportElementType {
