@@ -7,7 +7,7 @@ public enum StrategyType {
 
     CVS("cvs"), SVN("svn"), GIT("git"), UNKNOWN("UNKNOWN");
 
-    private final  String key;
+    private final String key;
 
     StrategyType(String key) {
         this.key = key;

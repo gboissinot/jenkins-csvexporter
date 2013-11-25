@@ -12,7 +12,7 @@ public class JobNameFilter {
     @SuppressWarnings("unused")
     public boolean keepNonTemplateJob(String jobName) {
         boolean keepJob = jobName != null && !jobName.contains("template");
-        if (keepJob){
+        if (keepJob) {
             return true;
         }
 
