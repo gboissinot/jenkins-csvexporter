@@ -13,14 +13,13 @@
     <name>csvexporter-batch</name>
 
     <properties>
-        <spring.core.version>3.2.4.RELEASE</spring.core.version>
+        <spring.batch.version>2.2.3.RELEASE</spring.batch.version>
         <spring.integration.version>2.2.6.RELEASE</spring.integration.version>
-        <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
         <spring.xml.version>2.1.4.RELEASE</spring.xml.version>
-        <common.io.version>2.2</common.io.version>
+        <common.io.version>2.4</common.io.version>
         <log4j.version>1.2.17</log4j.version>
-        <aspect.version>1.7.3</aspect.version>
-        <cglib.nodep.version>2.2.2</cglib.nodep.version>
+        <aspectj.version>1.7.4</aspectj.version>
+        <cglib.nodep.version>3.0</cglib.nodep.version>
         <slf4j.version>1.7.5</slf4j.version>
         <junit.version>4.11</junit.version>
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
@@ -33,91 +32,73 @@
             <groupId>com.boissinot.jenkins</groupId>
             <artifactId>csvexporter-apt-lib</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
             <version>${spring.batch.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-core</artifactId>
             <version>${spring.integration.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-xml</artifactId>
             <version>${spring.integration.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.ws</groupId>
             <artifactId>spring-xml</artifactId>
             <version>${spring.xml.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${common.io.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>${aspect.version}</version>
+            <version>${aspectj.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>${aspect.version}</version>
+            <version>${aspectj.version}</version>
         </dependency>
-
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>${cglib.nodep.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

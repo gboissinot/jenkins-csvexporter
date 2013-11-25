@@ -12,22 +12,15 @@
     <name>csvexporter-apt-lib</name>
 
     <properties>
-        <spring.core.version>3.2.4.RELEASE</spring.core.version>
         <spullara.mustache.core.version>0.6.3</spullara.mustache.core.version>
         <spullara.mustache.builder.version>0.6.3</spullara.mustache.builder.version>
-        <spullara.mustache.compiler.version>0.8.10</spullara.mustache.compiler.version>
+        <spullara.mustache.compiler.version>0.8.13</spullara.mustache.compiler.version>
         <guava.version>11.0-rc1</guava.version>
-        <junit.version>4.9</junit.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.core.version}</version>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>core</artifactId>
@@ -43,16 +36,30 @@
             <artifactId>compiler</artifactId>
             <version>${spullara.mustache.compiler.version}</version>
         </dependency>
+
+        <!--
+            Mustache processing from the AnnotationProcessor requires
+            com/google/common/util/concurrent/UncheckedExecutionException
+            from Guava
+        -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.core.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
