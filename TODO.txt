@@ -1,3 +1,4 @@
+- Externaliser toutes les collonnes dans un fichier avec API AnnotationProcessor de setter pour API set
 - Mettre un profile DEV sur le POMExtractor
 - Tests unitaires
 - Rajouter un environment de test Spring Batch et Spring Integraiton

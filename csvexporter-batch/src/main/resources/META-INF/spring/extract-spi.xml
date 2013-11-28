@@ -25,7 +25,7 @@
 
     <int:gateway id="adaptedItemProcessor"
                  service-interface="org.springframework.batch.item.ItemProcessor"
-                 default-reply-timeout="5000"
+                 default-reply-timeout="25000"
                  default-request-channel="adaptedInputChannel"/>
 
     <int:channel id="adaptedInputChannel" datatype="com.boissinot.jenkins.csvexporter.domain.InputSBJobObj">
@@ -85,6 +85,13 @@
         <int-xml:xpath-header-enricher>
             <int-xml:header name="builders" evaluation-type="NODE_RESULT" xpath-expression="//builders"/>
         </int-xml:xpath-header-enricher>
+
+
+        <!-- builders -->
+        <int-xml:xpath-header-enricher>
+            <int-xml:header name="axes" evaluation-type="NODE_RESULT" xpath-expression="//axes"/>
+        </int-xml:xpath-header-enricher>
+
         <!-- Generate the Config Job Object -->
         <int:transformer expression="@configObjPayloadJobTransformer.buildConfigObj(headers)"/>
         <!-- build final object -->

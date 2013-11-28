@@ -18,6 +18,7 @@ public class ConfigJob {
     private String gitURL;
     private String trigger;
     private String buildSteps;
+    private String platforms;
 
     public String getName() {
         return name;
@@ -121,5 +122,13 @@ public class ConfigJob {
 
     public void setBuildSteps(String buildSteps) {
         this.buildSteps = buildSteps;
+    }
+
+    public String getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(String platforms) {
+        this.platforms = platforms;
     }
 }

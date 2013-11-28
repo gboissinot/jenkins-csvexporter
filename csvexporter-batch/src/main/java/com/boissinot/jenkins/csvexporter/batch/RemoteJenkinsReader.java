@@ -34,10 +34,7 @@ public class RemoteJenkinsReader implements JenkinsReaderExtensionPoint {
         Jaxp13XPathTemplate template = new Jaxp13XPathTemplate();
         List<Node> nodes = template.evaluateAsNodeList("//job/url", new StringSource(str));
         for (Node node : nodes) {
-            String textContent = node.getTextContent();
-            if (textContent.contains("fr.soleil.passerelle.SoleilActors_JAR")) {
-                urls.add(textContent);
-            }
+            urls.add(node.getTextContent());
         }
 
         return urls;

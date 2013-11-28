@@ -2,6 +2,7 @@ package com.boissinot.jenkins.csvexporter.service.integration;
 
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.command.BuildersElementRetriever;
+import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.matrix.PlatformElementRetriever;
 import com.boissinot.jenkins.csvexporter.service.extractor.jenkins.scm.SCMElementBuilder;
 import org.springframework.integration.MessageHeaders;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -58,6 +59,14 @@ public class ConfigObjPayloadJobTransformer {
             BuildersElementRetriever buildersElementRetriever = new BuildersElementRetriever();
             final String buildSteps = buildersElementRetriever.buildCommandSection(buildersNode);
             configJob.setBuildSteps(buildSteps);
+        }
+
+        //axes
+        final Node axesNode = (Node) headers.get("axes");
+        if (axesNode != null) {
+            PlatformElementRetriever platformElementRetriever = new PlatformElementRetriever();
+            final String platforms = platformElementRetriever.buildPlatformsSection(axesNode);
+            configJob.setPlatforms(platforms);
         }
 
         return configJob;

@@ -3,6 +3,7 @@ package com.boissinot.jenkins.csvexporter.service.extractor.jenkins;
 import com.boissinot.jenkins.csvexporter.domain.OutputCSVJobObj;
 import com.boissinot.jenkins.csvexporter.domain.jenkins.job.ConfigJob;
 import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.DeveloperInfoRetriever;
+import com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMContentExtractor;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.integration.Message;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -14,12 +15,13 @@ import java.util.Map;
  */
 public class OutputObjBuilder {
 
-    private DeveloperInfoRetriever developerInfoRetriever;
+    private POMContentExtractor pomContentExtractor;
 
     @Required
-    public void setDeveloperInfoRetriever(DeveloperInfoRetriever developerInfoRetriever) {
-        this.developerInfoRetriever = developerInfoRetriever;
+    public void setPomContentExtractor(POMContentExtractor pomContentExtractor) {
+        this.pomContentExtractor = pomContentExtractor;
     }
+
 
     @ServiceActivator
     @SuppressWarnings("unused")
@@ -40,9 +42,14 @@ public class OutputObjBuilder {
         builder.cvsBranche(configJob.getCvsBranche());
         builder.svnURL(configJob.getSvnURL());
         builder.gitURL(configJob.getGitURL());
+        builder.platforms(configJob.getPlatforms());
 
         final Map module_map = (Map) messageConfigJob.getHeaders().get("MODULE_MAP");
-        builder.developers(developerInfoRetriever.getDevelopers(configJob, module_map));
+        String pomContent = pomContentExtractor.getPomContent(configJob, module_map);
+        if (pomContent != null) {
+            DeveloperInfoRetriever developerInfoRetriever = new DeveloperInfoRetriever();
+            builder.developers(developerInfoRetriever.getDevelopers(pomContent));
+        }
 
         return builder.build();
     }

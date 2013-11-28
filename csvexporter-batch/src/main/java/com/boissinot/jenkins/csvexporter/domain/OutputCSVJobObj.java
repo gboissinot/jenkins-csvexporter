@@ -36,7 +36,9 @@ public class OutputCSVJobObj {
     private String trigger;
     @ExportElement(order = 13, label = "COMMANDS")
     private String buildSteps;
-    @ExportElement(order = 14, label = "DEVELOPERS")
+    @ExportElement(order = 15, label = "MATRIX_PLATFORM")
+    private String platforms;
+    @ExportElement(order = 16, label = "DEVELOPERS")
     private String developers;
 
     public OutputCSVJobObj() {
@@ -57,6 +59,7 @@ public class OutputCSVJobObj {
         this.gitURL = cellProcessor.getCSVAware(builder.gitURL);
         this.trigger = cellProcessor.getCSVAware(builder.trigger);
         this.buildSteps = cellProcessor.getCSVAware(builder.buildSteps);
+        this.platforms =  cellProcessor.getCSVAware(builder.platforms);
         this.developers = cellProcessor.getCSVAware(builder.developers);
     }
 
@@ -112,6 +115,10 @@ public class OutputCSVJobObj {
         return buildSteps;
     }
 
+    public String getPlatforms() {
+        return platforms;
+    }
+
     public String getDevelopers() {
         return developers;
     }
@@ -131,6 +138,7 @@ public class OutputCSVJobObj {
         private String gitURL;
         private String trigger;
         private String buildSteps;
+        private String platforms;
         private String developers;
 
         public Builder() {
@@ -198,6 +206,11 @@ public class OutputCSVJobObj {
 
         public Builder buildSteps(String buildSteps) {
             this.buildSteps = buildSteps;
+            return this;
+        }
+
+        public Builder platforms(String platforms) {
+            this.platforms = platforms;
             return this;
         }
 

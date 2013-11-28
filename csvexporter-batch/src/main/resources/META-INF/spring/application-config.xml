@@ -124,10 +124,10 @@
 
     <bean id="outputObjBuilder"
           class="com.boissinot.jenkins.csvexporter.service.extractor.jenkins.OutputObjBuilder"
-          p:developerInfoRetriever-ref="developerInfoRetriever"/>
+          p:pomContentExtractor-ref="pomContentExtractor"/>
 
-    <bean id="developerInfoRetriever"
-          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.DeveloperInfoRetriever">
+    <bean id="pomContentExtractor"
+          class="com.boissinot.jenkins.csvexporter.service.extractor.maven.pom.POMContentExtractor">
         <property name="httpResourceContentFetcher" ref="httpResourceContentFetcher"/>
         <property name="strategies">
             <list>
