@@ -2,7 +2,6 @@ package com.boissinot.jenkins.csvexporter.service.extractor.jenkins;
 
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 
-import javax.annotation.Nullable;
 
 /**
  * @author Gregory Boissinot
@@ -41,7 +40,7 @@ public class FunctionalJobTypeRetriever {
         }
     }
 
-    public JOB_TYPE getJobType(@Nullable String jobName) {
+    public JOB_TYPE getJobType(String jobName) {
 
         if (jobName == null) {
             throw new ExportException("You must give a non empty job name.");
