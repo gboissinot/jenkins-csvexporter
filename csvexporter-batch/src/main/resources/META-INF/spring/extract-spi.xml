@@ -147,7 +147,7 @@
         </int-xml:xpath-header-enricher>
         <!-- disabled -->
         <int-xml:xpath-header-enricher>
-            <int-xml:header name="disabled" evaluation-type="BOOLEAN_RESULT" xpath-expression="//disabled"/>
+            <int-xml:header name="disabled" evaluation-type="STRING_RESULT" xpath-expression="//disabled"/>
         </int-xml:xpath-header-enricher>
         <!-- description -->
         <int-xml:xpath-header-enricher>
