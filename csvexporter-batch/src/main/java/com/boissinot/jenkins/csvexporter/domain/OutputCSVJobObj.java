@@ -59,7 +59,7 @@ public class OutputCSVJobObj {
         this.gitURL = cellProcessor.getCSVAware(builder.gitURL);
         this.trigger = cellProcessor.getCSVAware(builder.trigger);
         this.buildSteps = cellProcessor.getCSVAware(builder.buildSteps);
-        this.platforms =  cellProcessor.getCSVAware(builder.platforms);
+        this.platforms = cellProcessor.getCSVAware(builder.platforms);
         this.developers = cellProcessor.getCSVAware(builder.developers);
     }
 

@@ -40,7 +40,7 @@ public class ConfigObjPayloadJobTransformer {
         final String description = (String) headers.get("description");
         configJob.setDesc(description);
         //disabled
-        final Boolean disabled = Boolean.valueOf((String)headers.get("disabled"));
+        final Boolean disabled = Boolean.valueOf((String) headers.get("disabled"));
         configJob.setDisabled(disabled);
 
         //scm

@@ -4,6 +4,7 @@ package com.boissinot.jenkins.csvexporter.batch;
 import com.boissinot.jenkins.csvexporter.domain.InputSBJobObj;
 import com.boissinot.jenkins.csvexporter.exception.ExportException;
 import org.springframework.batch.core.listener.SkipListenerSupport;
+
 import java.io.*;
 
 /**
