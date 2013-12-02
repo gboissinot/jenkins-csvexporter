@@ -12,40 +12,24 @@
     <name>csvexporter-apt-lib</name>
 
     <properties>
-        <mustache-core.version>0.6.3</mustache-core.version>
-        <mustache-builder.version>0.6.3</mustache-builder.version>
-        <mustache-compiler.version>0.8.10</mustache-compiler.version>
-        <guava.version>11.0-rc1</guava.version>
+
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.spullara.mustache.java</groupId>
-            <artifactId>core</artifactId>
-            <version>${mustache-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.spullara.mustache.java</groupId>
-            <artifactId>builder</artifactId>
-            <version>${mustache-builder.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>compiler</artifactId>
-            <version>${mustache-compiler.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -58,6 +42,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <compilerArgument>-proc:none</compilerArgument>
                 </configuration>

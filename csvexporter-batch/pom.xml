@@ -20,17 +20,34 @@
         <cglib.nodep.version>2.2.2</cglib.nodep.version>
         <slf4j.version>1.7.5</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
+        <common-io.version>2.2</common-io.version>
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
         <maven.shade.plugin.version>2.1</maven.shade.plugin.version>
+        <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
     </properties>
 
     <dependencies>
 
+        <!--
+        Annotation Processor with at compile time
+        (runtime of apt-lib: spring-core, mustache and guava)
+        Whe don't want to rely on transitive dependency management,
+        we specify them explictely
+        -->
         <dependency>
             <groupId>com.boissinot.jenkins</groupId>
             <artifactId>csvexporter-apt-lib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.spullara.mustache.java</groupId>
+            <artifactId>compiler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
 
+        <!-- Others libs -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -68,6 +85,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+            <version>${common-io.version}</version>
         </dependency>
 
         <dependency>
@@ -129,6 +147,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
+                <version>${maven-processor-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>process</id>
