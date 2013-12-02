@@ -12,7 +12,6 @@
     <name>csvexporter-apt-lib</name>
 
     <properties>
-
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
     </properties>
 
