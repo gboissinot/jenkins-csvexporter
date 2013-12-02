@@ -12,53 +12,46 @@
     <name>csvexporter-apt-lib</name>
 
     <properties>
-        <spring.core.version>3.2.2.RELEASE</spring.core.version>
-        <spring.integration.version>2.2.0.RELEASE</spring.integration.version>
-        <spring.batch.version>2.1.9.RELEASE</spring.batch.version>
-        <spring.xml.version>2.1.2.RELEASE</spring.xml.version>
-        <log4j.version>1.2.17</log4j.version>
-        <junit.version>4.9</junit.version>
+        <mustache-core.version>0.6.3</mustache-core.version>
+        <mustache-builder.version>0.6.3</mustache-builder.version>
+        <mustache-compiler.version>0.8.10</mustache-compiler.version>
+        <guava.version>11.0-rc1</guava.version>
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${common-io.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>core</artifactId>
-            <version>0.6.3</version>
+            <version>${mustache-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>builder</artifactId>
-            <version>0.6.3</version>
+            <version>${mustache-builder.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>compiler</artifactId>
-            <version>0.8.10</version>
+            <version>${mustache-compiler.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>11.0-rc1</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

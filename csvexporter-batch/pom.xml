@@ -13,16 +13,13 @@
     <name>csvexporter-batch</name>
 
     <properties>
-        <spring.core.version>3.2.4.RELEASE</spring.core.version>
         <spring.integration.version>2.2.6.RELEASE</spring.integration.version>
         <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
         <spring.xml.version>2.1.4.RELEASE</spring.xml.version>
-        <common.io.version>2.2</common.io.version>
-        <log4j.version>1.2.17</log4j.version>
         <aspect.version>1.7.3</aspect.version>
         <cglib.nodep.version>2.2.2</cglib.nodep.version>
         <slf4j.version>1.7.5</slf4j.version>
-        <junit.version>4.11</junit.version>
+        <log4j.version>1.2.17</log4j.version>
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
         <maven.shade.plugin.version>2.1</maven.shade.plugin.version>
     </properties>
@@ -37,13 +34,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
 
         <dependency>
@@ -71,21 +66,13 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${common.io.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${spring.core.version}</version>
         </dependency>
 
         <dependency>
@@ -125,21 +112,17 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>spring-s3</id>
-            <name>Spring Maven Snapshot Repository</name>
-            <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
