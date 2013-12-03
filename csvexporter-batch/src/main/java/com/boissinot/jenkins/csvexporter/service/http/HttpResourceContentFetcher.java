@@ -28,10 +28,18 @@ public class HttpResourceContentFetcher {
         BufferedReader br = null;
         try {
             conn = httpConnectionRetriever.getConnection(httpURL);
+
+            if (httpURL.startsWith("https://riouxsvn.com/svn/fusion-soleil/")) {
+                String username = "qa-soleil";
+                String password = "impega";
+                String userpass = username + ":" + password;
+                String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userpass.getBytes());
+                conn.setRequestProperty("Authorization", basicAuth);
+            }
+
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             conn.setDoOutput(false);
-
             conn.connect();
             inputStream = conn.getInputStream();
 
