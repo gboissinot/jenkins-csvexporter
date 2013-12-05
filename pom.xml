@@ -3,7 +3,7 @@
 
     <groupId>com.boissinot.jenkins</groupId>
     <artifactId>jenkins-csvexporter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>jenkins-csvexporter</name>
 
