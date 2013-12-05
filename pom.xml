@@ -105,8 +105,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray</id>
-            <url>https://api.bintray.com/maven/gboissinot/jenkins-csvexporter</url>
+            <id>bintray-gboissinot</id>
+            <name>bintray-gboissinot</name>
+            <url>https://api.bintray.com/maven/gboissinot/maven/jenkins-csvexporter</url>
         </repository>
     </distributionManagement>
 
