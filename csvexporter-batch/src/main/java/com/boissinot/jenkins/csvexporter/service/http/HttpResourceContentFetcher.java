@@ -37,6 +37,14 @@ public class HttpResourceContentFetcher {
                 conn.setRequestProperty("Authorization", basicAuth);
             }
 
+            else if (httpURL.startsWith("http://calypso/jenkins/")){
+                String username = "dev";
+                String password = "dev";
+                String userpass = username + ":" + password;
+                String basicAuth = "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(userpass.getBytes());
+                conn.setRequestProperty("Authorization", basicAuth);
+            }
+
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             conn.setDoOutput(false);
